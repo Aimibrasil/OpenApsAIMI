@@ -162,7 +162,9 @@ class LoopHubImpl @Inject constructor(
      * creating a sync→aps dependency. First match in priority order wins.
      */
     @VisibleForTesting
-    internal fun detectActiveTherapyMode(events: List<TE>, now: Long): String? {
+    internal fun detectActiveTherapyMode(allEvents: List<TE>, now: Long): String? {
+        // Context intents ("AIMI_CONTEXT:<id>:{json}") are not modes the person set, see Therapy.
+        val events = allEvents.filterNot { it.isAimiContextNote() }
         fun active(keyword: String, minWindowMs: Long = 0L): Boolean =
             events.any { event ->
                 val note = event.note ?: return@any false
@@ -184,6 +186,21 @@ class LoopHubImpl @Inject constructor(
                     note.contains("breakfast", ignoreCase = true)) &&
                     now <= (event.timestamp + event.duration)
             }
+        fun activeCoffee(): Boolean =
+            events.any { event ->
+                val note = event.note ?: return@any false
+                // Same keywords as CoffeeRiseMode (coffee / cafe / café)
+                val isCoffee = note.contains("coffee", ignoreCase = true) ||
+                    note.contains("cafe", ignoreCase = true) ||
+                    note.contains("café", ignoreCase = true)
+                if (!isCoffee) return@any false
+                // Default 90 min when NOTE has no duration (CoffeeRiseMode.windowMin)
+                val windowMs = when {
+                    event.duration <= 0L -> COFFEE_DEFAULT_WINDOW_MS
+                    else -> minOf(event.duration, COFFEE_MAX_WINDOW_MS)
+                }
+                now <= (event.timestamp + windowMs)
+            }
         return when {
             active("sport") -> "SPORT"
             active("fcl", FCL_MIN_WINDOW_MS) -> "FCL"
@@ -195,6 +212,9 @@ class LoopHubImpl @Inject constructor(
             active("fasting") -> "FASTING"
             active("lowcarb") -> "LOWCARB"
             active("anticip") -> "ANTICIP"
+            // After every meal mode: in the loop a declared meal switches the coffee mode off
+            // (CoffeeRiseMode), so the watch must show the meal, not COFFEE.
+            activeCoffee() -> "COFFEE"
             else -> null
         }
     }
@@ -202,6 +222,9 @@ class LoopHubImpl @Inject constructor(
     companion object {
         /** Same floor as Therapy.FCL_MIN_WINDOW_MS — FCL notes often ship with duration 0. */
         private const val FCL_MIN_WINDOW_MS = 60 * 60_000L
+        /** CoffeeRiseMode.DEFAULT_WINDOW_MIN / MAX_WINDOW_MIN */
+        private const val COFFEE_DEFAULT_WINDOW_MS = 90 * 60_000L
+        private const val COFFEE_MAX_WINDOW_MS = 150 * 60_000L
     }
 
     /** Tells the loop algorithm that the pump is physically connected. */
