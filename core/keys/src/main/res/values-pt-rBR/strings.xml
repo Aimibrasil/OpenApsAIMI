@@ -56,6 +56,14 @@
     <string name="pref_title_alert_carbs_required">Alerta sobre carboidratos necessários</string>
     <string name="pref_title_alert_urgent_as_android_notification">Emitir alarmes urgentes como notificações do Android</string>
     <string name="pref_title_alert_increase_volume">Aumentar gradualmente o volume da notificação</string>
+    <string name="pref_title_alert_sound_low_glucose">Som dos alarmes de glicose baixa</string>
+    <string name="pref_title_alert_sound_other_alarms">Som de outros alarmes urgentes</string>
+    <string name="pref_summary_alert_sound">O som padrão do AAPS ou uma melodia mais suave caso sons altos sejam difíceis para você. Se a melodia não puder ser reproduzida, o som padrão do AAPS será utilizado.</string>
+    <string name="alert_sound_default">Som do AAPS</string>
+    <string name="alert_sound_soft_chime" comment="Name of a soft alarm melody: four light rising bell notes">Sino suave</string>
+    <string name="alert_sound_warm_bells" comment="Name of a soft alarm melody: three low bells with a long ring">Sinos quentes</string>
+    <string name="alert_sound_marimba" comment="Name of a soft alarm melody: short wooden notes, like the marimba instrument">Marimba</string>
+    <string name="alert_sound_gentle_pulse" comment="Name of a soft alarm melody: one soft tone that pulses slowly">Pulso suave</string>
     <string name="pref_title_alert_override_dnd">Ignorar o modo Não Perturbe</string>
     <string name="pref_summary_alert_override_dnd">Quando ativado, os alarmes do AAPS soam através dos modos silencioso e Não Perturbe (fluxo de alarme). Quando desativado, os alarmes respeitam o modo silencioso/Não Perturbe (fluxo de notificação).</string>
     <string name="pref_title_alert_hypo">Alerta de glicose baixa</string>
