@@ -5,10 +5,15 @@ import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.data.model.SourceSensor
 import app.aaps.core.data.model.TrendArrow
 import app.aaps.core.interfaces.db.PersistenceLayer
+import app.aaps.core.interfaces.notifications.NotificationAction
+import app.aaps.core.interfaces.notifications.NotificationId
+import app.aaps.core.interfaces.notifications.NotificationLevel
 import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.keys.BooleanNonKey
 import app.aaps.core.keys.IntNonKey
 import app.aaps.core.keys.StringNonKey
+import app.aaps.core.ui.R as CoreUiR
+import app.aaps.plugins.sync.R
 import app.aaps.plugins.sync.garmin.keys.GarminBooleanKey
 import app.aaps.plugins.sync.garmin.keys.GarminIntKey
 import app.aaps.plugins.sync.garmin.keys.GarminStringKey
@@ -57,7 +62,7 @@ class GarminPluginTest : TestBaseWithProfile() {
 
     @BeforeEach
     fun setup() {
-        gp = GarminPlugin(aapsLogger, rh, preferences, sp, context, loopHub, persistenceLayer)
+        gp = GarminPlugin(aapsLogger, rh, preferences, sp, context, loopHub, persistenceLayer, config, notificationManager)
         gp.clock = clock
         whenever(loopHub.currentProfileName).thenReturn("Default")
         whenever(preferences.get(GarminIntKey.LocalHttpPort)).thenReturn(28890)
@@ -95,6 +100,7 @@ class GarminPluginTest : TestBaseWithProfile() {
         )
         verify(loopHub, atMost(1)).postTherapyMode(any(), any())
         verify(loopHub, atMost(1)).postCarbs(any())
+        verify(loopHub, atMost(3)).postBolus(any(), any())
         verifyNoMoreInteractions(loopHub)
     }
 
@@ -561,7 +567,7 @@ class GarminPluginTest : TestBaseWithProfile() {
         whenever(loopHub.lowGlucoseMark).thenReturn(70.0)
         whenever(loopHub.highGlucoseMark).thenReturn(180.0)
         whenever(loopHub.temporaryBasalHistory(any())).thenReturn(emptyList())
-        whenever(loopHub.smbHistoryTimestamps(any())).thenReturn(emptyList())
+        whenever(loopHub.smbHistory(any())).thenReturn(emptyList())
         whenever(loopHub.getGlucoseValues(any(), eq(false))).thenReturn(
             listOf(
                 createGlucoseValue(
@@ -580,7 +586,7 @@ class GarminPluginTest : TestBaseWithProfile() {
         verify(loopHub, atLeastOnce()).activeTherapyMode
         verify(loopHub, atLeastOnce()).temporaryBasalRemainingMinutes
         verify(loopHub, atLeastOnce()).temporaryBasalHistory(any())
-        verify(loopHub, atLeastOnce()).smbHistoryTimestamps(any())
+        verify(loopHub, atLeastOnce()).smbHistory(any())
     }
 
     @Test
@@ -593,7 +599,7 @@ class GarminPluginTest : TestBaseWithProfile() {
         whenever(loopHub.lowGlucoseMark).thenReturn(70.0)
         whenever(loopHub.highGlucoseMark).thenReturn(180.0)
         whenever(loopHub.temporaryBasalHistory(any())).thenReturn(emptyList())
-        whenever(loopHub.smbHistoryTimestamps(any())).thenReturn(emptyList())
+        whenever(loopHub.smbHistory(any())).thenReturn(emptyList())
         whenever(loopHub.getGlucoseValues(any(), eq(false))).thenAnswer { i ->
             val from = i.getArgument<Instant>(0)
             fromClosedRange(from.toEpochMilli(), clock.instant().toEpochMilli(), 300_000L)
@@ -650,7 +656,9 @@ class GarminPluginTest : TestBaseWithProfile() {
         whenever(loopHub.temporaryBasalHistory(any())).thenReturn(
             listOf(BasalHistoryStep(t = 1000L, p = 100), BasalHistoryStep(t = 2000L, p = 130))
         )
-        whenever(loopHub.smbHistoryTimestamps(any())).thenReturn(listOf(1500L, 2500L))
+        whenever(loopHub.smbHistory(any())).thenReturn(
+            listOf(SmbHistoryStep(t = 1500L, u = 0.35), SmbHistoryStep(t = 2500L, u = 0.20))
+        )
         whenever(loopHub.getGlucoseValues(any(), eq(false))).thenReturn(
             listOf(createGlucoseValue(clock.instant(), 110.0))
         )
@@ -660,7 +668,7 @@ class GarminPluginTest : TestBaseWithProfile() {
                 json.contains("\"mode\":\"FCL\"") &&
                 json.contains("\"tbrMins\":27") &&
                 json.contains("\"basalHistory\":[{\"t\":1000,\"p\":100},{\"t\":2000,\"p\":130}]") &&
-                json.contains("\"smbHistory\":[1500,2500]"),
+                json.contains("\"smbHistory\":[{\"t\":1500,\"u\":0.35},{\"t\":2500,\"u\":0.2}]"),
             "missing target/mode/tbrMins/basalHistory/smbHistory in: $json"
         )
         verify(loopHub).getGlucoseValues(any(), eq(false))
@@ -670,7 +678,104 @@ class GarminPluginTest : TestBaseWithProfile() {
         verify(loopHub, atLeastOnce()).activeTherapyMode
         verify(loopHub, atLeastOnce()).temporaryBasalRemainingMinutes
         verify(loopHub, atLeastOnce()).temporaryBasalHistory(any())
-        verify(loopHub, atLeastOnce()).smbHistoryTimestamps(any())
+        verify(loopHub, atLeastOnce()).smbHistory(any())
     }
 
+    private fun stubBolusStrings() {
+        whenever(rh.gs(CoreUiR.string.format_insulin_units)).thenReturn("%1\$s U")
+        whenever(rh.gs(R.string.garmin_bolus_not_on_client)).thenReturn("client %1\$s")
+        whenever(rh.gs(R.string.garmin_bolus_needs_key)).thenReturn("key %1\$s")
+        whenever(rh.gs(R.string.garmin_bolus_too_soon)).thenReturn("soon %1\$s")
+        whenever(rh.gs(R.string.garmin_bolus_refused_by_limits)).thenReturn("limits %1\$s")
+        whenever(rh.gs(R.string.garmin_bolus_limited)).thenReturn("limited %1\$s %2\$s")
+        whenever(rh.gs(R.string.garmin_bolus_not_delivered)).thenReturn("failed %1\$s %2\$s")
+    }
+
+    private fun verifyBolusNotification(text: String) {
+        verify(notificationManager).post(
+            eq(NotificationId.GARMIN_BOLUS), eq(text), eq(NotificationLevel.IMPORTANT), eq(0),
+            anyOrNull<Int>(), any<List<NotificationAction>>(), anyOrNull<() -> Boolean>()
+        )
+    }
+
+    @Test
+    fun onPostBolus_refusedOnClient() {
+        stubBolusStrings()
+        whenever(config.AAPSCLIENT).thenReturn(true)
+        whenever(preferences.get(GarminStringKey.RequestKey)).thenReturn("foo")
+        assertEquals(GarminPlugin.BOLUS_REFUSED_JSON, gp.onPostBolus(createUri(mapOf("bolus" to 1.5))))
+        verifyBolusNotification("client 1.5 U")
+    }
+
+    @Test
+    fun onPostBolus_refusedWithoutKey() {
+        stubBolusStrings()
+        whenever(preferences.get(GarminStringKey.RequestKey)).thenReturn("")
+        assertEquals(GarminPlugin.BOLUS_REFUSED_JSON, gp.onPostBolus(createUri(mapOf("bolus" to 1.5))))
+        verifyBolusNotification("key 1.5 U")
+    }
+
+    @Test
+    fun onPostBolus_invalidAmountRefused() {
+        whenever(preferences.get(GarminStringKey.RequestKey)).thenReturn("foo")
+        assertEquals(GarminPlugin.BOLUS_REFUSED_JSON, gp.onPostBolus(createUri(mapOf("bolus" to 0))))
+        assertEquals(GarminPlugin.BOLUS_REFUSED_JSON, gp.onPostBolus(createUri(mapOf("bolus" to "NaN"))))
+        assertEquals(GarminPlugin.BOLUS_REFUSED_JSON, gp.onPostBolus(createUri(emptyMap())))
+        verifyNoMoreInteractions(notificationManager)
+    }
+
+    @Test
+    fun onPostBolus_givenThenRepeatBlockedForOneMinute() {
+        stubBolusStrings()
+        whenever(preferences.get(GarminStringKey.RequestKey)).thenReturn("foo")
+        whenever(loopHub.postBolus(eq(1.5), any())).thenReturn(1.5)
+        val uri = createUri(mapOf("bolus" to 1.5))
+
+        assertEquals("{\"ok\":true,\"bolus\":1.5}", gp.onPostBolus(uri))
+        // Same request again a moment later: refused.
+        gp.clock = Clock.offset(clock, Duration.ofSeconds(30))
+        assertEquals(GarminPlugin.BOLUS_REFUSED_JSON, gp.onPostBolus(uri))
+        verifyBolusNotification("soon 1.5 U")
+        // After one minute a new bolus is allowed again.
+        gp.clock = Clock.offset(clock, Duration.ofMillis(GarminPlugin.BOLUS_REPEAT_BLOCK_MS + 1_000))
+        assertEquals("{\"ok\":true,\"bolus\":1.5}", gp.onPostBolus(uri))
+        verify(loopHub, times(2)).postBolus(eq(1.5), any())
+    }
+
+    @Test
+    fun onPostBolus_limitedByMaxBolusIsNotified() {
+        stubBolusStrings()
+        whenever(preferences.get(GarminStringKey.RequestKey)).thenReturn("foo")
+        whenever(loopHub.postBolus(eq(12.0), any())).thenReturn(10.0)
+        assertEquals("{\"ok\":true,\"bolus\":10.0}", gp.onPostBolus(createUri(mapOf("bolus" to 12.0))))
+        verify(loopHub).postBolus(eq(12.0), any())
+        verifyBolusNotification("limited 12.0 U 10.0 U")
+    }
+
+    @Test
+    fun onPostBolus_refusedByLimitsDoesNotStartTheRepeatBlock() {
+        stubBolusStrings()
+        whenever(preferences.get(GarminStringKey.RequestKey)).thenReturn("foo")
+        whenever(loopHub.postBolus(eq(2.0), any())).thenReturn(0.0)
+        val uri = createUri(mapOf("bolus" to 2.0))
+        assertEquals(GarminPlugin.BOLUS_REFUSED_JSON, gp.onPostBolus(uri))
+        verifyBolusNotification("limits 2.0 U")
+        // Nothing was given, so a new try is not blocked as a repeat.
+        whenever(loopHub.postBolus(eq(2.0), any())).thenReturn(2.0)
+        assertEquals("{\"ok\":true,\"bolus\":2.0}", gp.onPostBolus(uri))
+        verify(loopHub, times(2)).postBolus(eq(2.0), any())
+    }
+
+    @Test
+    fun onPostBolus_queueFailureIsNotified() {
+        stubBolusStrings()
+        whenever(preferences.get(GarminStringKey.RequestKey)).thenReturn("foo")
+        whenever(loopHub.postBolus(eq(1.0), any())).thenAnswer { i ->
+            i.getArgument<(String) -> Unit>(1).invoke("Loop is suspended")
+            1.0
+        }
+        gp.onPostBolus(createUri(mapOf("bolus" to 1.0)))
+        verify(loopHub).postBolus(eq(1.0), any())
+        verifyBolusNotification("failed 1.0 U Loop is suspended")
+    }
 }

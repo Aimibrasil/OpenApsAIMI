@@ -8,6 +8,9 @@ import java.time.Instant
 /** One plateau of temporary basal for Millimétré staircase (`t` = start ms, `p` = percent). */
 data class BasalHistoryStep(val t: Long, val p: Int)
 
+/** One SMB for watch logs (`t` = epoch ms, `u` = insulin units). */
+data class SmbHistoryStep(val t: Long, val u: Double)
+
 /** Abstraction from all the functionality we need from the AAPS app. */
 interface LoopHub {
 
@@ -65,10 +68,10 @@ interface LoopHub {
     fun temporaryBasalHistory(windowMs: Long = 3L * 60L * 60L * 1000L): List<BasalHistoryStep>
 
     /**
-     * SMB bolus timestamps (epoch ms) in the last [windowMs] for Millimétré (`smbHistory`).
+     * SMB boluses in the last [windowMs] for watch faces (`smbHistory`: `{t,u}`).
      * ⚠️ ASYNC IMPACT: runBlocking + bolus DB query.
      */
-    fun smbHistoryTimestamps(windowMs: Long = 3L * 60L * 60L * 1000L): List<Long>
+    fun smbHistory(windowMs: Long = 3L * 60L * 60L * 1000L): List<SmbHistoryStep>
 
     /** Returns the lower bound of the target glucose range. */
     val lowGlucoseMark: Double
@@ -90,8 +93,16 @@ interface LoopHub {
     fun postCarbs(carbohydrates: Int)
 
     // mod Bolus and temp target
-    /** Triggers a bolus. */
-    fun postBolus(bolus: Double)
+    /**
+     * Gives a bolus asked for by the watch, limited by the bolus constraints (max bolus) like any
+     * other bolus. Returns the amount sent to the pump after that limit, 0.0 when nothing is given.
+     * The caller must refuse the request on a client and when no request key is set.
+     *
+     * The pump command is sent later, so a returned amount means "sent on", not "delivered".
+     * [onNotDelivered] gets the reason when the command queue refuses or fails it after that, so the
+     * caller can tell the user.
+     */
+    fun postBolus(bolus: Double, onNotDelivered: (String) -> Unit): Double
 
     /** Stores or cancels a temptarget. */
     fun postTempTarget(target: Double, duration: Int)
