@@ -20,7 +20,7 @@ import dev.zacsweers.metro.SingleIn
  */
 @SingleIn(AppScope::class)
 @Inject
-class ElementAvailability(
+class   ElementAvailability(
     private val xDripSource: XDripSource,
     private val dexcomBoyda: DexcomBoyda,
     private val eversenseCalibrationSource: EversenseCalibrationSource,

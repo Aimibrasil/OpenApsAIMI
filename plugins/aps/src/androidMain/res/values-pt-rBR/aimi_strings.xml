@@ -1,0 +1,2250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AIMI English strings from freeze aimi-baseline-2026-08-26. -->
+    <string name="key_openapsaimi_settings">key_openapsaimi_settings</string>
+
+    <string name="key_openapsaimi_max_smb">key_openapsaimi_max_smb</string>
+
+
+    <string name="key_aimiweight">key_aimiweight</string>
+
+    <string name="key_openapsaimi_fixed_tbr_rise">key_openapsaimi_fixed_tbr_rise</string>
+
+
+    <string name="openapsaimi">"AIMI 3.3"</string>
+
+    <string name="openapsaimi_maxsmb_summary">Valor máximo de SMB quando a glicemia está abaixo de 120</string>
+
+    <string name="description_openapsaimi">Loop AIMI: PK/PD adaptativo, Autodrive V3, assistente fisiológico (Health Connect + catálogo de 28 padrões), Recursive Belief Tree opcional (RBT/HTR) e alarmes unificados de risco de hipo. Fontes CGM nativas Eversense E3/365 e padrão suportadas.</string>
+
+    <string name="oaps_aimi_mealAdjFact_summary">Fator de ajuste DynISF para o Modo Refeição</string>
+
+    <string name="oaps_aimi_mealAdjFact_title">Fator DynISF do Modo Refeição</string>
+
+    <string name="oaps_aimi_enableDeleteLine_title">Permitir a possibilidade de excluir um dia no Treinamento de ML</string>
+
+    <string name="pref_aimi_steps_source_title">Fonte de Dados de Passos e Frequência Cardíaca</string>
+
+    <string name="pref_aimi_steps_source_wear">Preferir Wear OS (Direto)</string>
+
+    <string name="pref_aimi_steps_source_auto">Auto (Wear OS → Health Connect)</string>
+
+    <string name="pref_aimi_steps_source_hc">Apenas Health Connect</string>
+
+    <string name="pref_aimi_steps_source_disabled">Desativado</string>
+
+    <string name="oaps_aimi_weight_summary">Peso em kg para calcular a basal</string>
+
+
+    <string name="oaps_aimi_tdd7_summary">Média de TDD dos últimos 7 dias</string>
+
+
+
+    <string name="aimi_pkpd_compose_title">Configuração de PK/PD</string>
+
+    <string name="aimi_pkpd_compose_summary">Predefinições guiadas, ajuste de conforto e parâmetros avançados em uma tela</string>
+
+    <string name="aimi_pkpd_compose_summary_v2">Escolha seu perfil de insulina e deixe o AIMI aprender. A maioria dos usuários só precisa da aba Simples.</string>
+
+    <string name="aimi_pkpd_level_simple">Simples</string>
+
+    <string name="aimi_pkpd_level_advanced">Avançado</string>
+
+    <string name="aimi_pkpd_level_expert">Especialista</string>
+
+    <string name="aimi_pkpd_enabled_simple_summary">Aprende a velocidade de ação da sua insulina e melhora o tempo dos SMBs. Deixe ativado, a menos que o suporte indique o contrário.</string>
+
+    <string name="aimi_pkpd_prudence_corrections_title">Agressividade de correção</string>
+
+    <string name="aimi_pkpd_prudence_corrections_summary">À esquerda reduz a força da correção; à direita aumenta (margem de fusão do ISF).</string>
+
+    <string name="aimi_pkpd_prudence_left">Mais cauteloso</string>
+
+    <string name="aimi_pkpd_prudence_right">Mais agressivo</string>
+
+    <string name="aimi_pkpd_tail_prudence_title">Liberação tardia de insulina</string>
+
+    <string name="aimi_pkpd_tail_prudence_summary">Mesma polaridade das correções: à esquerda reduz SMB tardio; à direita permite mais SMB tardio.</string>
+
+    <string name="aimi_pkpd_tail_left">Mais cauteloso</string>
+
+    <string name="aimi_pkpd_tail_right">Permitir mais</string>
+
+    <string name="aimi_pkpd_open_advanced">Abrir ajuste avançado…</string>
+
+    <string name="aimi_pkpd_status_card_title">Modelo de insulina usado pelo loop</string>
+
+    <string name="aimi_pkpd_status_learned_format">Estimativa AIMI: DIA %1$.1f h · pico %2$.0f min</string>
+
+    <string name="aimi_pkpd_status_profile_format">Perfil AAPS: DIA %1$.1f h · pico %2$.0f min</string>
+
+    <string name="aimi_pkpd_status_used_format" comment="%1$.2f=DIA in hours, %2$.0f=insulin peak in minutes. These are the values that dosed on the last loop run. Example: Used on the last loop: DIA 5.20 h · peak 68 min">Usado no último loop: DIA %1$.2f h · pico %2$.0f min</string>
+
+    <string name="aimi_pkpd_status_no_loop_yet">Nenhum loop executado desde que o app iniciou.</string>
+
+    <string name="aimi_pkpd_status_no_recent_loop">Nenhum loop executado nos últimos 15 min.</string>
+
+    <string name="aimi_pkpd_status_learning_24h_format" comment="%1$d=number of accepted learning steps, %2$d=percent of loop runs where learning was blocked. The count is kept in memory, so it starts again when the app starts. Example: Last 24 h or since the app started: accepted learning steps: 12, loop runs blocked: 40%">Últimas 24 h ou desde que o app iniciou: passos de aprendizado aceitos: %1$d, execuções de loop bloqueadas: %2$d%%</string>
+
+    <string name="aimi_pkpd_status_no_learning_24h">O aprendiz não rodou nas últimas 24 h ou desde que o app iniciou.</string>
+
+    <string name="aimi_pkpd_status_top_reason_format" comment="%1$s=the most frequent reason why learning was blocked, one of the aimi_pkpd_block_reason_* strings">Motivo principal: %1$s</string>
+
+    <string name="aimi_pkpd_block_reason_causal_unclean">o contexto glicêmico não estava limpo (refeição, atividade ou ruído)</string>
+
+    <string name="aimi_pkpd_block_reason_causal_modulator">a causa estimada da variação glicêmica não permitiu o aprendizado</string>
+
+    <string name="aimi_pkpd_block_reason_curve">refeição recente ou elevação glicêmica (restrição de curva)</string>
+
+    <string name="aimi_pkpd_block_reason_iob_too_low">pouca insulina ativa (IOB) para aprender</string>
+
+    <string name="aimi_pkpd_block_reason_carbs_active">carboidratos ainda estavam sendo absorvidos</string>
+
+    <string name="aimi_pkpd_block_reason_exercise">exercício recente</string>
+
+    <string name="aimi_pkpd_block_reason_fast_change">a glicemia estava subindo ou caindo rápido demais</string>
+
+    <string name="aimi_pkpd_block_reason_low_glucose">a glicemia estava baixa ou perto de baixa</string>
+
+    <string name="aimi_pkpd_block_reason_window">a janela de tempo de aprendizado estava fora do intervalo</string>
+
+    <string name="aimi_pkpd_status_learning_on">Aprendizado ativo quando o IOB e as condições permitirem.</string>
+
+    <string name="aimi_pkpd_status_learning_off">PKPD desativado — usando apenas a curva de insulina do perfil.</string>
+
+    <string name="aimi_pkpd_status_faster_insulin">O AIMI identifica insulina mais rápida que o seu perfil — esperado para Fiasp/Lyumjev.</string>
+
+    <string name="aimi_pkpd_tap_for_technical">Toque para detalhes técnicos do pico</string>
+
+    <string name="aimi_pkpd_advisor_apply">Aplicar sugestão</string>
+
+    <string name="aimi_pkpd_advisor_applied">Sugestão aplicada</string>
+
+    <string name="aimi_pkpd_advanced_intro">Escolha a velocidade de aprendizado do AIMI. O DIA e o pico partem da insulina do seu perfil e permanecem próximos a ela.</string>
+
+    <string name="aimi_pkpd_learning_pace_title">Velocidade de aprendizado</string>
+
+    <string name="aimi_pkpd_pace_slow">Lenta</string>
+
+    <string name="aimi_pkpd_pace_normal">Normal</string>
+
+    <string name="aimi_pkpd_pace_fast">Rápida</string>
+
+    <string name="aimi_pkpd_pace_faster">Mais rápida</string>
+
+    <string name="aimi_pkpd_reset_to_profile_action">Redefinir valores aprendidos para o perfil</string>
+
+    <string name="aimi_pkpd_reset_confirm_title">Redefinir DIA e pico aprendidos?</string>
+
+    <string name="aimi_pkpd_reset_confirm_body">O DIA e o pico aprendidos recomeçam a partir da insulina do seu perfil. Isso acontece no próximo loop. O AIMI também faz isso sozinho quando você altera a insulina no seu perfil.</string>
+
+    <string name="aimi_pkpd_reset_confirm_ok">Redefinir</string>
+
+    <string name="aimi_pkpd_expert_peak_governor">Governador de pico (TAP-G)</string>
+    <string name="aimi_pkpd_expert_dia_governor">Governador de DIA (TAP-D)</string>
+
+    <string name="aimi_pkpd_expert_isf_fusion">Fusão de ISF (bruto)</string>
+
+    <string name="aimi_pkpd_expert_smb_tail">Cauda de SMB (bruto)</string>
+
+    <string name="aimi_pkpd_wizard_step_profile_title">Passo 1 — A insulina do seu perfil</string>
+
+    <string name="aimi_pkpd_wizard_step_profile_body">A insulina do seu perfil AAPS tem um DIA de cerca de %1$.1f h. O AIMI parte da insulina do seu perfil e aprende a partir dela. Ela permanece próxima a isso: DIA de 0,75 a 1,25 vezes, pico de 0,75 a 1,35 vezes (nunca abaixo de 35 min). Quando você altera a insulina no seu perfil, o aprendizado recomeça.</string>
+
+    <string name="aimi_pkpd_wizard_step_patience_title">Passo 2 — Deixe aprender</string>
+
+    <string name="aimi_pkpd_wizard_step_patience_body">Mantenha o PKPD ativado e evite alterar os controles deslizantes por vários dias. Verifique o cartão de status: o DIA e o pico aprendidos devem se mover gradualmente em direção à sua insulina real.</string>
+
+    <string name="aimi_pkpd_wizard_next">Próximo</string>
+
+    <string name="aimi_pkpd_wizard_done">Concluir</string>
+
+    <string name="aimi_pkpd_wizard_skip">Pular</string>
+
+    <string name="aimi_pkpd_rerun_wizard">Executar guia de configuração novamente</string>
+
+    <string name="aimi_pkpd_loop_summary_title">Usado atualmente pelo loop</string>
+
+    <string name="aimi_pkpd_loop_summary_format">DIA aprendido %1$.1f h · pico %2$.0f min</string>
+
+    <string name="aimi_pkpd_tap_g_detail">Ramo TAP-G: %1$s\nPico efetivo %2$.1f min (prior de insulina %3$.1f)\nDeslocamento fisio %4$.1f min, deslocamento do local %5$.1f min, trajetória %6$.1f min</string>
+
+    <string name="aimi_peak_gov_advice_prior">Consultor: o pico do perfil de insulina está guiando o pico efetivo neste ciclo.</string>
+
+    <string name="aimi_peak_gov_advice_physio">Consultor: o deslocamento de restrição fisio / trajetória (passos, FC, núcleo de estresse) é o principal ajuste de pico.</string>
+
+    <string name="aimi_peak_gov_advice_learned">Consultor: o aprendizado adaptativo PKPD está puxando o pico governado para dentro dos seus limites.</string>
+
+    <string name="aimi_peak_gov_advice_trajectory">Consultor: a geometria da trajetória no espaço de fases adicionou um pequeno ajuste limitado ao tempo de pico.</string>
+
+    <string name="aimi_peak_gov_advice_generic">Consultor: ramo dominante %1$s — veja o detalhamento numérico acima.</string>
+
+    <string name="aimi_pkpd_sync_state_action">Alinhar estado do loop ao inicial e limites</string>
+
+    <string name="aimi_pkpd_sync_done">O DIA e o pico aprendidos recomeçarão a partir da insulina do seu perfil no próximo loop.</string>
+
+    <string name="aimi_dyn_isf_trajectory_section_title">Trajetória DynISF (geometria do CGM)</string>
+
+    <string name="aimi_pkpd_section_comfort">Conforto e modelagem de SMB</string>
+
+    <string name="aimi_pkpd_section_learning">Aprendizado (inicial e limites)</string>
+
+    <string name="aimi_pkpd_section_expert">Limites avançados e proteções</string>
+
+    <string name="oaps_aimi_pkpd_enabled_title">Ativar PK/PD adaptativo</string>
+
+    <string name="oaps_aimi_pkpd_enabled_summary">Aprende o DIA e o tempo de pico continuamente para refinar a dosagem do AIMI.</string>
+
+    <string name="oaps_aimi_pkpd_max_dia_delta_title">Variação máxima de DIA por dia (h)</string>
+
+    <string name="oaps_aimi_pkpd_max_dia_delta_summary">Limita a rapidez com que o DIA aprendido pode mudar a cada dia.</string>
+
+    <string name="oaps_aimi_pkpd_max_peak_delta_title">Variação máxima de pico por dia (min)</string>
+
+    <string name="oaps_aimi_pkpd_max_peak_delta_summary">Limita a rapidez com que o tempo de pico aprendido pode mudar a cada dia.</string>
+
+    <string name="oaps_aimi_isf_fusion_min_title">Fator mínimo de fusão de ISF</string>
+
+    <string name="oaps_aimi_isf_fusion_min_summary">Limite inferior aplicado ao ISF fundido em relação à âncora de TDD.</string>
+
+    <string name="oaps_aimi_isf_fusion_max_title">Fator máximo de fusão de ISF</string>
+
+    <string name="oaps_aimi_isf_fusion_max_summary">Limite superior aplicado ao ISF fundido em relação à âncora de TDD.</string>
+
+    <string name="oaps_aimi_isf_fusion_slope_title">Variação máxima de ISF por ciclo</string>
+
+    <string name="oaps_aimi_isf_fusion_slope_summary">Variação relativa máxima permitida a cada 5 minutos para o ISF fundido.</string>
+
+    <string name="oaps_aimi_smb_tail_threshold_title">Limiar de fração da cauda</string>
+
+    <string name="oaps_aimi_smb_tail_threshold_summary">Fração do IOB restante que aciona o amortecimento de SMB.</string>
+
+    <string name="oaps_aimi_smb_tail_damping_title">Fator de amortecimento da cauda</string>
+
+    <string name="oaps_aimi_smb_tail_damping_summary">Multiplicador aplicado ao SMB quando o IOB de cauda está alto.</string>
+
+    <string name="oaps_aimi_pkpd_relief_enabled_title">Ativar alívio pragmático de PKPD</string>
+
+    <string name="oaps_aimi_pkpd_relief_enabled_summary">ATIVADO por padrão. Mantenha ATIVADO se a intenção de SMB for frequentemente reduzida em excesso em contextos explícitos de refeição/alta elevação. Desative apenas se observar correções excessivas recorrentes apesar dos limites rígidos.</string>
+
+    <string name="oaps_aimi_pkpd_relief_factor_title">Fator mínimo de alívio de PKPD</string>
+
+    <string name="oaps_aimi_pkpd_relief_factor_summary">Intervalo de 0,50–1,00 (padrão 0,75). Aumente (0,80–0,90) se o SMB ainda estiver muito amortecido em contextos explícitos de refeição/alta elevação. Diminua (0,65–0,70) se as quedas pós-refeição forem rápidas demais.</string>
+
+    <string name="oaps_aimi_redcarpet_restore_title">Limiar de restauração Red Carpet</string>
+
+    <string name="oaps_aimi_redcarpet_restore_summary">Intervalo de 0,50–0,95 (padrão 0,75). Aumente para restaurar o SMB mais cedo (mais correção). Diminua para permanecer mais conservador. Passo de ajuste sugerido: +/-0,05 e observe por 24–48 h.</string>
+
+    <string name="oaps_aimi_priority_max_iob_factor_title">Fator MaxIOB prioritário</string>
+
+    <string name="oaps_aimi_priority_max_iob_factor_summary">Intervalo de 1,00–1,60 (padrão 1,20). Aumente se o SMB final for repetidamente cortado pelo MaxIOB em contextos explícitos de alta elevação/refeição. Diminua se notar risco de acúmulo de insulina ou hipoglicemia tardia.</string>
+
+    <string name="oaps_aimi_priority_max_iob_extra_title">Extra de MaxIOB prioritário (U)</string>
+
+    <string name="oaps_aimi_priority_max_iob_extra_summary">Intervalo de 0,0–5,0 U (padrão 2,0 U). Aumente quando a correção continuar insuficiente após elevar o fator; diminua se surgirem baixas na janela de 1–3 h após a correção.</string>
+
+    <string name="aimi_adv_rec_htr_enable_title">Ativar liberação de SMB por trajetória de hiper (HTR)</string>
+
+    <string name="aimi_adv_rec_htr_enable_desc">Hiperglicemia sustentada com Autodrive V3 ativo, mas entrega de SMB fraca. O HTR eleva o microbolus do V3 quando a projeção de cenário confirma uma alta (não uma regra fixa de 200 mg/dL).</string>
+
+    <string name="aimi_adv_rec_rbt_shadow_title">Ativar Recursive Belief Tree (sombra)</string>
+
+    <string name="aimi_adv_rec_rbt_shadow_desc">O Autodrive V3 está ativo. Ligue o modo sombra do RBT para exportar o desdobramento de crenças em múltiplas escalas no AIMI_Decisions.jsonl antes de ativar a autoridade de liberação.</string>
+
+    <string name="aimi_adv_rec_rbt_authority_title">Ativar autoridade da Recursive Belief Tree</string>
+
+    <string name="aimi_adv_rec_rbt_authority_desc">A sombra do RBT está ligada e o desdobramento JSONL parece estável. Ative a autoridade para que tensões entre escalas conduzam a liberação de SMB (substitui o HTR paralelo quando a autoridade de liberação está ativa). Revise a seção de desdobramento abaixo primeiro.</string>
+
+    <string name="aimi_rbt_unfold_section_title">DESDOBRAMENTO RECURSIVO DE CRENÇAS</string>
+
+    <string name="aimi_rbt_unfold_section_desc">Última exportação de crenças em múltiplas escalas do AIMI_Decisions.jsonl (seções recursive_belief e physiological_patterns). Ative a sombra do RBT primeiro, revise vários ciclos do loop e então ative a autoridade se o desdobramento parecer coerente.</string>
+
+    <string name="aimi_rbt_unfold_mode">Modo: sombra=%1$s autoridade=%2$s wavelet=%3$s</string>
+
+    <string name="aimi_rbt_unfold_no_data">Ainda não há exportação de recursive_belief. Execute o loop com a sombra do RBT ativada por pelo menos um ciclo.</string>
+
+    <string name="aimi_rbt_unfold_summary">Último ciclo: aut=%1$s smb=%2$.2fU paradoxos=%3$d sombra=%4$s</string>
+
+    <string name="aimi_rbt_unfold_view_btn">Ver último desdobramento</string>
+
+    <string name="aimi_rbt_unfold_dialog_title">Desdobramento recursivo de crenças</string>
+
+    <string name="aimi_t3c_history_section_title">T3C NO RBT - ÚLTIMAS 24H</string>
+
+    <string name="aimi_t3c_history_section_desc">Observação histórica nativa de execução do T3C a partir do AIMI_Decisions.jsonl. Resumo somente leitura, sem alteração em tempo de execução.</string>
+
+    <string name="aimi_t3c_history_unavailable">Nenhum histórico de execução do T3C nas últimas 24 h está disponível no momento.</string>
+
+    <string name="aimi_t3c_history_not_enough_data">Ainda não há dados suficientes. %1$d ciclo(s) com exportação do T3C foram encontrados nas últimas 24 h.</string>
+
+    <string name="aimi_history_period">Período: últimas 24 h</string>
+
+    <string name="aimi_history_ticks">%1$d ciclos analisados</string>
+
+    <string name="aimi_history_dominant">Status dominante: %1$s</string>
+
+    <string name="aimi_t3c_history_native_applied">Nativo aplicado: %1$d (%2$d%%)</string>
+
+    <string name="aimi_t3c_history_native_blocked">Nativo bloqueado: %1$d (%2$d%%)</string>
+
+    <string name="aimi_t3c_history_legacy_fallback">Alternativa legada: %1$d (%2$d%%)</string>
+
+    <string name="aimi_t3c_history_safety_terminal">Terminal de segurança: %1$d (%2$d%%)</string>
+
+    <string name="aimi_history_blocker">Bloqueador principal: %1$s</string>
+
+    <string name="aimi_history_demand">Demanda basal média/faixa: %1$s</string>
+
+    <string name="aimi_history_applied_rate">Taxa aplicada média/faixa: %1$s</string>
+
+    <string name="aimi_t3c_history_transitions">Transições de posse: %1$d</string>
+
+    <string name="aimi_t3c_history_transition_detail">Transição mais comum: %1$s</string>
+
+    <string name="aimi_t3c_history_transition_arrow" comment="%1$s=ownership the tick came from, %2$s=ownership it moved to. Example: Native RBT → Legacy bypass">%1$s → %2$s</string>
+
+    <string name="aimi_history_blocker_unknown" comment="Used in place of a blocker name when the export does not carry one.">bloqueador de execução desconhecido</string>
+
+    <string name="aimi_history_stats_range" comment="%1$s=average with its unit, %2$s=smallest value, %3$s=largest value. Example: 1.20 U/h (0.40 – 2.10)">%1$s (%2$s – %3$s)</string>
+
+    <string name="aimi_t3c_history_observation_applied">O caminho nativo do T3C foi aplicado em %1$d%% dos ciclos observados.</string>
+
+    <string name="aimi_t3c_history_observation_blocked">O caminho nativo do T3C foi bloqueado principalmente por %1$s.</string>
+
+    <string name="aimi_t3c_history_observation_legacy">A alternativa legada ainda apareceu em %1$d%% dos ciclos observados.</string>
+
+    <string name="aimi_t3c_history_observation_safety">Os terminais de segurança dominaram a janela observada.</string>
+
+    <string name="aimi_t3c_history_observation_mixed">A posse de execução do T3C permaneceu mista na janela observada.</string>
+
+    <string name="aimi_harmonia_history_section_title">HARMONIA NO RBT - ÚLTIMAS 24H</string>
+
+    <string name="aimi_harmonia_history_section_desc">Arbitragem histórica basal-primeiro do Harmonia a partir do AIMI_Decisions.jsonl. Resumo somente leitura, sem alteração em tempo de execução.</string>
+
+    <string name="aimi_harmonia_history_unavailable">Nenhum histórico de execução do Harmonia nas últimas 24 h está disponível no momento.</string>
+
+    <string name="aimi_harmonia_history_not_enough_data">Ainda não há dados suficientes. %1$d ciclo(s) com exportação do Harmonia foram encontrados nas últimas 24 h.</string>
+
+    <string name="aimi_harmonia_history_native_applied">Nativo aplicado: %1$d (%2$d%%)</string>
+
+    <string name="aimi_harmonia_history_native_ready">Nativo pronto: %1$d (%2$d%%)</string>
+
+    <string name="aimi_harmonia_history_native_blocked">Nativo bloqueado: %1$d (%2$d%%)</string>
+
+    <string name="aimi_harmonia_history_t3c_priority">Prioridade T3C: %1$d (%2$d%%)</string>
+
+    <string name="aimi_harmonia_history_smb_applied">Modulação de SMB do RBT aplicada: %1$d (%2$d%%)</string>
+
+    <string name="aimi_harmonia_history_smb_ready">Modulação de SMB do RBT pronta: %1$d (%2$d%%)</string>
+
+    <string name="aimi_harmonia_history_smb_blocked">Modulação de SMB do RBT bloqueada: %1$d (%2$d%%)</string>
+
+    <string name="aimi_harmonia_history_smb_demand">Demanda de SMB do RBT: %1$s</string>
+
+    <string name="aimi_harmonia_history_observation_applied">O Harmonia assumiu o caminho basal-primeiro em %1$d%% dos ciclos observados.</string>
+
+    <string name="aimi_harmonia_history_observation_ready">O Harmonia estava pronto, mas não dominante o suficiente para ser aplicado na janela observada.</string>
+
+    <string name="aimi_harmonia_history_observation_blocked">O Harmonia foi bloqueado principalmente por %1$s.</string>
+
+    <string name="aimi_harmonia_history_observation_t3c_priority">O T3C manteve prioridade maior que o Harmonia em %1$d%% dos ciclos observados.</string>
+
+    <string name="aimi_harmonia_history_observation_mixed">A arbitragem do Harmonia permaneceu mista na janela observada.</string>
+
+    <string name="aimi_t3c_family_signals_title">Sinais de família</string>
+
+    <string name="aimi_t3c_family_signals_desc">Padrões observados do T3C mapeados para famílias de produtos AIMI.</string>
+
+    <string name="aimi_t3c_family_signals_not_enough">Dados insuficientes para sinais de família.</string>
+
+    <string name="aimi_t3c_family_signal_row">%1$s — %2$s: %3$s</string>
+
+    <string name="aimi_t3c_family_stability">Estabilidade</string>
+
+    <string name="aimi_t3c_family_meal_capture">Captura de refeição</string>
+
+    <string name="aimi_t3c_family_physio_ambiguity">Ambiguidade fisio</string>
+
+    <string name="aimi_t3c_family_post_hypo">Recuperação pós-hipo</string>
+
+    <string name="aimi_t3c_family_activity">Atividade</string>
+
+    <string name="aimi_t3c_family_autonomy">Autonomia</string>
+
+    <string name="aimi_t3c_family_native_rbt">RBT nativo</string>
+
+    <string name="aimi_t3c_level_high">Alto</string>
+
+    <string name="aimi_t3c_level_medium">Médio</string>
+
+    <string name="aimi_t3c_level_low">Baixo</string>
+
+    <string name="aimi_t3c_level_stable">Estável</string>
+
+    <string name="aimi_t3c_signal_safety_gates_block">As proteções de segurança bloqueiam frequentemente o T3C nativo.</string>
+
+    <string name="aimi_t3c_signal_meal_conflicts">Conflitos semelhantes a refeição aparecem nos bloqueadores do T3C.</string>
+
+    <string name="aimi_t3c_signal_post_hypo">A proteção pós-hipo impede frequentemente a autoridade basal-primeiro.</string>
+
+    <string name="aimi_t3c_signal_activity_lockout">O bloqueio por atividade continua visível nos bloqueadores do T3C.</string>
+
+    <string name="aimi_t3c_signal_legacy_fallback">A alternativa legada ainda está visível.</string>
+
+    <string name="aimi_t3c_signal_native_clear">O T3C nativo aplica-se quando a segurança está livre.</string>
+
+    <string name="aimi_t3c_signal_blockers_mixed">Os bloqueadores nativos permanecem mistos na janela observada.</string>
+
+    <string name="aimi_adv_rec_pkpd_relief_enable_title">Ativar alívio pragmático de PKPD</string>
+
+    <string name="aimi_adv_rec_pkpd_relief_enable_desc">Padrão de hiper com baixa pressão de hipo detectado. Ativar o alívio pragmático ajuda a preservar a intenção de SMB em contextos explícitos de refeição/alta elevação.</string>
+
+    <string name="aimi_adv_rec_pkpd_relief_factor_title">Aumentar fator mínimo de alívio de PKPD</string>
+
+    <string name="aimi_adv_rec_pkpd_relief_factor_desc">O fator mínimo atual de PKPD é %1$s. Considere ~0,75 para reduzir o amortecimento excessivo de SMB em contextos prioritários.</string>
+
+    <string name="aimi_adv_rec_redcarpet_restore_title">Aumentar limiar de restauração Red Carpet</string>
+
+    <string name="aimi_adv_rec_redcarpet_restore_desc">O limiar de restauração atual é %1$s. Considere ~0,75 para que contextos explícitos recuperem o SMB proposto antes dos limites rígidos.</string>
+
+    <string name="aimi_adv_rec_priority_maxiob_title">Aumentar margem de MaxIOB prioritário</string>
+
+    <string name="aimi_adv_rec_priority_maxiob_desc">As configurações atuais de MaxIOB prioritário são fator=%1$s e extra=%2$sU. Considere ~1,20 e +2,0U em contextos agressivos explícitos.</string>
+
+    <string name="oaps_aimi_smb_exercise_damping_title">Fator de amortecimento por exercício</string>
+
+    <string name="oaps_aimi_smb_exercise_damping_summary">Multiplicador aplicado ao SMB após exercício recente. Valores abaixo de 0,5 atuam como 0,5, então o SMB nunca é reduzido em mais da metade.</string>
+
+    <string name="oaps_aimi_smb_late_fat_damping_title">Fator de amortecimento para refeição tardia</string>
+
+    <string name="oaps_aimi_smb_late_fat_damping_summary">Multiplicador aplicado ao SMB quando há suspeita de refeição gordurosa tardia. Valores abaixo de 0,5 atuam como 0,5, então o SMB nunca é reduzido em mais da metade.</string>
+
+    <string name="oaps_aimi_trajectory_enabled_title">Ativar Proteção de Trajetória</string>
+
+    <string name="oaps_aimi_trajectory_enabled_summary">Sistema de controle em espaço de fases que analisa a geometria da trajetória glicêmica para evitar correção excessiva ou insuficiente e melhorar a convergência ao alvo.</string>
+
+    <string name="oaps_aimi_cho_summary">Média de carboidratos por refeição. Valor estimado, não exato</string>
+
+
+    <string name="aimi_preferences">Configurações do AIMI</string>
+
+    <string name="aimi_advisor_section_settings">Configurações do AIMI</string>
+
+    <string name="aimi_adv_support_title">Suporte Especializado</string>
+
+    <string name="aimi_adv_support_msg">Digite o código de acesso fornecido por MTR para exportar diagnósticos.</string>
+
+    <string name="aimi_adv_support_verify">Verificar</string>
+
+    <string name="aimi_adv_support_invalid">⚠️ Código Inválido</string>
+
+    <string name="aimi_adv_support_code_hint">Digite o Código de Especialista</string>
+
+    <string name="aimi_adv_issue_title">Descrever Problema</string>
+
+    <string name="aimi_adv_issue_msg">Descreva brevemente o problema para que MTR possa analisar o contexto.</string>
+
+    <string name="aimi_adv_issue_hint">Descreva seu problema (opcional)...</string>
+
+    <string name="aimi_adv_generate_btn">Gerar e Compartilhar</string>
+
+    <string name="aimi_adv_error_gen">Erro ao gerar relatório</string>
+
+    <string name="aimi_diag_subject">Relatório de Diagnóstico AIMI - %1$s</string>
+
+    <string name="aimi_diag_chooser">Enviar Diagnóstico para MTR</string>
+
+    <string name="aimi_diag_generating">Gerando relatório de diagnóstico...</string>
+
+    <string name="aimi_diag_empty">Falha ao criar pacote de suporte (Vazio)</string>
+
+    <string name="oaps_aimi_enableMlTraining_title">Ativar Treinamento de I.A.</string>
+
+
+
+    <string name="oaps_aimi_meal_interval_summary">Intervalo entre SMB para o Modo Refeição Genérica</string>
+
+    <string name="oaps_aimi_meal_interval_title">Intervalo de SMB do Modo Refeição Genérica</string>
+
+    <string name="oaps_aimi_highcarbAdjFact_summary">Fator de ajuste DynISF para o Modo Alto Carboidrato</string>
+
+    <string name="oaps_aimi_highcarbAdjFact_title">Fator DynISF do Modo Alto Carboidrato</string>
+
+
+
+    <string name="oaps_aimi_HC_interval_summary">Intervalo entre SMB para o Modo Alto Carboidrato</string>
+
+    <string name="oaps_aimi_HC_interval_title">Intervalo de SMB do Modo Alto Carboidrato</string>
+
+    <string name="oaps_aimi_snackAdjFact_summary">Fator de ajuste DynISF para o Modo Lanche</string>
+
+    <string name="oaps_aimi_snackAdjFact_title">Fator DynISF do Modo Lanche</string>
+
+
+
+    <string name="oaps_aimi_snack_interval_summary">Intervalo entre SMB para o Modo Lanche</string>
+
+    <string name="oaps_aimi_snack_interval_title">Intervalo de SMB do Modo Lanche</string>
+
+    <string name="oaps_aimi_sleepAdjFact_summary">Fator de ajuste DynISF para o Modo Sono</string>
+
+    <string name="oaps_aimi_sleepAdjFact_title">Fator DynISF do Modo Sono</string>
+
+
+
+    <string name="oaps_aimi_sleep_interval_summary">Intervalo entre SMB para o Modo Sono</string>
+
+    <string name="oaps_aimi_sleep_interval_title">Intervalo de SMB do Modo Sono</string>
+
+
+    <string name="OApsAIMI_PregnancyDueDate_title">Data Prevista do Parto (Terme)</string>
+
+    <string name="OApsAIMI_PregnancyDueDate_summary">Digite a data estimada do parto (AAAA-MM-DD) para ativar o piloto automático gestacional.</string>
+
+    <string name="OApsAIMI_RemoteControlPin_title">PIN de controle remoto</string>
+
+    <string name="OApsAIMI_RemoteControlPin_summary">PIN para recursos de controle remoto do AIMI.</string>
+
+
+
+    <string name="oaps_aimi_HIGHBG_interval_summary">Intervalo de SMB para Glicemia Alta</string>
+
+    <string name="oaps_aimi_HIGHBG_interval_title">Intervalo de SMB para Glicemia Alta</string>
+
+    <string name="openapsaimi_highBG_maxsmb_summary">Valor máximo de SMB quando a glicemia está acima de 120</string>
+
+    <string name="OApsAIMI_Enable_night_title">Modo Noturno (SMB/2)</string>
+
+    <string name="oaps_aimi_learners_title">🎓 Aprendizes</string>
+
+
+    <string name="aimi_sos_enable_title">Ativar SOS de Emergência</string>
+
+    <string name="aimi_sos_enable_summary">Envia automaticamente um SMS com sua localização e glicemia se ocorrer uma hipoglicemia grave.</string>
+
+    <string name="aimi_sos_phone_title">Número de Contato de Emergência</string>
+
+    <string name="aimi_sos_phone_summary">Número de telefone para enviar o SMS (inclua o código do país, ex.: +55...).</string>
+
+    <string name="aimi_sos_threshold_title">Limiar Crítico de Hipo</string>
+
+    <string name="aimi_sos_threshold_summary">Glicemia abaixo da qual o SOS será disparado (mg/dL).</string>
+
+    <string name="aimi_sos_permissions_title">Conceder Permissões de SMS e Localização</string>
+
+    <string name="aimi_sos_permissions_summary">Toque para autorizar o AAPS a enviar SMS de SOS e acessar a localização em emergências. Chamadas telefônicas automáticas não são usadas.</string>
+
+    <string name="aimi_sos_permission_screen_title">Permissões do SOS de emergência</string>
+    <string name="aimi_sos_permission_intro">O SOS de emergência envia um SMS com sua glicemia e localização para seu contato de emergência durante uma baixa grave. Conceda as permissões abaixo para que funcione.</string>
+    <string name="aimi_sos_permission_name_sms">Enviar SMS</string>
+    <string name="aimi_sos_permission_name_fine_location">Localização precisa</string>
+    <string name="aimi_sos_permission_name_coarse_location">Localização aproximada</string>
+    <string name="aimi_sos_permission_name_background_location">Localização em segundo plano</string>
+    <string name="aimi_sos_permission_grant_button">Conceder acesso</string>
+    <string name="aimi_sos_permission_all_granted_button">Todas as permissões concedidas</string>
+    <string name="aimi_sos_permission_open_settings_button">Abrir configurações do app</string>
+    <string name="aimi_sos_permission_foreground_denied_message">Algumas permissões foram negadas</string>
+    <string name="aimi_sos_permission_all_granted_message">Todas as permissões do SOS de emergência concedidas</string>
+    <string name="aimi_sos_permission_background_denied_message">Localização em segundo plano negada. O SOS de emergência pode não funcionar enquanto o app estiver fechado.</string>
+
+    <string name="aimi_physio_hc_permissions_title">Permissões do Health Connect</string>
+
+    <string name="aimi_physio_hc_permissions_summary">Abra a tela para conceder acesso a sono, HRV e frequência cardíaca via Health Connect.</string>
+
+    <string name="aimi_hc_permission_screen_title">Permissões do Health Connect</string>
+    <string name="aimi_hc_permission_intro">O AIMI usa o Health Connect para ler seus dados de sono, frequência cardíaca e passos para o assistente fisiológico. Conceda as permissões abaixo.</string>
+    <string name="aimi_hc_permission_required_header">Obrigatórias</string>
+    <string name="aimi_hc_permission_optional_header">Opcional: temperatura da pele (Garmin / Oura)</string>
+    <string name="aimi_hc_permission_thermal_note">Se a temperatura não estiver listada aqui, seu dispositivo ou versão do Health Connect pode não suportá-la. O AIMI ainda funciona sem ela.</string>
+    <string name="aimi_hc_permission_grant_button_with_count" comment="%1$d = number of required permissions still missing. Example: Grant access (2 required)">Conceder acesso (%1$d obrigatórias)</string>
+    <string name="aimi_hc_permission_optional_only_button">Essenciais concedidas — conceder acesso opcional</string>
+    <string name="aimi_hc_permission_all_granted_button">Todas as permissões concedidas</string>
+    <string name="aimi_hc_permission_open_settings_button">Abrir configurações do Health Connect</string>
+    <string name="aimi_hc_permission_sdk_unavailable">O Health Connect não está disponível neste dispositivo.</string>
+    <string name="aimi_hc_permission_update_required">O Health Connect precisa ser instalado ou atualizado.</string>
+    <string name="aimi_hc_permission_client_error">Não foi possível acessar o Health Connect. Abra as configurações para verificar o app.</string>
+    <string name="aimi_hc_permission_granted_message">Acesso ao Health Connect concedido</string>
+
+
+    <string name="aimi_ai_auditor_section_title">Auditor de Decisões de IA</string>
+
+    <string name="aimi_trajectory_section_title">Proteção de Trajetória</string>
+
+    <string name="aimi_prediction_guards_title">Proteções de previsão (especialista)</string>
+
+    <string name="oaps_aimi_thyroid_title">🦋 Módulo de Hipertireoidismo (Basedow)</string>
+
+
+    <string name="oaps_aimi_thyroid_enabled_summary">Adapta DIA, ISF, EGP e limites de segurança com base na hiperfunção metabólica. Crítico durante o tratamento quando a resistência à insulina cai rápido.</string>
+
+    <string name="oaps_aimi_thyroid_mode_title">Modo de Estimação</string>
+
+    <string name="oaps_aimi_thyroid_mode_summary">Escolha como o algoritmo determina o estado da sua Tireoide.</string>
+
+    <string name="oaps_aimi_thyroid_manual_status_title">Estado da Tireoide (Manual)</string>
+
+    <string name="oaps_aimi_thyroid_manual_status_summary">Força o módulo a um estado físico específico (ex.: Leve, Grave, Eutireoidiano).</string>
+
+    <string name="oaps_aimi_thyroid_treatment_phase_title">Fase do Tratamento</string>
+
+    <string name="oaps_aimi_thyroid_treatment_phase_summary">Defina seu contexto médico atual (ex.: Titulação, Normalizando). Alto risco de hipo durante a Titulação/Redução gradual.</string>
+
+    <string name="oaps_aimi_thyroid_guard_level_title">Nível de Proteção de Normalização</string>
+
+    <string name="oaps_aimi_thyroid_guard_level_summary">Agressividade da barreira de segurança que bloqueia SMBs enquanto a tireoide normaliza rapidamente para a fase Eutireoidiana.</string>
+
+    <string name="oaps_aimi_thyroid_log_verbosity_title">Registros Estendidos</string>
+
+    <string name="oaps_aimi_thyroid_log_verbosity_summary">Adiciona detalhes extremos aos registros da máquina de estados da Tireoide e de cálculo do modelo de efeito.</string>
+
+    <!-- Labels of the thyroid module lists. One string per entry, so common code (iOS too) can show them. -->
+    <string name="aimi_thyroid_mode_manual">Seleção Manual</string>
+    <string name="aimi_thyroid_mode_auto">Auto (Exames + Fisio) - Experimental</string>
+    <string name="aimi_thyroid_status_euthyroid">Eutireoidiano (Normal)</string>
+    <string name="aimi_thyroid_status_hyper_mild">Hiper Leve</string>
+    <string name="aimi_thyroid_status_hyper_moderate">Hiper Moderado</string>
+    <string name="aimi_thyroid_status_hyper_severe">Hiper Grave</string>
+    <string name="aimi_thyroid_status_normalizing">Normalizando (Alto Risco)</string>
+    <string name="aimi_thyroid_phase_none">Nenhum (Eutireoidiano Estável)</string>
+    <string name="aimi_thyroid_phase_titration">Titulação (Iniciando Medicação)</string>
+    <string name="aimi_thyroid_phase_stable">Tratamento Estável</string>
+    <string name="aimi_thyroid_phase_de_escalation">Redução Gradual (Interrompendo Medicação)</string>
+    <string name="aimi_thyroid_guard_low">Baixo (Limites mínimos)</string>
+    <string name="aimi_thyroid_guard_medium">Médio (Limites padrão)</string>
+    <string name="aimi_thyroid_guard_high">Alto (Bloqueio estrito contra quedas rápidas)</string>
+
+    <string name="oaps_aimi_LunchAdjFact_summary">Fator DynISF do Modo Almoço</string>
+
+    <string name="oaps_aimi_LunchAdjFact_title">DynISF do Modo Almoço</string>
+
+
+
+    <string name="oaps_aimi_lunch_interval_summary">Intervalo de SMB do Modo Almoço</string>
+
+    <string name="oaps_aimi_lunch_interval_title">Intervalo de SMB do Modo Almoço</string>
+
+    <string name="oaps_aimi_DinnerAdjFact_summary">Fator DynISF do Modo Jantar</string>
+
+    <string name="oaps_aimi_DinnerAdjFact_title">DynISF do Modo Jantar</string>
+
+
+
+    <string name="oaps_aimi_Dinner_interval_summary">Intervalo do Modo Jantar</string>
+
+    <string name="oaps_aimi_Dinner_interval_title">Intervalo do Modo Jantar</string>
+
+    <string name="oaps_aimi_enableMlLearningRate_title">Ativar Taxa de Aprendizado variável para melhor ajuste</string>
+
+    <string name="oaps_aimi_enableMlFCL_title">Loop Fechado Completo</string>
+
+    <string name="oaps_aimi_FCLAdjFact_title">DynISF Loop Fechado Completo</string>
+
+    <string name="oaps_aimi_FCLAdjFact_summary">DynISF Loop Fechado Completo via detecção automática</string>
+
+
+
+    <string name="oaps_aimi_FCL_interval_summary">Intervalo de SMB do FCL</string>
+
+    <string name="oaps_aimi_FCL_interval_title">Intervalo de SMB do FCL</string>
+
+    <string name="oaps_aimi_BFdjFact_summary">DynISF Modo Café da Manhã</string>
+
+    <string name="oaps_aimi_BFAdjFact_title">DynISF Modo Café da Manhã</string>
+
+
+
+    <string name="oaps_aimi_BF_interval_summary">Intervalo entre 2 SMBs no Modo Café da Manhã</string>
+
+    <string name="oaps_aimi_BF_interval_title">Intervalo de SMB do Modo Café da Manhã</string>
+
+
+
+    <string name="oaps_aimi_enableMlautoDrive_title">Ativar Auto Drive – detecção automática de refeição – EXPERIMENTAL</string>
+
+
+    <string name="oaps_aimi_AutodriveISF_summary">Abaixo deste valor de ISF, a condição para receber o pré-bolus é verdadeira</string>
+
+    <string name="oaps_aimi_AutodriveISF_title">Valor de ISF do Autodrive para pré-bolus</string>
+
+    <string name="OApsAIMI_CombinedDelta_summary">Acima deste valor, a condição para receber o pré-bolus é verdadeira</string>
+
+    <string name="OApsAIMI_CombinedDelta_title">Delta combinado de glicemia para pré-bolus</string>
+
+
+
+
+
+
+
+    <string name="oaps_aimi_AutodriveAcceleration_summary">Aceleração da glicemia: se estiver acima deste valor, a condição para pré-bolus do autodrive é verdadeira</string>
+
+    <string name="oaps_aimi_AutodriveAcceleration_title">Aceleração mínima da glicemia para entrega de pré-bolus</string>
+
+
+    <string name="aimi_mpc_u_per_kg_summary">Limite superior para cada busca de dose MPC de 5 minutos: este valor × peso corporal AIMI (kg). Ainda limitado por SMB Máx / SMB Máx Glicemia Alta. Padrão 0,065 U/kg (antes fixo em 0,05). Aumente com cautela — risco de hipo.</string>
+
+    <string name="aimi_preferences_title_menu">Configurações do AAPS</string>
+
+
+    <string name="wcycle_preferences_title_menu">Ajustes do Ciclo Menstrual - Configurações</string>
+
+    <string name="oaps_aimi_enablewcycle_title">Ativar ciclo menstrual</string>
+
+    <string name="wcycledateday_summary">Digite apenas o primeiro dia do ciclo, formato dd</string>
+
+    <string name="wcycledateday_title">Primeiro dia do ciclo</string>
+
+    <string name="wcyclemenstruation_summary">Durante os primeiros dias do ciclo, este percentual será aplicado como redução basal (estudos mostram redução média de 5–10%)</string>
+
+    <string name="wcyclemenstruation_title">Primeiros 5 dias do ciclo, redução basal em %</string>
+
+    <string name="wcycleovulation_summary">Durante a ovulação, vários estudos mostram a necessidade de reduzir o SMB e a basal em cerca de 5%</string>
+
+    <string name="wcycleovulation_title">% de redução na ovulação</string>
+
+    <string name="wcycleluteal_summary">A fase lútea exige cerca de 8–15% a mais de insulina</string>
+
+    <string name="wcycleluteal_title">Fase lútea, defina a % para aplicar na basal e no SMB</string>
+
+    <string name="oaps_aimi_ngr_title">Resistência noturna ao crescimento</string>
+
+
+    <string name="oaps_aimi_ngr_enabled_summary">Detecta elevações noturnas sustentadas para usuários pediátricos.</string>
+
+    <string name="oaps_aimi_ngr_age_title">Idade pediátrica (anos)</string>
+
+    <string name="oaps_aimi_ngr_age_summary">Idade usada para ativar o monitor por padrão abaixo da fase adulta.</string>
+
+    <string name="oaps_aimi_ngr_night_start_title">Início da janela noturna (HH:mm)</string>
+
+    <string name="oaps_aimi_ngr_night_start_summary">Início da janela de detecção de resistência.</string>
+
+    <string name="oaps_aimi_ngr_night_end_title">Fim da janela noturna (HH:mm)</string>
+
+    <string name="oaps_aimi_ngr_night_end_summary">Fim da janela de detecção de resistência (dia seguinte se anterior ao início).</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="oaps_aimi_ngr_max_iob_title">IOB extra por bloco de 30 min (U)</string>
+
+    <string name="oaps_aimi_ngr_max_iob_summary">Quantidade de IOB adicional concedida para cada bloco de 30 minutos enquanto o NGR estiver ativo.</string>
+
+
+
+    <string name="oaps_aimi_ngr_headroom">Margem NGR: +%1$.2fU (limite %2$.2fU).</string>
+
+    <string name="oaps_aimi_ngr_basal_applied">Reforço basal NGR ×%1$.2f → %2$.2fU/h.</string>
+
+    <string name="oaps_aimi_ngr_smb_applied">Reforço SMB NGR ×%1$.2f (solicitado %2$.3fU, limitado %3$.3fU).</string>
+
+    <string name="aimi_prebolus_not_delivered" comment="%1$s=meal mode pre-bolus phase tag (example: LUNCH_P1), %2$s=requested insulin amount with units (example: 1.50 U). Warning shown when a requested meal pre-bolus was never confirmed as delivered by the pump.">O pré-bolus de refeição %1$s (%2$s) foi solicitado, mas não foi confirmada a entrega pela bomba. Verifique o histórico de bolus.</string>
+
+    <string name="wcycle_invalid_day">♀️ WCycle: dia inválido</string>
+
+    <string name="eventual_bg_over_180_hyper_basalaimi">Glicemia eventual &gt;180 e hiper → ajuste basalaimi.</string>
+
+    <string name="aimi_plateau_high_boost">Reforço =&gt; Hiper maior que 180 com glicemia estável</string>
+
+    <string name="aimi_plateau_prefs">Correção de platô (AIMI)</string>
+
+    <string name="aimi_plateau_prefs_title_menu">Configurações de correção de platô</string>
+
+    <string name="oaps_aimi_highbg_title">Limiar alto (mg/dL)</string>
+
+    <string name="oaps_aimi_highbg_summary">Acima desta glicemia, a lógica de “platô” pode intensificar a basal.</string>
+
+
+
+
+
+    <string name="oaps_aimi_max_multiplier_title">Multiplicador basal máximo (×)</string>
+
+    <string name="oaps_aimi_max_multiplier_summary">Limite superior para a basal durante o platô (× basal do perfil).</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="aimi_hypo_risk_alarm_summary">O AIMI emite um alarme URGENTE unificado (NotificationId.HYPO_RISK_ALARM) com o som de alarme do AAPS. Adie ou dispense na lista de notificações ou na janela do painel.</string>
+
+
+
+    <string name="aimi_advisor_score_label_excellent">Excelente</string>
+
+    <string name="aimi_advisor_score_label_good">Bom</string>
+
+    <string name="aimi_advisor_score_label_warning">Pode melhorar</string>
+
+    <string name="aimi_advisor_score_label_attention">Requer atenção</string>
+
+    <string name="aimi_advisor_score_label_critical">Exige ação agora</string>
+
+
+
+
+
+
+
+
+    <string name="aimi_advisor_recommendations_title">Recomendações</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="aimi_pref_openai_key_summary">Insira sua chave (sk-...) para ativar o Coach AIMI.</string>
+
+    <string name="aimi_adv_analysis_issue_safety">Risco de hipoglicemia detectado (SMB Máx potencialmente agressivo demais).</string>
+
+    <string name="aimi_adv_analysis_issue_hyper">Hiperglicemia persistente (ISF ou Alvo a revisar).</string>
+
+    <string name="aimi_adv_analysis_issue_smb">O gerenciamento de refeições pode ser melhorado (Modos ou SMB).</string>
+
+    <string name="aimi_adv_analysis_issue_basal">O peso basal está desequilibrado em relação ao TDD.</string>
+
+    <string name="aimi_adv_analysis_issue_profile">Qualidade do perfil a otimizar.</string>
+
+    <string name="aimi_prefs_ai_title">🤖 Assistente de IA</string>
+
+    <string name="aimi_prefs_provider_title">Provedor de IA</string>
+
+    <string name="aimi_prefs_provider_dialog_title">Selecionar Provedor de IA</string>
+
+    <string name="aimi_prefs_provider_openai">OpenAI (GPT-5.2)</string>
+
+    <string name="aimi_prefs_provider_gemini">Gemini (2.5 Flash)</string>
+
+    <string name="aimi_prefs_provider_deepseek">DeepSeek (Chat)</string>
+
+    <string name="aimi_prefs_provider_claude">Claude (3.5 Sonnet)</string>
+
+    <string name="aimi_prefs_openai_key_title">Chave de API da OpenAI</string>
+
+    <string name="aimi_prefs_openai_key_summary">Insira sua Chave de API da OpenAI (sk-...)</string>
+
+    <string name="aimi_prefs_gemini_key_title">Chave de API do Gemini</string>
+
+    <string name="aimi_prefs_gemini_key_summary">Insira sua Chave de API do Google Gemini (AIza...)</string>
+
+    <string name="aimi_prefs_deepseek_key_title">Chave de API do DeepSeek</string>
+
+    <string name="aimi_prefs_deepseek_key_summary">Insira sua Chave de API do DeepSeek</string>
+
+    <string name="aimi_prefs_claude_key_title">Chave de API do Claude</string>
+
+    <string name="aimi_prefs_claude_key_summary">Insira sua Chave de API da Anthropic Claude</string>
+
+    <string name="aimi_tuning_section_title">CONTEXTO DE AJUSTE</string>
+
+    <string name="aimi_tuning_section_desc">Escolha o que deseja melhorar. O tamanho do passo se adapta à sua carga de CGM (pequeno / moderado / forte).</string>
+
+    <string name="aimi_tuning_context_meal_rise">Elevação por refeição</string>
+
+    <string name="aimi_tuning_context_hypo_guard">Proteção contra hipo</string>
+
+    <string name="aimi_tuning_context_hyper_stable">Controle de hiper</string>
+
+    <string name="aimi_tuning_context_auto">Auto</string>
+
+    <string name="aimi_tuning_preview_btn">Pré-visualizar</string>
+
+    <string name="aimi_tuning_apply_btn">Aplicar ajuste</string>
+
+    <string name="aimi_tuning_tier_micro">Passo pequeno</string>
+
+    <string name="aimi_tuning_tier_moderate">Passo moderado</string>
+
+    <string name="aimi_tuning_tier_strong">Passo forte</string>
+
+    <string name="aimi_tuning_dialog_preview_title">Ajuste proposto</string>
+
+    <string name="aimi_tuning_dialog_apply_title">Aplicar ajuste?</string>
+
+    <string name="aimi_tuning_dialog_tier">Dose: %1$s</string>
+
+    <string name="aimi_tuning_no_changes">Nenhuma alteração necessária — as configurações já correspondem a este contexto ou as métricas não justificam ajuste.</string>
+
+    <string name="aimi_tuning_blocked">Ajuste bloqueado: %1$s</string>
+
+    <string name="aimi_tuning_result_title">Ajuste aplicado</string>
+
+    <string name="aimi_tuning_result_summary">%1$d parâmetro(s) atualizado(s) (passo %2$s).</string>
+
+    <string name="aimi_tuning_result_export_ok">Exportação de configurações concluída.</string>
+
+    <string name="aimi_tuning_result_export_skipped">Exportação de configurações ignorada — ative a exportação automática e defina a senha em Manutenção.</string>
+
+    <string name="aimi_tuning_result_export_expired">Exportação de configurações ignorada — senha de exportação expirada. Digite-a novamente em Manutenção.</string>
+
+    <string name="aimi_tuning_result_export_failed">Falha na exportação de configurações — verifique as configurações de exportação em Manutenção.</string>
+
+    <string name="aimi_advisor_title">Consultor AIMI</string>
+
+    <string name="aimi_adv_loading">Análise em andamento...</string>
+
+    <string name="aimi_adv_loading_details" comment="Shown under the main Advisor report while RBT/T3c history sections load">Carregando histórico detalhado…</string>
+
+    <string name="aimi_adv_error_prefix">Erro: </string>
+
+    <string name="aimi_adv_error_message" comment="%1$s=error details, e.g. The report could not be loaded">Erro: %1$s</string>
+
+    <string name="aimi_adv_error_oom">Memória insuficiente para concluir. Feche outros apps e tente novamente.</string>
+
+    <string name="aimi_adv_card_render_error" comment="%1$s=card name, %2$s=exception type. Shown in place of a single advisor card that failed to render.">⚠️ %1$s indisponível (%2$s)</string>
+
+    <string name="aimi_adv_report_weekly">Relatório Semanal</string>
+
+    <string name="aimi_adv_score_label">Pontuação: %1$.1f/10</string>
+    <string name="aimi_adv_not_enough_data">Dados glicêmicos insuficientes para este período. Sem pontuação e sem recomendação de configurações.</string>
+
+    <string name="aimi_adv_apply_btn">APLICAR</string>
+
+    <string name="aimi_adv_apply_dialog_title">Confirmar a alteração</string>
+
+    <string name="aimi_adv_apply_dialog_prefix">O Consultor sugere esta alteração:</string>
+
+    <string name="aimi_adv_success_msg" comment="%1$d=number of settings that were changed. Example: 1 change applied.">%1$d alteração aplicada.</string>
+
+    <string name="aimi_adv_no_change_msg">Nenhuma alteração pôde ser aplicada.</string>
+
+    <string name="aimi_adv_section_obs">OBSERVAÇÕES</string>
+
+    <string name="aimi_adv_section_pkpd">ALTERAÇÕES DE PKPD</string>
+
+    <string name="aimi_adv_metric_tir">TIR (70-180)</string>
+
+    <string name="aimi_adv_metric_tdd" comment="Label of a metric tile. TDD = total daily dose of insulin.">TDD MÉDIO</string>
+
+    <string name="aimi_adv_metric_gmi" comment="Label of a metric tile. GMI = glucose management indicator, shown in percent.">GMI</string>
+
+    <string name="aimi_adv_metric_hypo54" comment="Label of a metric tile: share of time spent below 54 mg/dL.">BAIXA &lt; 54</string>
+
+    <string name="aimi_adv_metric_today_tir" comment="Label of a metric tile: time in range for today only.">TIR DE HOJE</string>
+
+    <string name="aimi_adv_metric_today_tdd" comment="Label of a metric tile: total daily dose for today only.">TDD DE HOJE</string>
+
+    <string name="aimi_adv_metric_value_gmi" comment="%1$.1f=GMI value in percent. Example: 6.8%%">%1$.1f%%</string>
+
+    <string name="aimi_adv_metric_value_missing" translatable="false">-</string>
+
+    <string name="aimi_adv_apply_dialog_change" comment="%1$s=name of the setting, %2$s=new value. Example: Max SMB → 1.2">%1$s → %2$s</string>
+
+    <string name="aimi_adv_section_brain">ESTADO COGNITIVO</string>
+
+    <string name="aimi_adv_section_oref">ANÁLISE OREF (LOCAL)</string>
+
+    <string name="aimi_adv_oref_show_chart">Mostrar gráfico de faixas do CGM</string>
+
+    <string name="aimi_adv_oref_hide_chart">Ocultar gráfico</string>
+
+    <string name="aimi_adv_oref_chart_title">Tempo nas faixas do CGM (%)</string>
+
+    <string name="aimi_adv_oref_bar_low">&lt;70</string>
+
+    <string name="aimi_adv_oref_bar_in_range">70–180</string>
+
+    <string name="aimi_adv_oref_bar_high">&gt;180</string>
+
+    <string name="aimi_adv_oref_user_insight_title">O que isso significa para você</string>
+
+    <string name="aimi_adv_oref_user_data_insufficient">Não há histórico suficiente de CGM e loop neste período para tirar conclusões firmes. Continue com o loop e abra o Consultor novamente após coletar mais dados.</string>
+
+    <string name="aimi_adv_oref_user_data_limited">Há alguns dados, mas a janela ainda é curta. Trate as tendências apenas como indícios; confirme com suas métricas habituais e equipe de saúde se algo preocupar.</string>
+
+    <string name="aimi_adv_oref_user_data_good">Pontos alinhados de loop e CGM suficientes para um retrato estável dos últimos dias.</string>
+
+    <string name="aimi_adv_oref_user_priority">Foco sugerido por regras simples: %1$s (não é um diagnóstico).</string>
+
+    <string name="aimi_adv_oref_user_personal_off">O modelo pessoal no dispositivo está desativado. Ative-o em AIMI → Chaves de IA se quiser um modelo pequeno treinado com seus dados recentes ao abrir o Consultor.</string>
+
+    <string name="aimi_adv_oref_user_personal_training">Modelo pessoal: o treinamento precisa de mais desfechos rotulados de 4 horas nesta janela.</string>
+
+    <string name="aimi_adv_oref_user_personal_failed">O modelo pessoal não pôde ser atualizado; os detalhes técnicos estão no bloco de análise abaixo.</string>
+
+    <string name="aimi_adv_oref_user_personal_ok">Sinais pessoais no dispositivo (informativos, não são recomendação de tratamento): relacionados a hipo ≈%1$d%%, relacionados a hiper ≈%2$d%%. Converse sobre problemas persistentes com sua equipe de saúde.</string>
+
+    <string name="aimi_adv_oref_user_personal_uncalibrated">Modelo pessoal no dispositivo: treinado. A pontuação ainda é um número interno. Ela não foi verificada em relação a resultados reais, por isso não é exibida como percentual de risco e não altera nenhuma sugestão. Converse com sua equipe de saúde sobre padrões que continuam voltando.</string>
+
+    <string name="aimi_adv_section_coach">COACH DE IA</string>
+
+    <string name="aimi_adv_brain_protect" comment="%1$.2f=the reactivity factor. Example: PROTECTIVE (x0.85)">PROTETOR (x%1$.2f)</string>
+
+    <string name="aimi_adv_brain_offense" comment="%1$.2f=the reactivity factor. Example: OFFENSIVE (x1.20)">OFENSIVO (x%1$.2f)</string>
+
+    <string name="aimi_adv_brain_neutral" comment="%1$.2f=the reactivity factor. Example: NEUTRAL (x1.00)">NEUTRO (x%1$.2f)</string>
+
+    <string name="aimi_adv_brain_protect_desc">O sistema detectou instabilidade recente ou uma hipo e reduziu a agressividade geral.</string>
+
+    <string name="aimi_adv_brain_offense_desc">O sistema está combatendo glicemia alta persistente ou detectou resistência.</string>
+
+    <string name="aimi_adv_brain_neutral_desc">O sistema está rodando com suas configurações base. Nenhuma anomalia detectada.</string>
+
+    <string name="aimi_coach_title">Coach de IA</string>
+
+    <string name="aimi_coach_header_title" comment="%1$s=the AI Coach title (see aimi_coach_title). The star is decorative.">✨ %1$s</string>
+
+    <string name="aimi_coach_loading">Gerando orientação personalizada...</string>
+
+    <string name="aimi_coach_placeholder" comment="%1$s=the LLM provider name, e.g. OPENAI or GEMINI">Configure uma chave de API para %1$s nas preferências para ativar o Coach de IA.</string>
+
+    <string name="aimi_coach_basic_with_note" comment="%1$s=the deterministic analysis text, %2$s=the note asking to configure an API key (see aimi_coach_placeholder)">%1$s\n\n⚙️ %2$s</string>
+
+    <string name="aimi_coach_error">Não foi possível obter orientação do Coach de IA.</string>
+
+    <string name="aimi_coach_error_detail" comment="%1$s=the error message (see aimi_coach_error), %2$s=technical detail">%1$s\n%2$s</string>
+
+    <string name="aimi_coach_svc_missing_key" comment="%1$s=the LLM provider name, e.g. OPENAI or GEMINI">Chave de API ausente. Configure sua chave de %1$s.</string>
+
+    <string name="aimi_coach_svc_missing_key_simple">Chave de API ausente.</string>
+
+    <string name="aimi_coach_svc_empty_prompt">O comando está vazio.</string>
+
+    <string name="aimi_coach_svc_connection_error" comment="%1$s=the LLM provider name, %2$s=the underlying error detail">Erro de conexão (%1$s): %2$s</string>
+
+    <string name="aimi_coach_svc_generic_error" comment="%1$s=the underlying error detail">Erro: %1$s</string>
+
+    <string name="aimi_coach_svc_error_openai" comment="%1$d=HTTP status code, %2$s=the raw error body">Erro da OpenAI (%1$d): %2$s</string>
+
+    <string name="aimi_coach_svc_read_error_openai">Não foi possível ler a resposta da OpenAI.</string>
+
+    <string name="aimi_coach_svc_gemini_blocked">Conteúdo bloqueado pelos filtros de segurança do Gemini.</string>
+
+    <string name="aimi_coach_svc_read_error_gemini">Não foi possível ler a resposta do Gemini.</string>
+
+    <string name="aimi_coach_svc_error_deepseek" comment="%1$d=HTTP status code, %2$s=the raw error body">Erro do DeepSeek (%1$d): %2$s</string>
+
+    <string name="aimi_coach_svc_error_claude" comment="%1$d=HTTP status code, %2$s=the raw error body">Erro do Claude (%1$d): %2$s</string>
+
+    <string name="aimi_coach_svc_read_error_claude">Não foi possível ler a resposta do Claude.</string>
+
+    <string name="aimi_adv_analysis_intro_excellent">Excelente trabalho! Seus resultados são impressionantes.</string>
+
+    <string name="aimi_adv_analysis_intro_good">Bom trabalho, mas alguns ajustes são possíveis.</string>
+
+    <string name="aimi_adv_analysis_intro_poor">Atenção: ajustes são necessários para melhorar o equilíbrio.</string>
+
+    <string name="aimi_adv_analysis_issues_header">Problemas identificados:</string>
+
+    <string name="aimi_adv_analysis_all_good">Nenhum problema grave detectado.</string>
+
+    <string name="aimi_adv_generated_footer" comment="%1$s=formatted date/time the report was generated. Example: Generated on 15 Sep 14:30 - OpenAPS AIMI">Gerado em %1$s - OpenAPS AIMI</string>
+
+    <string name="aimi_advisor_model_title">Escolher Modelo de IA</string>
+
+    <string name="aimi_adv_basal_dialog_title">Proposta Basal (Prévia)</string>
+
+    <string name="aimi_adv_basal_export_header_title">PROPOSTA BASAL AIMI (NÃO APLICADA)</string>
+
+    <string name="aimi_adv_basal_export_btn">Exportar</string>
+
+    <string name="aimi_adv_basal_generating_msg">Gerando proposta basal...</string>
+
+    <string name="aimi_adv_basal_failed_msg">Falha na proposta basal. Tente novamente.</string>
+
+    <string name="aimi_adv_basal_no_profile_msg">Nenhum dado de perfil disponível. Nenhuma proposta foi gerada.</string>
+
+    <string name="aimi_adv_basal_disclaimer">Esta é apenas uma proposta. Nenhuma alteração automática é feita no perfil.</string>
+
+    <string name="aimi_adv_basal_strategy_line" comment="%1$s=the proposed strategy name, e.g. Keep the current basal">Estratégia: %1$s</string>
+
+    <string name="aimi_adv_basal_factor_line" comment="%1$.3f=the scaling factor applied to every hour. Example: Factor: 0.950">Fator: %1$.3f</string>
+
+    <string name="aimi_adv_basal_rationale_line" comment="%1$s=the reason for the proposed strategy">Justificativa: %1$s</string>
+
+    <string name="aimi_adv_basal_preview_heading">Prévia (primeiras 6 horas):</string>
+
+    <string name="aimi_adv_basal_row_line" comment="%1$d=hour of day 0-23, %2$s=current rate U/h, %3$s=proposed rate U/h, %4$s=change in percent with sign. Example: 06h 0.80 to 0.76 U/h (-5.0%%)">%1$02dh  %2$.2f -&gt; %3$.2f U/h (%4$+.1f%%)</string>
+
+    <string name="aimi_adv_basal_share_subject">Proposta Basal AIMI</string>
+
+    <string name="aimi_adv_basal_share_chooser_title">Exportar proposta basal</string>
+
+    <string name="aimi_adv_basal_strategy_no_profile">Nenhum perfil disponível</string>
+
+    <string name="aimi_adv_basal_strategy_safety_reduction">Reduzir basal por segurança</string>
+
+    <string name="aimi_adv_basal_strategy_gentle_increase">Aumentar basal um pouco</string>
+
+    <string name="aimi_adv_basal_strategy_hold_baseline">Manter a basal atual</string>
+
+    <string name="aimi_adv_basal_rationale_safety_reduction">Há risco de hipo nos dados recentes.</string>
+
+    <string name="aimi_adv_basal_rationale_gentle_increase">A glicemia costuma estar alta e o risco de hipo é baixo.</string>
+
+    <string name="aimi_adv_basal_rationale_hold_baseline">Não há um padrão claro para alterar o perfil basal.</string>
+
+    <string name="aimi_adv_rec_hypos_action_reason">Reduzir o SMB Máx em 20% porque o tempo abaixo de 70 mg/dL está alto</string>
+
+    <string name="aimi_adv_rec_control_action_reason">Elevar o fator do almoço em até 10 pontos, no máximo até 100, porque o tempo no alvo está abaixo da meta</string>
+
+    <string name="aimi_adv_rec_hypos_title">Risco de hipo</string>
+
+    <string name="aimi_adv_rec_hypos_desc" comment="%1$d=percent of time spent below 54 mg/dL. Example: 5%% of the time was below 54 mg/dL.">%1$d%% do tempo ficou abaixo de 54 mg/dL. Sugere-se dosar menos.</string>
+
+    <string name="aimi_adv_rec_control_title">Controle glicêmico</string>
+
+    <string name="aimi_adv_rec_control_desc" comment="%1$d=time in range in percent. Example: Time in range is 62%%, below the goal.">O tempo no alvo é de %1$d%%, abaixo da meta. Sugere-se dosar um pouco mais.</string>
+
+    <string name="aimi_adv_rec_hypers_title">Glicemia alta</string>
+
+    <string name="aimi_adv_rec_hypers_desc" comment="%1$d=percent of time spent above 180 mg/dL. Example: Time above 180 mg/dL is high (28%%).">O tempo acima de 180 mg/dL está alto (%1$d%%). Verifique suas proporções de refeição.</string>
+
+    <string name="aimi_adv_rec_basal_title">A basal é dominante</string>
+
+    <string name="aimi_adv_rec_basal_desc" comment="%1$d=basal share of the total daily dose in percent. Example: Basal is 60%% of the total daily dose.">A basal corresponde a %1$d%% da dose diária total. Verifique se suas taxas basais estão corretas.</string>
+
+    <string name="aimi_adv_rec_profile_ok_title">O perfil parece bom</string>
+
+    <string name="aimi_adv_rec_profile_ok_desc">Nenhuma grande alteração é necessária.</string>
+
+    <string name="aimi_adv_rec_oref_isf_hypo_title">Padrão de hipo: discuta o ISF com sua equipe de saúde</string>
+
+    <string name="aimi_adv_rec_oref_isf_hypo_desc">O OREF/ML no dispositivo marca prioridade de hipo. Cerca de %1$s%% do tempo do CGM ficou abaixo de 70 mg/dL. Pergunte ao seu médico se um ISF moderadamente maior (mais mg/dL por unidade = correções mais suaves) se adapta ao seu perfil — evite saltos bruscos de uma só vez.</string>
+
+    <string name="aimi_adv_rec_oref_isf_hyper_title">Padrão alto: direção do ISF com sua equipe</string>
+
+    <string name="aimi_adv_rec_oref_isf_hyper_desc">O tempo acima de 180 é de cerca de %1$s%% com poucas baixas. Converse se o ISF do perfil deve permitir correções um pouco mais fortes (muitas vezes um ISF moderadamente menor em mg/dL por U) — apenas com acompanhamento médico.</string>
+
+    <string name="aimi_adv_rec_oref_isf_mixed_title">Altas e baixas mistas: compensações do ISF</string>
+
+    <string name="aimi_adv_rec_oref_isf_mixed_desc">O OREF sinaliza pressão de hipo e de hiper (cerca de %1$s%% abaixo de 70 e %2$s%% acima de 180). Movimentos no ISF são ambíguos: siga o problema que dominar semana a semana (mais suave se baixas liderarem, mais forte se altas liderarem) com sua equipe de saúde.</string>
+
+    <string name="aimi_adv_rec_oref_basal_hypo_title">Participação basal e baixas</string>
+
+    <string name="aimi_adv_rec_oref_basal_hypo_desc">A basal representa cerca de %1$s%% do TDD enquanto o risco de hipo está elevado. Revise os segmentos basais noturnos e diurnos com sua equipe antes de alterar proporções de refeição ou PKPD.</string>
+
+    <string name="aimi_adv_rec_oref_ic_hyper_title">Altas pós-refeição: verifique proporções de carboidrato</string>
+
+    <string name="aimi_adv_rec_oref_ic_hyper_desc">O foco do OREF é hiper com cerca de %1$s%% do tempo acima de 180 mg/dL. Verifique a precisão e o tempo do IC (proporção de carboidrato); ajuste apenas em pequenos passos supervisionados.</string>
+
+    <string name="aimi_adv_rec_oref_pkpd_review_title">PKPD: DIA, pico, amortecimento</string>
+
+    <string name="aimi_adv_rec_oref_pkpd_review_desc">O PKPD está ativado e o OREF sinaliza um desequilíbrio. Com sua equipe de saúde, revise a insulina do seu perfil (seu DIA e tempo de pico, onde o aprendizado PK/PD começa) e o amortecimento de SMB juntos, não um de cada vez.</string>
+
+    <string name="aimi_adv_rec_oref_autodrive_mpc_title">AutoDrive: agressividade do MPC</string>
+
+    <string name="aimi_adv_rec_oref_autodrive_mpc_desc">O AutoDrive está ligado. O passo atual de insulina por kg do MPC é %1$s (preferência). Se as altas persistirem sem baixas, discuta um aumento cauteloso com sua equipe; não aumente repetidamente sem revisão.</string>
+
+    <string name="aimi_adv_rec_oref_autodrive_mpc_hypo_title">AutoDrive: inclinar-se para MPC menos agressivo</string>
+
+    <string name="aimi_adv_rec_oref_autodrive_mpc_hypo_desc">Baixas frequentes enquanto o AutoDrive está ligado (passo MPC %1$s). Discuta reduzir a agressividade do MPC com seu médico antes de novos aumentos.</string>
+
+    <string name="aimi_adv_rec_pkpd_relief_reduce_title">Reduzir piso de alívio de PKPD (contexto de hipo)</string>
+
+    <string name="aimi_adv_rec_pkpd_relief_reduce_desc">O fator mínimo de alívio é %1$s com tempo elevado abaixo de 70. Considere avançar em direção a ~%2$s com supervisão e reavalie — o ajuste funciona nos dois sentidos.</string>
+
+    <string name="aimi_adv_rec_redcarpet_reduce_title">Reduzir limiar de restauração Red Carpet (contexto de hipo)</string>
+
+    <string name="aimi_adv_rec_redcarpet_reduce_desc">O limiar de restauração é %1$s enquanto as baixas são frequentes. Uma redução moderada em direção a ~%2$s pode diminuir o retorno tardio de SMB — confirme com sua equipe.</string>
+
+    <string name="aimi_adv_rec_priority_maxiob_reduce_title">Reduzir fator MaxIOB prioritário (contexto de hipo)</string>
+
+    <string name="aimi_adv_rec_priority_maxiob_reduce_desc">O fator MaxIOB prioritário é %1$s com exposição significativa a hipo. Considere ~%2$s sob supervisão em vez de novos aumentos.</string>
+
+    <string name="aimi_adv_rec_priority_maxiob_extra_reduce_title">Reduzir extra de MaxIOB prioritário (contexto de hipo)</string>
+
+    <string name="aimi_adv_rec_priority_maxiob_extra_reduce_desc">O extra de MaxIOB prioritário é %1$sU enquanto as baixas estão elevadas. Um passo em direção a ~%2$sU pode ser mais seguro do que elevar ainda mais a margem.</string>
+
+    <string name="aimi_pkpd_title_enable">Ligar aprendizado de PK/PD</string>
+
+    <string name="aimi_pkpd_title_isf">Limite de fusão de ISF</string>
+
+    <string name="aimi_pkpd_title_damping">Amortecimento de cauda de SMB</string>
+
+    <string name="aimi_pkpd_advisor_disabled">O aprendizado de PK/PD está desligado e o tempo no alvo está baixo. Ligue-o para que o AIMI aprenda a rapidez com que sua insulina age.</string>
+
+    <string name="aimi_pkpd_hyper_isf" comment="%1$s=the new ISF fusion max factor, one step of 0.1 above the current value. Example: Frequent highs: raise the ISF fusion max factor by one small step, to 1.2, for stronger corrections.">Altas frequentes: eleve o fator máximo de fusão de ISF em um pequeno passo, para %1$s, para correções mais fortes.</string>
+
+    <string name="aimi_pkpd_hypo_damping" comment="%1$s=the new SMB tail floor (a factor, lower means stronger damping). Example: Risk of lows: lower the SMB tail floor to 0.75 to give fewer late SMBs.">Risco de baixas: reduza o piso da cauda de SMB para %1$s para dar menos SMBs tardios.</string>
+
+    <string name="aimi_pkpd_hypo_isf_reduce">Baixas frequentes com alta margem de fusão de ISF: considere reduzir a fusão máxima de %1$sx para ~%2$sx com seu médico para limitar correções agressivas.</string>
+
+    <string name="aimi_pkpd_hyper_damping_reduce">Altas persistentes com forte amortecimento de cauda de SMB (piso %1$s): se as hipos forem raras, considere enfraquecer o amortecimento elevando o piso da cauda para ~%2$s para permitir mais entrega tardia.</string>
+
+    <string name="aimi_meal_advisor_title">Consultor de Refeições AIMI</string>
+
+    <string name="aimi_meal_advisor_intro">Tire uma foto da sua refeição. O AIMI estimará os carboidratos e a proteína, para você revisar antes de registrar.</string>
+
+    <string name="aimi_meal_advisor_provider_label">Modelo de IA</string>
+
+    <string name="aimi_meal_advisor_description_hint">Observações opcionais sobre a refeição, por exemplo o tipo de massa ou pão</string>
+
+    <string name="aimi_meal_advisor_photo_placeholder">Nenhuma foto ainda. Toque em Analisar refeição para tirar uma.</string>
+
+    <string name="aimi_meal_advisor_photo_content_description">Foto da refeição</string>
+
+    <string name="aimi_meal_advisor_analyze_button">Analisar refeição</string>
+
+    <string name="aimi_meal_advisor_analyzing_button">Analisando…</string>
+
+    <string name="aimi_meal_advisor_analyze_error_prefix" comment="%1$s = the underlying error message. Example: Could not analyze the photo: timeout">Não foi possível analisar a foto: %1$s</string>
+
+    <string name="aimi_meal_advisor_confirm_error_prefix" comment="%1$s = the underlying error message. Example: Could not log carbs: database error">Não foi possível registrar carboidratos: %1$s</string>
+
+    <string name="aimi_meal_advisor_camera_error_message" comment="%1$d = the Camera2 error code reported by the system. Example: Camera error (code 2). Please try again.">Erro de câmera (código %1$d). Tente novamente.</string>
+
+    <string name="aimi_meal_advisor_camera_not_ready_message">A câmera não está disponível no momento. Tente novamente.</string>
+
+    <string name="aimi_meal_advisor_camera_permission_denied_message">O acesso à câmera não foi concedido. Permita o acesso à câmera nas configurações do sistema para usar o Consultor de Refeições.</string>
+
+    <string name="aimi_meal_advisor_capture_button">Capturar</string>
+
+    <string name="aimi_meal_advisor_carbs_field_label">Carboidratos (g)</string>
+
+    <string name="aimi_meal_advisor_confidence_high">Alta confiança</string>
+
+    <string name="aimi_meal_advisor_confidence_medium">Confiança média</string>
+
+    <string name="aimi_meal_advisor_confidence_low">Baixa confiança</string>
+
+    <string name="aimi_meal_advisor_confirm_button" comment="%1$d = grams of carbs to log, %2$.1f = the insulin dose in units this implies at the current carb ratio. Example: Log 45 g carbs and 4.5 U dose">Registrar %1$d g de carboidratos e dose de %2$.1f U</string>
+
+    <string name="aimi_meal_advisor_confirmed_message">Carboidratos registrados.</string>
+
+    <string name="aimi_meal_advisor_identified_items_title">Itens identificados</string>
+
+    <string name="aimi_meal_advisor_item_row" comment="%1$s = food item name, %2$s = amount description. Example: Rice (about 1 cup)">%1$s (%2$s)</string>
+
+    <string name="aimi_meal_advisor_macro_summary" comment="%1$.0f = protein grams, %2$.0f = fat grams, %3$s = fat-protein-unit equivalent used for extended dosing. Example: Protein: 20 g | Fat: 15 g | FPU: 1.2">Proteína: %1$.0f g | Gordura: %2$.0f g | FPU: %3$s</string>
+
+    <string name="aimi_meal_advisor_reasoning_prefix" comment="%1$s = the AI's reasoning text for its estimate. Example: Why: Portion sizes were estimated from the plate diameter">Motivo: %1$s</string>
+
+    <string name="aimi_meal_advisor_risk_banner" comment="%1$s = risk severity label (e.g. High hidden-carb risk), %2$s = specific notes from the AI. Example: High hidden-carb risk: Bread and rice portions were hard to size from the photo.">%1$s: %2$s</string>
+
+    <string name="aimi_meal_advisor_risk_high">Alto risco de carboidrato oculto</string>
+
+    <string name="aimi_meal_advisor_risk_high_and_manual">Alto risco e verificação manual necessária</string>
+
+    <string name="aimi_meal_advisor_risk_manual">Verificação manual aconselhada</string>
+
+    <string name="aimi_meal_advisor_risk_notes_default">Revise a estimativa antes de confirmar.</string>
+
+    <string name="aimi_auditor_enabled_title">Ativar Auditor de Decisões de IA</string>
+
+    <string name="aimi_auditor_enabled_summary">Ativa o Segundo Cérebro para questionar e modular as decisões do AIMI</string>
+
+    <string name="aimi_auditor_mode_title">Modo do Auditor</string>
+
+    <string name="aimi_auditor_max_per_hour_title">Máximo de Auditorias por Hora</string>
+
+    <string name="aimi_auditor_max_per_hour_summary">Número máximo de chamadas de auditoria de IA por hora (padrão: 12)</string>
+
+    <string name="aimi_auditor_timeout_title">Tempo Limite da API (segundos)</string>
+
+    <string name="aimi_auditor_timeout_summary">Tempo máximo de espera pela resposta do provedor de IA (padrão: 10 s)</string>
+
+    <string name="aimi_auditor_min_confidence_title">Confiança Mínima (%)</string>
+
+    <string name="aimi_auditor_min_confidence_summary">Aplica modulações apenas se a confiança da IA estiver acima deste limiar (padrão: 70%)</string>
+
+    <string name="aimi_auditor_notification_channel_name">Insights do Auditor AIMI</string>
+
+    <string name="aimi_auditor_notification_channel_description">Alertas quando o Auditor de Decisões de IA tiver uma nova recomendação.</string>
+
+    <string name="aimi_auditor_notification_title_ready">Novo relatório do Auditor</string>
+
+    <string name="aimi_auditor_notification_title_warning">Recomendação importante do Auditor</string>
+
+    <string name="aimi_auditor_notification_summary_single">Nova recomendação disponível</string>
+
+    <string name="aimi_auditor_notification_summary_multiple" comment="%1$d=number of recommendations. Example: 3 recommendations available">%1$d recomendações disponíveis</string>
+
+    <string name="aimi_auditor_notification_tap_to_view" comment="Shown in expanded Android notification body">Toque para ver o relatório completo.</string>
+
+    <string name="aimi_auditor_notification_action_view">Ver relatório</string>
+
+    <string name="aimi_auditor_report_dialog_title">Relatório do Auditor</string>
+
+    <string name="aimi_auditor_report_no_cache">Nenhum relatório recente do auditor está disponível. O último parecer pode ter expirado.</string>
+
+    <string name="aimi_auditor_report_stale_bg_note" comment="Shown when the cached auditor verdict is from the prior CGM reading because a newer glucose value arrived.">Observação: este parecer se aplica à leitura anterior do CGM; há um valor de glicemia mais recente disponível.</string>
+
+    <string name="aimi_auditor_report_verdict_line" comment="%1$s=verdict label (e.g. SOFTEN), %2$d=confidence percent. Example: Verdict: SOFTEN (82% confidence)">Parecer: %1$s (%2$d%% de confiança)</string>
+
+    <string name="aimi_auditor_report_status_line" comment="%1$s=tracker status message. Example: Status: OK_SOFTEN">Status: %1$s</string>
+
+    <string name="aimi_auditor_report_degraded_mode">Modo degradado: os ajustes foram limitados por segurança.</string>
+
+    <string name="aimi_auditor_report_evidence_header">Evidências:</string>
+
+    <string name="aimi_auditor_report_risk_flags_header">Alertas de risco:</string>
+
+    <string name="aimi_auditor_report_adjustments_header">Ajustes limitados:</string>
+
+    <string name="aimi_auditor_report_smb_factor" comment="%1$s=SMB factor multiplier. Example: SMB factor: 0.75">Fator de SMB: %1$s</string>
+
+    <string name="aimi_auditor_report_interval_add" comment="%1$d=minutes added to SMB interval. Example: Interval add: +3 min">Adição de intervalo: +%1$d min</string>
+
+    <string name="aimi_auditor_report_prefer_tbr_yes">Preferir TBR: sim</string>
+
+    <string name="aimi_auditor_report_prefer_tbr_no">Preferir TBR: não</string>
+
+    <string name="aimi_auditor_report_tbr_factor" comment="%1$s=TBR factor multiplier. Example: TBR factor: 1.05">Fator de TBR: %1$s</string>
+
+    <string name="aimi_auditor_in_app_notification_summary" comment="%1$s=short verdict or status summary. Example: SOFTEN — see full report">Auditor: %1$s</string>
+
+    <string name="aimi_auditor_indicator_processing">Análise em andamento, aguarde…</string>
+
+    <string name="aimi_auditor_indicator_idle">O Auditor será ativado no próximo gatilho</string>
+
+
+
+    <string name="aimi_physio_enable_summary">Ajusta a insulina usando sinais vitais do Health Connect e um catálogo fisiológico de 28 padrões (alvorada, refeições, estresse, recuperação). Não ativa nem desativa a árvore fisiológica ou o Harmonia — eles sempre rodam. Padrões ativos são exportados para AIMI_Decisions.jsonl e alimentam folhas do RBT e limites do HTR.</string>
+
+    <string name="aimi_physio_pattern_catalog_title">Catálogo de padrões fisiológicos</string>
+
+    <string name="aimi_physio_pattern_catalog_summary">28 padrões com histerese (sono, HRV, refeições, estresse, ciclo). Toque para detalhes.</string>
+
+    <string name="aimi_physio_pattern_catalog_detail">Quando o assistente está ativado, cada ciclo do loop executa o detector de padrões no contexto fisio + CGM. Correspondências são exportadas como physiological_patterns no AIMI_Decisions.jsonl e podem limitar o HTR ou informar folhas de crença do RBT. Requer permissões do Health Connect para sono e HRV quando essas fontes estão ativadas. Veja docs/AIMI_PHYSIOLOGICAL_PATTERN_CATALOG.md no repositório para a lista completa.</string>
+
+    <string name="aimi_physio_data_sources_title">Fontes de Dados</string>
+
+    <string name="aimi_oura_pat_title">Token de API de temperatura do Oura (opcional)</string>
+
+    <string name="aimi_oura_pat_summary">Token de acesso pessoal de cloud.ouraring.com — ativa o desvio medido de temperatura da pele quando o Oura não o exporta para o Health Connect. Usuários Garmin dependem do ritmo de recuperação inferido pelo sono/FC de repouso do HC.</string>
+
+    <string name="aimi_physio_advanced_title">Análise e Registros</string>
+
+    <string name="aimi_physio_llm_enable_title">Análise Narrativa por LLM</string>
+
+    <string name="aimi_physio_llm_enable_summary">Envia dados fisio para LLM para resumos diários de saúde (Opcional).</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="aimi_control_center_not_configured">Não configurado</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="aimi_tpo_active_session_title">Proteção temporária ativa</string>
+
+    <string name="aimi_tpo_active_session_pending">Aguardando confirmação do LLM…</string>
+
+    <string name="aimi_tpo_active_session_summary">Pacote: %1$s · nível %2$s · %3$d min restantes · %4$d prefs ajustadas</string>
+
+    <string name="aimi_tpo_revert_now">Reverter agora</string>
+
+    <string name="aimi_tpo_revert_confirm_title">Reverter proteção temporária?</string>
+
+    <string name="aimi_tpo_revert_confirm_body">Restaura as preferências salvas antes desta sessão de proteção de 45 min. As chaves editadas manualmente por você durante a sessão são mantidas.</string>
+
+    <string name="aimi_tpo_revert_done">Proteção temporária revertida.</string>
+
+    <string name="aimi_tpo_extra_changes">+%1$d ajustes adicionais</string>
+
+    <string name="aimi_tpo_pack_post_hypo">Recuperação pós-hipo</string>
+
+    <string name="aimi_tpo_pack_poor_sleep">Janela de sono ruim</string>
+
+    <string name="aimi_tpo_pack_exhausted">Recuperação esgotada</string>
+    <string name="aimi_tpo_pack_manual_boost">Reforço manual</string>
+
+    <string name="aimi_tpo_prefs_subscreen_title">Proteção transitória (TPO)</string>
+
+    <string name="aimi_tpo_notification_channel_name">Proteção temporária AIMI</string>
+
+    <string name="aimi_tpo_notification_channel_description">Alertas quando o AIMI inicia uma sessão de proteção temporária de 45 minutos.</string>
+
+    <string name="aimi_tpo_notification_channel_ended_name" comment="Android notification channel for TPO session end (prefs restored)">Proteção AIMI encerrada</string>
+
+    <string name="aimi_tpo_notification_channel_ended_description" comment="Shown in system notification settings for the TPO end channel">Notifica quando uma sessão de proteção temporária termina e as preferências são restauradas.</string>
+
+    <string name="aimi_tpo_notification_started_title">Proteção temporária AIMI ativa</string>
+
+    <string name="aimi_tpo_notification_started_text">%1$s · %2$d min · %3$d prefs ajustadas</string>
+
+    <string name="aimi_tpo_notification_started_tier">Nível: %1$s</string>
+
+    <string name="aimi_tpo_notification_ended_title">Proteção temporária AIMI encerrada</string>
+
+    <string name="aimi_tpo_notification_ended_expired">Sessão de 45 minutos concluída — suas preferências foram restauradas.</string>
+
+    <string name="aimi_tpo_notification_ended_manual">Proteção revertida — suas preferências salvas foram restauradas.</string>
+
+    <string name="aimi_tpo_notification_ended_superseded">Proteção anterior substituída por uma sessão de prioridade maior.</string>
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="aimi_control_center_protection_title">Proteção vs correção</string>
+
+
+
+
+
+
+
+
+
+    <string name="aimi_control_center_meal_title">Captura de refeição e elevações rápidas</string>
+
+
+
+
+
+
+
+
+
+    <string name="aimi_control_center_stability_title">Suavização e estabilidade</string>
+
+
+
+
+
+
+
+
+
+    <string name="aimi_control_center_t3c_title">T3C no RBT</string>
+
+    <string name="aimi_control_center_t3c_summary">Último estado nativo de execução do T3C (somente leitura) a partir do AIMI_Decisions.jsonl.</string>
+
+    <string name="aimi_control_center_t3c_unavailable_body">Nenhuma exportação nativa de execução do T3C disponível ainda. Execute um ciclo do loop para preencher este cartão.</string>
+
+    <string name="aimi_control_center_t3c_status_native_applied">Nativo aplicado</string>
+
+    <string name="aimi_control_center_t3c_status_native_ready">Nativo pronto</string>
+
+    <string name="aimi_control_center_t3c_status_native_blocked">Nativo bloqueado</string>
+
+    <string name="aimi_control_center_t3c_status_legacy_fallback">Alternativa legada</string>
+
+    <string name="aimi_control_center_t3c_status_safety_terminal">Terminal de segurança</string>
+
+    <string name="aimi_control_center_t3c_status_unavailable">Indisponível</string>
+
+    <string name="aimi_control_center_t3c_owner_native">RBT nativo</string>
+
+    <string name="aimi_control_center_t3c_owner_legacy">Desvio legado</string>
+
+    <string name="aimi_control_center_t3c_owner_safety">Barreira de segurança</string>
+
+    <string name="aimi_control_center_t3c_owner_unavailable">Responsável indisponível</string>
+
+    <string name="aimi_control_center_t3c_chip_authority_applied">Autoridade aplicada</string>
+
+    <string name="aimi_control_center_t3c_chip_shadow_only">Apenas sombra</string>
+
+    <string name="aimi_control_center_t3c_mode">Modo de execução</string>
+
+    <string name="aimi_control_center_t3c_basal_demand">Demanda basal</string>
+
+    <string name="aimi_control_center_t3c_applied_rate">Taxa aplicada</string>
+
+    <string name="aimi_control_center_t3c_blocker">Bloqueador</string>
+
+    <string name="aimi_control_center_t3c_selected_for_production">Selecionado para produção</string>
+
+    <string name="aimi_control_center_t3c_bypass_neutralized">Desvio histórico neutralizado</string>
+
+    <string name="aimi_control_center_t3c_authority_applied">Autoridade aplicada</string>
+
+    <string name="aimi_control_center_t3c_shadow_only">Apenas sombra</string>
+
+    <string name="aimi_control_center_harmonia_title">Harmonia no RBT</string>
+
+    <string name="aimi_control_center_harmonia_summary">Última arbitragem basal-primeiro do Harmonia (somente leitura) a partir do AIMI_Decisions.jsonl.</string>
+
+    <string name="aimi_control_center_harmonia_unavailable_body">Nenhuma exportação do Harmonia no RBT disponível ainda. Execute um ciclo do loop para preencher este cartão.</string>
+
+    <string name="aimi_control_center_harmonia_status_native_applied">Nativo aplicado</string>
+
+    <string name="aimi_control_center_harmonia_status_native_ready">Nativo pronto</string>
+
+    <string name="aimi_control_center_harmonia_status_native_blocked">Nativo bloqueado</string>
+
+    <string name="aimi_control_center_harmonia_status_t3c_priority">Prioridade T3C</string>
+
+    <string name="aimi_control_center_harmonia_status_unavailable">Indisponível</string>
+
+    <string name="aimi_control_center_harmonia_chip_selected">Selecionado para produção</string>
+
+    <string name="aimi_control_center_harmonia_chip_no_smb_authority">Sem autoridade de SMB</string>
+
+    <string name="aimi_control_center_harmonia_mode">Modo de produção</string>
+
+    <string name="aimi_control_center_harmonia_action">Ação</string>
+
+    <string name="aimi_control_center_harmonia_branch">Ramo</string>
+
+    <string name="aimi_control_center_harmonia_basal_demand">Demanda basal</string>
+
+    <string name="aimi_control_center_harmonia_applied_rate">Taxa aplicada</string>
+
+    <string name="aimi_control_center_harmonia_smb_channel">Canal de SMB do RBT</string>
+
+    <string name="aimi_control_center_harmonia_smb_demand">Demanda de SMB</string>
+
+    <string name="aimi_control_center_harmonia_smb_blocker">Bloqueador de SMB</string>
+
+    <string name="aimi_control_center_harmonia_blocker">Bloqueador</string>
+
+    <string name="aimi_control_center_harmonia_basal_first_channel">Canal basal-primeiro do RBT</string>
+
+    <string name="aimi_control_center_harmonia_selected_for_production">Selecionado para produção</string>
+
+    <string name="aimi_control_center_harmonia_adds_smb_authority">Adiciona autoridade de SMB</string>
+
+    <string name="aimi_control_center_physio_title">Influência fisiológica</string>
+
+
+
+
+
+
+
+    <string name="aimi_behavior_causal_section_title">Mapa causal do AIMI</string>
+
+    <string name="aimi_behavior_causal_section_desc">Este bloco identifica o desalinhamento de família comportamental mais provável por trás do padrão glicêmico observado, antes de propor qualquer movimento de família. Ele serve para responder qual família deve ser ajustada primeiro e por quê.</string>
+
+    <string name="aimi_behavior_causal_none">Nenhum desalinhamento forte no nível de família se destaca nos dados atuais.</string>
+
+    <string name="aimi_behavior_causal_confidence">Confiança %1$d%%</string>
+
+    <string name="aimi_behavior_causal_yoyo_title">Padrão ioiô aponta primeiro para instabilidade de execução</string>
+
+    <string name="aimi_behavior_causal_yoyo_body">A variabilidade está alta (CV %1$d%%) com %2$d%% abaixo de 70 e %3$d%% acima de 180. Isso geralmente significa que a sequência de execução está nervosa ou acumulada demais antes de significar que o modelo de refeição em si está errado.</string>
+
+    <string name="aimi_behavior_causal_meal_latency_title">O problema principal parece ser captura tardia de refeição</string>
+
+    <string name="aimi_behavior_causal_meal_latency_body">O tempo acima de 180 é de %1$d%% enquanto o tempo abaixo de 70 permanece em %2$d%%. A hipótese principal do produto é refeições não declaradas pouco capturadas ou elevações rápidas, e não um sistema que já seja agressivo demais.</string>
+
+    <string name="aimi_behavior_causal_hypo_title">O produto deve proteger primeiro contra excesso de correção</string>
+
+    <string name="aimi_behavior_causal_hypo_body">O tempo abaixo de 70 é de %1$d%% com %2$d eventos graves de baixa. Antes de aumentar qualquer outra autoridade, o produto deve remover o excesso de pressão de correção e a execução acumulada.</string>
+
+    <string name="aimi_behavior_causal_hyper_passive_title">A configuração parece passiva demais para hiperglicemia sustentada</string>
+
+    <string name="aimi_behavior_causal_hyper_passive_body">O tempo acima de 180 é de %1$d%% enquanto o tempo abaixo de 70 permanece em %2$d%%. O principal desalinhamento é a falta de margem de correção mais do que instabilidade excessiva.</string>
+
+    <string name="aimi_behavior_causal_physio_title">O contexto fisio é fraco demais para elevações ambíguas</string>
+
+    <string name="aimi_behavior_causal_physio_body">A variabilidade é de %1$d%% com %2$d%% acima de 180 enquanto o tratamento de refeições permanece assertivo. Este é um risco clássico de produto ao interpretar elevações por cortisol, endócrinas ou de recuperação como refeições em excesso.</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="aimi_control_center_autonomy_title">Autonomia do AIMI</string>
+
+
+
+
+
+
+
+
+    <string name="aimi_t3c_brittle_mode_title">Modo T3c / Diabetes Instável</string>
+
+    <string name="aimi_t3c_brittle_mode_summary">Prioriza TBR sobre SMB. Desativa o reforço de SMB pela Fusão de ISF e impõe comportamento estrito Basal-Primeiro em elevações persistentes.</string>
+
+    <string name="aimi_t3c_activation_threshold_title">Limiar de Ativação do T3C (mg/dL)</string>
+
+    <string name="aimi_t3c_activation_threshold_summary">As correções serão ativadas acima deste nível (Padrão: 130)</string>
+
+    <string name="aimi_t3c_aggressiveness_title">Agressividade de Correção do T3C</string>
+
+    <string name="aimi_t3c_aggressiveness_summary">Dimensiona a intensidade dos ajustes basais (Padrão: 1,0)</string>
+
+    <string name="aimi_t3c_anticipation_strength_title">Antecipação do T3C (previsões)</string>
+
+    <string name="aimi_t3c_anticipation_strength_summary">0 = legado (apenas projeção local). Aumente para mesclar glicemia eventual e tempo da curva de IOB/COB na basal (alívio mais precoce de hipo e antecipação de hiper). Intervalo 0–1.</string>
+
+    <string name="aimi_iob_surveillance_guard_title">Vigilância de IOB (anti-acúmulo)</string>
+
+    <string name="aimi_iob_surveillance_guard_summary">Quando a glicemia está acima do alvo com IOB relevante, a tendência não é mais uma alta rápida (platô) e as previsões apontam para baixo, o SMB é limitado e a basal temporária é levemente favorecida para que a insulina ativa atue — sem bloquear altas bruscas ou forte absorção de refeição (COB/UAM). Desvio por alta de refeição: Δ≥2,0 ou média curta≥2,5 mg/dL/5m enquanto o contexto de prioridade de refeição estiver ativo. Constantes: InsulinStackingStance.kt. Métricas: adjustments.iob_surveillance em Documents/AAPS/AIMI_Decisions.jsonl a cada loop.</string>
+
+    <string name="aimi_iob_surveillance_applied">Vigilância de IOB: insulina ativa alta e previsão de queda — SMB reduzido; prefira TBR. Aguarde a insulina acumulada agir.</string>
+
+    <string name="aimi_t3c_settings_title">Configurações do Modo Instável T3C</string>
+
+    <string name="oaps_aimi_adaptive_basal_title">Basal Adaptativa Universal</string>
+
+    <string name="oaps_aimi_adaptive_basal_summary">Dimensiona automaticamente as taxas basais padrão com base em insights neurais (para todos os usuários).</string>
+
+    <string name="oaps_aimi_adaptive_basal_max_scaling_title">Escalonamento Adaptativo Máximo</string>
+
+    <string name="oaps_aimi_adaptive_basal_max_scaling_summary">Multiplicador máximo permitido para escalonamento basal adaptativo (ex.: 1,5x).</string>
+
+    <string name="aimi_hormonitor_viewer_title">Hormonitor — dados de estudo</string>
+
+    <string name="aimi_hormonitor_viewer_summary">Navegue pelos dados exportados do estudo dia a dia: tempo no alvo, decisões e como a árvore/Harmonia, contexto fisio e hormonal foram aplicados.</string>
+
+    <string name="aimi_hormonitor_viewer_empty">Nenhum arquivo de estudo do Hormonitor encontrado ainda.</string>
+
+    <string name="aimi_hormonitor_viewer_no_events">Nenhum evento detalhado registrado para este dia.</string>
+
+    <string name="aimi_hormonitor_tir">TIR (baixa / no alvo / alta)</string>
+
+    <string name="aimi_hormonitor_tdd">Dose diária total</string>
+
+    <string name="aimi_hormonitor_decisions">Decisões</string>
+
+    <string name="aimi_hormonitor_reliability">Confiabilidade da fonte</string>
+
+    <string name="aimi_hormonitor_integrity">Integridade dos dados</string>
+
+    <string name="aimi_hormonitor_records">Registros</string>
+
+    <string name="aimi_hormonitor_schema">Esquema</string>
+
+    <string name="aimi_hormonitor_span">Intervalo de tempo</string>
+
+    <string name="aimi_hormonitor_patient_story">Cobertura do histórico do paciente</string>
+
+    <string name="aimi_hormonitor_physio_snapshot">Cobertura de instantâneo fisio</string>
+
+    <string name="aimi_hormonitor_malformed">Linhas malformadas</string>
+
+    <string name="aimi_hormonitor_tree_harmonia">Árvore / Harmonia</string>
+
+    <string name="aimi_hormonitor_patient_modes">Modos do paciente</string>
+
+    <string name="aimi_hormonitor_strategy_hints">Dicas de estratégia</string>
+
+    <string name="aimi_hormonitor_reason_codes">Códigos de motivo</string>
+
+    <string name="aimi_hormonitor_final_decisions">Decisões finais</string>
+
+    <string name="aimi_hormonitor_mode_confidence">Confiança média do modo</string>
+
+    <string name="aimi_hormonitor_vetoes">Vetos fisio</string>
+
+    <string name="aimi_hormonitor_narratives">Narrativas</string>
+
+    <string name="aimi_hormonitor_physio">Fisio</string>
+
+    <string name="aimi_hormonitor_physio_states">Estados fisio</string>
+
+    <string name="aimi_hormonitor_activity_states">Estados de atividade</string>
+
+    <string name="aimi_hormonitor_confidence">Confiança média</string>
+
+    <string name="aimi_hormonitor_data_quality">Qualidade média dos dados</string>
+
+    <string name="aimi_hormonitor_steps15">Passos (15 min)</string>
+
+    <string name="aimi_hormonitor_hr">Frequência cardíaca</string>
+
+    <string name="aimi_hormonitor_hormonal">Hormonal</string>
+
+    <string name="aimi_hormonitor_cycle_phase">Fase do ciclo</string>
+
+    <string name="aimi_hormonitor_thyroid">Tireoide</string>
+
+    <string name="aimi_hormonitor_inflammation">Inflamação</string>
+
+    <string name="aimi_hormonitor_cycle_day">Dia do ciclo</string>
+
+    <string name="aimi_hormonitor_safety">Segurança</string>
+
+    <string name="aimi_hormonitor_safety_gates">Barreiras de segurança</string>
+
+    <string name="aimi_hormonitor_safety_phases">Fases de segurança</string>
+
+    <string name="aimi_hormonitor_hypo_suppressed">Hipo preditiva suprimida</string>
+
+    <string name="aimi_hormonitor_composite_min">Mínimo composto</string>
+
+    <string name="aimi_hormonitor_mean">média</string>
+    <string name="folder_documents">Documents</string>
+    <string name="uam_model_status"> 📦 Modelo UAM: %1$s (%2$s, %3$s)</string>
+    <string name="log_smb_cache_cleared">Cache de SMB limpo</string>
+    <string name="log_interpreter_closed">Intérprete fechado</string>
+    <string name="log_error_closing_interpreter">Erro ao fechar o intérprete: %1$s</string>
+    <string name="sanitize_info"> 🧹 Higienizar: %1$d valores incompletos -&gt; 0</string>
+    <string name="cache_hit"> ⚡ Acerto de cache → %1$s U</string>
+    <string name="cache_hit_invalid"> ⚠️ Acerto de cache inutilizável (NaN/Inf), recalculando…</string>
+    <string name="uam_unavailable"> ❌ Modelo UAM indisponível → SMB=0</string>
+    <string name="tflite_failed"> 💥 Falha na execução do TFLite: %1$s → SMB=0</string>
+    <string name="log_tflite_failed">Falha na execução do TFLite: %1$s</string>
+    <string name="uam_executed"> ✔ UAM executado → %1$s U</string>
+    <string name="uam_invalid"> ⚠️ Resultado inutilizável (bruto=%1$f) → SMB=0</string>
+    <string name="model_missing"> ❌ Arquivo de modelo não encontrado: %1$s</string>
+    <string name="log_model_file_not_found">Arquivo de modelo não encontrado: %1$s</string>
+    <string name="model_loaded"> 📦 Modelo carregado ✓ : %1$s (%2$s KB)</string>
+    <string name="log_interpreter_initialized">Intérprete inicializado a partir de %1$s (%2$s)</string>
+    <string name="model_load_failed"> ❌ Falha ao carregar o modelo: %1$s</string>
+    <string name="log_failed_init_uam">Falha ao iniciar o modelo UAM: %1$s</string>
+
+    <!-- Dump R.string names that were missing from kmp English. Copied from freeze plugins/aps values/strings.xml. -->
+    <string name="adjustments_smb">🎛️ Ajustes: %1$.2f → %2$.2f U</string>
+    <string name="autodrive_prebolus_variables">Limites e condições de pré-bolus</string>
+    <string name="autodrive_status">🚗 Autodrive: %1$s |&#160;Modo lanche/pré-bolus: %2$s | </string>
+    <string name="autosens_ratio_log">Taxa Autosens: %.2f;</string>
+    <string name="bg_80_90_fall">Glicemia 80&#8211;90 e queda livre → basal em 0.\n</string>
+    <string name="bg_80_90_stable">Glicemia 80&#8211;90 estável → basal x0,2.\n</string>
+    <string name="bg_90_100_slight_gain">Glicemia 90&#8211;100 e leve alta → basal x0,5.\n</string>
+    <string name="bg_combined_delta_high">Delta combinado alto (%1$.2f), multiplicador dinâmico aplicado; </string>
+    <string name="bg_combined_delta_moderate">Delta combinado moderado (%1$.2f), redução x0,8; </string>
+    <string name="bg_combined_delta_weak">Delta combinado muito fraco (%1$.2f), redução x0,6; </string>
+    <string name="bg_delta">  • Glicemia: %1$.0f, Delta: %2$.2f\n</string>
+    <string name="bg_drop_high_critical">Queda CRÍTICA abaixo de 85 (%1$.1f mg/dL/h), PARADA BASAL;</string>
+    <string name="bg_drop_high_warning">Queda moderada abaixo de 110 (%1$.1f mg/dL/h), basal reduzida em 50%%;</string>
+    <string name="bg_near_target">Glicemia prevista (%1$.1f) perto do alvo (%2$.1f), redução x0,5; </string>
+    <string name="bg_near_target_but_rising">Glicemia prevista (%1$.1f) perto do alvo (%2$.1f), mas alta detectada (Δ=%3$.1f, combinado=%4$.1f) → sem redução; </string>
+    <string name="bg_note_less_aggressive">menos agressivo</string>
+    <string name="bg_note_low_treatment">tratamento de baixa</string>
+    <string name="bg_note_more_aggressive">mais agressivo</string>
+    <string name="bg_note_normal">normal</string>
+    <string name="bg_note_too_aggressive">agressivo demais</string>
+    <string name="bg_over_180_stable_basal_factor">Glicemia &gt;180 estável → fator de ajuste da basal x.</string>
+    <string name="bg_rapid_rise">Alta rápida detectada (delta %1$.0f mg/dL), aplicando modo de emergência; </string>
+    <string name="bg_stable_high_delta_low">Glicemia estável &gt;160 e delta combinado &lt;1, redução x0,8; </string>
+    <string name="bg_trend_analysis">→ Análise de Tendência da Glicemia\n</string>
+    <string name="calc_dynamic_peaktime">🧠 Cálculo de Tempo de Pico Dinâmico\n</string>
+    <string name="calculated_trend">  • Tendência calculada: %1$.1f mg/dL/intervalo\n</string>
+    <string name="calm_meal_and_timing">Refeição calma e tempo → basal x1,5.</string>
+    <string name="condition_acceleratingdown">Aceleração da glicemia para baixo</string>
+    <string name="condition_belowminthreshold">Glicemia &lt;60 abaixo do limiar mínimo</string>
+    <string name="condition_belowtarget_dropping">Glicemia abaixo do alvo e caindo</string>
+    <string name="condition_belowtarget_stable_nocob">Glicemia abaixo do alvo estável sem COB</string>
+    <string name="condition_bg90">Glicemia &lt;90</string>
+    <string name="condition_droppingfast">Glicemia caindo rápido</string>
+    <string name="condition_droppingfastathigh">queda rápida a partir de glicemia &gt;180</string>
+    <string name="condition_droppingveryfast">Glicemia caindo muito rápido</string>
+    <string name="condition_fasting">jejum</string>
+    <string name="condition_honeysmb">SMB em modo "lua de mel"</string>
+    <string name="condition_hypoguard">proteção contra hipoglicemia</string>
+    <string name="condition_negdelta">delta negativo</string>
+    <string name="condition_newcalibration">nova calibração do sensor</string>
+    <string name="condition_nosmb">nenhum microbolus necessário</string>
+    <string name="condition_prediction">previsão de glicemia</string>
+    <string name="console_adjust_basal">Ajustando basal de %.2f para %.2f; </string>
+    <string name="console_basal_unchanged">Basal inalterada: %.2f; </string>
+    <string name="console_carb_impact">Impacto de carboidrato: %.0f mg/dL por 5m; Duração do IC: %.1f horas; IC restante (pico ~2h): %.1f mg/dL por 5m</string>
+    <string name="console_dia_adjusted">DIA Ajustado (em minutos) : %.0f</string>
+    <string name="console_limiting_carb_impact">Limitando impacto de carboidrato de %.0f para %.0f mg/dL/5m ( %d g/h )</string>
+    <string name="console_max_bg_adjusted">max_bg de %.2f para %.2f</string>
+    <string name="console_max_bg_unchanged">max_bg inalterado: %.2f</string>
+    <string name="console_min_bg_adjusted">Ajustando alvos para glicemia alta: min_bg de %.2f para %.2f; </string>
+    <string name="console_min_bg_unchanged">min_bg inalterado: %.2f; </string>
+    <string name="console_profile_sens">Perfil de sensibilidade: %.0f, sens: %.0f, CSF: %.0f</string>
+    <string name="console_target_bg_adjusted">target_bg de %.2f para %.2f; </string>
+    <string name="console_target_bg_changed">target_bg de %.2f para %.2f; </string>
+    <string name="console_target_bg_unchanged">target_bg inalterado: %.2f; </string>
+    <string name="console_temp_target_set">Alvo Temporário definido, sem ajustar com autosens</string>
+    <string name="context_patient_state_empty">Ainda não há compreensão do AIMI. Ela é atualizada a cada ciclo do loop e quando os sinais corporais ou o contexto do usuário mudam.</string>
+    <string name="context_title">Contexto AIMI</string>
+
+    <string name="pref_title_aimi_context">Contexto AIMI</string>
+    <string name="pref_summary_aimi_context">Informe ao AIMI sobre exercícios, doença, estresse ou viagem e veja como ele lê o seu corpo no momento.</string>
+
+    <string name="pref_title_aimi_meal_advisor">Consultor de Refeições AIMI</string>
+    <string name="pref_summary_aimi_meal_advisor">Tire uma foto da sua refeição e deixe o AIMI estimar os carboidratos antes de registrá-los.</string>
+
+    <string name="pref_title_aimi_mode_settings">Configurações de Modos AIMI</string>
+    <string name="pref_summary_aimi_mode_settings">Defina as doses de pré-bolus, o tamanho do SMB em percentual (100 = completo, 50 = metade) e o tempo para almoço, jantar, café da manhã e refeições com alto carboidrato, e ative um modo agora mesmo.</string>
+
+    <string name="pref_title_aimi_profile_advisor">Consultor de Perfil AIMI</string>
+    <string name="pref_summary_aimi_profile_advisor">Revise suas métricas de 7 dias e aplique um ajuste gradual para o padrão que você está vendo agora.</string>
+
+    <string name="aimi_mode_settings_title">Configurações de Modos</string>
+    <string name="aimi_mode_settings_tab_lunch">Almoço</string>
+    <string name="aimi_mode_settings_tab_dinner">Jantar</string>
+    <string name="aimi_mode_settings_tab_bfast">Café da manhã</string>
+    <string name="aimi_mode_settings_tab_highcarb">Alto Carboidrato</string>
+    <string name="aimi_mode_settings_prebolus1_label">Pré-bolus 1 (U)</string>
+    <string name="aimi_mode_settings_prebolus2_label">Pré-bolus 2 (U)</string>
+    <string name="aimi_mode_settings_reactivity_label">Tamanho do SMB em percentual (100 = completo, 50 = metade)</string>
+    <string name="aimi_mode_settings_duration_label">Duração (min)</string>
+    <string name="aimi_mode_settings_interval_label">Intervalo (min)</string>
+    <string name="aimi_mode_settings_prebolus1_hint">2.5</string>
+    <string name="aimi_mode_settings_prebolus2_hint">2.0</string>
+    <string name="aimi_mode_settings_reactivity_hint">100</string>
+    <string name="aimi_mode_settings_duration_hint">60</string>
+    <string name="aimi_mode_settings_interval_hint">5</string>
+    <string name="aimi_mode_settings_save_button">Salvar configurações</string>
+    <string name="aimi_mode_settings_activate_button" comment="%1$s = mode name (Lunch, Dinner, Breakfast, High Carb). Example: Activate Lunch">Ativar %1$s</string>
+    <string name="aimi_mode_settings_activate_confirm_title" comment="%1$s = mode name. Example: Activate Lunch mode?">Ativar modo %1$s?</string>
+    <string name="aimi_mode_settings_activate_confirm_message" comment="%1$s = mode name, %2$d = duration in minutes. Example: This creates a note named &quot;Lunch&quot; that lasts 60 minutes. AIMI uses this note to switch into Lunch mode.">Isso cria uma nota chamada \"%1$s\" que dura %2$d minutos. O AIMI usa essa nota para alternar para o modo %1$s.</string>
+    <string name="aimi_mode_settings_activated_message" comment="%1$s = mode name, %2$d = duration in minutes. Example: Lunch mode is now active for 60 minutes.">O modo %1$s está ativo agora por %2$d minutos.</string>
+    <string name="aimi_mode_settings_activate_error" comment="%1$s = the error message. Example: Could not activate mode: network error">Não foi possível ativar o modo: %1$s</string>
+
+    <string name="aimi_context_intro">Diga ao AIMI o que está acontecendo (exercício, doença, estresse, viagem...) e ele fará ajustes pelas próximas horas. Digite uma frase ou toque em uma predefinição abaixo.</string>
+    <string name="aimi_context_chat_hint">Descreva o que está acontecendo</string>
+    <string name="aimi_context_send_button">Analisar</string>
+    <string name="aimi_context_clear_button">Limpar</string>
+    <string name="aimi_context_llm_failure_message">Não foi possível detectar um contexto nesse texto. Tente uma frase mais simples ou toque em uma predefinição.</string>
+    <string name="aimi_context_offline_failure_message">Nenhum contexto correspondeu a essas palavras. Tente uma palavra-chave simples (Esporte, Doença, Estresse) ou toque em uma predefinição.</string>
+    <string name="aimi_context_error_prefix" comment="%1$s = the error message that follows the colon">Erro</string>
+    <string name="aimi_context_intent_added" comment="%1$d = how many contexts were added from the typed text. Example: 2 context(s) added">%1$d contexto(s) adicionado(s)</string>
+    <string name="aimi_context_parse_failed_title">Não foi possível entender isso</string>
+
+    <string name="aimi_context_presets_title">Predefinições rápidas</string>
+    <string name="aimi_context_active_intents_title">Contextos ativos</string>
+    <string name="aimi_context_clear_all_button">Limpar tudo</string>
+    <string name="aimi_context_empty_state">Nenhum contexto ativo. O AIMI está usando suas configurações normais, sem modificações.</string>
+    <string name="aimi_context_remove_action">Remover</string>
+    <string name="aimi_context_extend_action">Estender</string>
+    <string name="aimi_context_extend_dialog_title">Estender em</string>
+    <string name="aimi_context_duration_minutes" comment="%1$d = number of minutes">%1$d min</string>
+    <string name="aimi_context_duration_hours" comment="%1$d = number of hours">%1$d h</string>
+    <string name="aimi_context_clear_all_confirm_title">Remover todos os contextos ativos?</string>
+    <string name="aimi_context_clear_all_confirm_message">O AIMI voltará a ler apenas os dados normais do seu loop.</string>
+    <string name="aimi_context_clear_all_confirm_button">Remover tudo</string>
+
+    <string name="aimi_context_settings_title">Configurações</string>
+    <string name="aimi_context_module_enabled_label">Módulo de contexto ativado</string>
+    <string name="aimi_context_llm_enabled_label">Usar IA para ler texto livre</string>
+
+    <string name="aimi_context_time_expired">Expirado</string>
+    <string name="aimi_context_time_minutes" comment="%1$d = minutes left">%1$d min restantes</string>
+    <string name="aimi_context_time_hours_minutes" comment="%1$d = hours left, %2$d = extra minutes left">%1$dh %2$dmin restantes</string>
+    <string name="aimi_context_confidence_high">Alta confiança</string>
+    <string name="aimi_context_confidence_medium">Confiança média</string>
+    <string name="aimi_context_confidence_low">Baixa confiança</string>
+
+    <string name="aimi_context_intent_activity" comment="%1$s = activity type (e.g. Cardio), %2$s = intensity (e.g. High)">Atividade: %1$s (%2$s)</string>
+    <string name="aimi_context_intent_illness" comment="%1$s = symptom type, %2$s = intensity">Doença: %1$s (%2$s)</string>
+    <string name="aimi_context_intent_stress" comment="%1$s = stress type, %2$s = intensity">Estresse: %1$s (%2$s)</string>
+    <string name="aimi_context_intent_meal_risk" comment="%1$s = intensity">Risco de refeição não declarada (%1$s)</string>
+    <string name="aimi_context_intent_alcohol" comment="%1$.1f = units of alcohol, %2$s = intensity">Álcool: %1$.1f U (%2$s)</string>
+    <string name="aimi_context_intent_travel" comment="%1$d = timezone shift in hours, %2$s = intensity">Viagem: fuso de %1$dh (%2$s)</string>
+    <string name="aimi_context_intent_cycle" comment="%1$s = menstrual cycle phase">Ciclo menstrual: %1$s</string>
+    <string name="aimi_context_intent_slow_carb" comment="%1$s = intensity">Refeição de absorção lenta (%1$s)</string>
+    <string name="aimi_context_intent_hypo_recovery" comment="%1$s = intensity">Recuperação de hipo (%1$s)</string>
+
+    <string name="aimi_context_physio_narrative_title">Resumo diário do corpo</string>
+    <string name="aimi_context_physio_narrative_footnote">Escrito uma vez ao dia pelo provedor de IA que você escolheu, a partir dos seus dados de sono, frequência cardíaca e atividade. Ele explica apenas o estado do seu corpo. Não altera a insulina e não é aconselhamento médico.</string>
+
+    <string name="aimi_context_patient_state_title">Estado do paciente</string>
+    <string name="aimi_context_patient_state_live_body_label">Sinais corporais em tempo real</string>
+    <string name="aimi_context_patient_state_thermal_label">Temperatura</string>
+    <string name="aimi_context_patient_state_phase_label">Fase fisiológica</string>
+    <string name="aimi_context_patient_state_intent_label">Contexto dominante</string>
+    <string name="aimi_context_patient_state_signals_label">Detalhamento de sinais</string>
+    <string name="aimi_context_patient_state_bias_label">Estratégia de entrega</string>
+    <string name="aimi_context_patient_state_reasons_label">Motivos</string>
+    <string name="dia_base_info">DIA base: %1$f h = %2$f min\n</string>
+    <string name="dia_calculation_details">Detalhes do Cálculo de DIA:</string>
+    <string name="endo_preferences_title">Configurações de Endometriose</string>
+    <string name="eventual_bg_over_110_hyper_factor">Glicemia eventual &gt;110 e hiper → ajuste de fator.</string>
+    <string name="final_dia_constrained">DIA final limitado a [180, 720] min: %1$.0fmin</string>
+    <string name="finalization_smb">🧩 Finalização: %1$.2f → %2$.2f U</string>
+    <string name="first_bg_value">  • Primeira glicemia : %1$.1f mg/dL\n</string>
+    <string name="heart_rate">&#160;| FC=%1$s bpm</string>
+    <string name="honeymoon_bg_140_169_profile">Lua de mel glicemia 140&#8211;169 → perfil.</string>
+    <string name="honeymoon_bg_over_170_adjustment">Lua de mel glicemia &gt;170 → ajuste.</string>
+    <string name="honeymoon_delta_over_2_bg_90_119_profile">Lua de mel Δ&gt;2 e glicemia 90&#8211;119 → perfil.</string>
+    <string name="honeymoon_meal_slope">Inclinação de refeição em lua de mel.</string>
+    <string name="honeymoon_mixed_correction">Correção mista em lua de mel.</string>
+    <string name="honeymoon_plus_meal_detection">Lua de mel + detecção de refeição.</string>
+    <string name="honeymoon_small_slope">Pequena inclinação em lua de mel.</string>
+    <string name="hypo_risk_notification_text">Risco de hipo: queda rápida detectada. Verifique sua glicemia agora.</string>
+    <string name="hypo_risk_notification_title">Risco de Hipo</string>
+    <string name="insulin_effect">Efeito da insulina: %1$.2f</string>
+    <string name="iob_high_reduction">IOB alto (%1$.2f U), redução x0,85; </string>
+    <string name="last_bg_value">  • Última glicemia : %1$.1f mg/dL\n</string>
+    <string name="lgs_triggered">🛑 LGS: Glicemia=%1$s ≤ %2$s → TBR 0U/h (30m)\n</string>
+    <string name="lgs_triggered_min_pred">🛑 LGS: minPred=%1$s mg/dL ≤ %2$s (glicemia atual acima do limiar) → TBR 0U/h (30m)\n</string>
+    <string name="lgs_triggered_predicted">🛑 LGS: prev=%1$s eventual=%2$s ≤ %3$s → TBR 0U/h (30m)\n</string>
+    <string name="limits_smb">🧱 Limites: %1$.2f → %2$.2f U</string>
+    <string name="manual_basal_override">Basal forçada → %1$.2f U/h (%2$dmin). Modo manual de refeição %3$s\n</string>
+    <string name="manual_meal_prebolus">&#160;Microdosando Modo Refeição %1$.2fU.</string>
+    <string name="fcl_prebolus" comment="%1$.2f = prebolus size in insulin units, for example 1.00. Appended to the loop reason line.">&#160;Microdosando modo FCL %1$.2fU.</string>
+    <string name="meal_dinner_maintain">Manter modo jantar (piso %.1f)</string>
+    <string name="meal_mode_first_30">Modos manuais de refeição 0&#8211;30m [%1$s] → basal forçada em %2$.2f U/h (sobreposição).\n</string>
+    <string name="meal_snack_30_60m_rising_basal_delta">Refeição/lanche 30&#8211;60m e subindo → basal Δ.</string>
+    <string name="meal_snack_under_30m_basal_10">Refeição/lanche &lt;30m → basal x10.</string>
+    <string name="morning_adjustment">Ajuste da manhã (6&#8211;10h): DIA reduzido em 20%</string>
+    <string name="morning_rise_profile_basal">Elevação matinal → basal do perfil.</string>
+    <string name="night_adjustment">Ajuste noturno (22&#8211;23h e 0&#8211;5h): DIA aumentado em 20%</string>
+    <string name="no_bg_history">✘ Nenhum histórico recente de glicemia disponível.\n</string>
+    <string name="no_conditions_met_2">Nenhuma condição atendida</string>
+    <string name="number_of_values">  • Número de valores : %1$d\n</string>
+    <string name="peak_time">  → 🕒 TempoPico=%1$s min | Glicemia=%2$s Δ%3$s</string>
+    <string name="profile_peak_time">  • Pico do perfil: %1$.0f\n</string>
+    <string name="pump_age_adjustment">Idade da bomba (%1$.0f dias): DIA aumentado em %2$.0f%%</string>
+    <string name="reason_activity_cap">Limite de SMB de Atividade (%.2f)</string>
+    <string name="reason_activity_ratio">  • Taxa de atividade: %1$.2f ➝ fator %2$.2f\n</string>
+    <string name="reason_additional_carbs">%d carboidratos adicionais necessários em %dmin;</string>
+    <string name="reason_ai_file">🧠 Arquivo de I.A.: %1$s Previsão : %2$s U</string>
+    <string name="reason_autodrive_v3_authoritative_blender_skipped">🛡️ Autodrive V3 com autoridade: combinador legado MPC/PI ignorado</string>
+    <string name="reason_bg_data_old">Se a hora atual do sistema %1$d estiver correta, os dados de glicemia são antigos demais. A última leitura de glicemia foi feita há %2$.0f minutos às %3$d</string>
+    <string name="reason_bg_dropping">, a glicemia está caindo (delta %1$.0f), definindo basal em 0.</string>
+    <string name="reason_bg_dropping_floor">Queda (Δ%.1f), piso de segurança (%.2f)</string>
+    <string name="reason_bio_sync_flow">  • 🟢 Bio-Sync FLUXO (Passos %1$d, FC %2$d) ➝ Pico mais rápido x%3$.2f\n</string>
+    <string name="reason_bio_sync_stress">  • 🔴 Bio-Sync ESTRESSE (FC %1$d, Passos %2$d) ➝ Pico mais lento x1,25\n</string>
+    <string name="reason_boost_hyper">⚡ Reforço de hiper: x1,7 (Glicemia=%1$d, Δ=%2$.1f)</string>
+    <string name="reason_boost_hyper_2">⚡ Reforço de hiper: x1,5 (Glicemia=%1$d, Δ=%2$.1f)</string>
+    <string name="reason_cgm_calibrating">O CGM está calibrando, no estado ??? ou o ruído está alto</string>
+    <string name="reason_cgm_flat">Erro: os dados do CGM não mudaram nos últimos ~45m</string>
+    <string name="reason_data_removed" comment="%1$s=the day, as the phone writes a date. Example: 25/10/2026">As linhas de %1$s foram movidas para fora do arquivo de treinamento para oapsaimiML2_records_excluded.csv, porque o tempo no alvo desse dia ficou abaixo de 65%%.</string>
+    <string name="reason_delete_note_done" comment="%1$s=the day, as the phone writes a date. Example: 25/10/2026. %2$d=number of rows">Excluir nota: %2$d linhas de %1$s foram movidas para fora do arquivo de treinamento para oapsaimiML2_records_excluded.csv.</string>
+    <string name="reason_delete_note_nothing" comment="%1$s=the day, as the phone writes a date. Example: 25/10/2026">Excluir nota: o arquivo de treinamento não tem linhas de %1$s. Nada foi removido.</string>
+    <string name="reason_delete_note_unreadable" comment="%1$s=the note text as the user wrote it. Example: delete 2026-10-25">Excluir nota \"%1$s\": o dia não pôde ser lido. Escreva \"delete\" para ontem, ou \"delete dd/mm/aaaa\". Nada foi removido.</string>
+    <string name="reason_early_meal">Refeição precoce detectada → TBR forçada para %1$.2fU/h x30 (sobreposição).\n</string>
+    <string name="reason_eventual_bg">Glicemia eventual %1$s &gt;= %2$s, </string>
+    <string name="reason_hyper_correction">  • Fator de hiperglicemia: %1$.2f\n</string>
+    <string name="reason_hypo_guard">🛑 Proteção de hipo + margem de segurança: minBG=%1$s ≤ Limiar=%2$s (Glicemia=%3$s, previsto=%4$s, eventual=%5$s) → SMB=0</string>
+    <string name="reason_insulin_required"> insulina necessária %1$.2f</string>
+    <string name="reason_iob_adjustment_inverted">  • Aceleração de Atividade do IOB: -%1$.1f min\n</string>
+    <string name="reason_iob_max">IOB %.2f &gt; maxIOB %.2f</string>
+    <string name="reason_max_iob">Ajustes : MaxIob %.2f U </string>
+    <string name="reason_max_smb">; maxBolus %1$.2f</string>
+    <string name="reason_maxsmb">&#160;| MaxSMB %.1f U&#160;\n</string>
+    <string name="reason_meal_aggression_boost">🍽️ Ponderação de refeição: %1$.2fU → %2$.2fU (x%3$.2f)</string>
+    <string name="reason_meal_high_iob_relaxed">Modo refeição subindo: IOB %1$.2f &gt; máx %2$.2f → SMB amortecido para %3$d%%.</string>
+    <string name="reason_meal_hold_profile_basal">Modo refeição subindo: IOB %1$.2f &gt; máx %2$.2f → basal mantida no mínimo do perfil.\n</string>
+    <string name="reason_microbolus">Microdosando %1$.2fU.</string>
+    <string name="reason_ml_training">🗃️ Treinamento de ML: conjunto de dados insuficiente, sem refinamento\n</string>
+    <string name="reason_mpc_pi">🎛️ Modelo preditivo MPC: %.2f U (%.0f%%) | Modelo fisiológico PI: %.2f U (%.0f%%)</string>
+    <string name="reason_prebolus_bfast1">&#160;Microdosando 1/2 Modo Café da Manhã %.2fU.</string>
+    <string name="reason_prebolus_bfast2">&#160;Microdosando 2/2 Modo Café da Manhã %.2fU. </string>
+    <string name="reason_prebolus_dinner1">&#160;Microdosando 1/2 Modo Jantar %.2fU.</string>
+    <string name="reason_prebolus_dinner2">&#160;Microdosando 2/2 Modo Jantar %.2fU.</string>
+    <string name="reason_prebolus_highcarb">&#160;Microdosando 1/2 Modo Alto Carboidrato %.2fU.</string>
+    <string name="reason_prebolus_lunch1">&#160;Microdosando 1/2 Modo Almoço %.2fU.</string>
+    <string name="reason_prebolus_lunch2">&#160;Microdosando 2/2 Modo Almoço %.2fU.</string>
+    <string name="reason_prebolus_snack">&#160;Microdosando Modo Lanche %.2fU.</string>
+    <string name="reason_safety_sport_meal_reduction">🏃‍♂️ Segurança de esporte suavizada por refeição: %1$.2fU → %2$.2fU</string>
+    <string name="reason_sensor_lag">  • SensorLag &gt; Histórico ➝ x0,85\n</string>
+    <string name="reason_sensor_lag_lower">  • SensorLag &lt; Histórico ➝ x1,2\n</string>
+    <string name="reason_set_temp_basal">; definindo basal atual de %1$.2f como temporária.</string>
+    <string name="reason_strong_rise_basal">Alta forte (Δmax=%1$.1f) → basal x%2$.2f.</string>
+    <string name="reason_wait_microbolus">Aguardando %1$.0fmin %2$.0fs para microdosar novamente.</string>
+    <string name="safety_condition">Condição de segurança %1$s : %2$s</string>
+    <string name="safety_cut_tbr">Corte de segurança: glicemia prevista &lt;100 ou IOB &gt;%1$.2f → basal em 0.\n</string>
+    <string name="safety_sport_smb_zero">🏃‍♂️ Segurança de esporte → SMB=0</string>
+    <string name="sensitivity_ratio_temp_target">Taxa de sensibilidade definida em %.2f com base no alvo temporário de %.0f;</string>
+    <string name="slow_rise_proportional_adjustment">Alta lenta → ajuste proporcional.</string>
+    <string name="smb_disabled">SMB desativado (!microBolusAllowed)</string>
+    <string name="smb_disabled_high_target">SMB desativado devido a alvo temporário alto de %1$.0f</string>
+    <string name="smb_disabled_no_pref_or_condition">SMB desativado (nenhuma preferência enableSMB ativa ou nenhuma condição atendida)</string>
+    <string name="smb_enabled_after_carb_entry">SMB ativado por 6h após registro de carboidratos</string>
+    <string name="smb_enabled_always">SMB ativado devido a enableSMB_always</string>
+    <string name="smb_enabled_for_cob">SMB ativado para COB de %1$.1f</string>
+    <string name="smb_enabled_for_temp_target">SMB ativado para alvo temporário de %1$s</string>
+    <string name="smb_enabled_meal_mode">SMB ativado: modo refeição subindo (Glicemia %1$s, Δ=%2$.1f, eventual %3$s)</string>
+    <string name="smb_final">✅ SMB Final: %1$s U</string>
+    <string name="sos_log_error_send">Falha ao enviar SMS de SOS</string>
+    <string name="sos_log_monitoring_start">Glicemia caiu abaixo do limiar (%1$.1f &lt; %2$.1f). Iniciando monitoramento de 30 min.</string>
+    <string name="sos_log_sending">Enviando SMS de SOS (Glicemia: %1$.1f, Delta: %2$s)</string>
+    <string name="sos_sms_footer_critical">\nTOME PROVIDÊNCIAS AGORA!</string>
+    <string name="sos_sms_footer_low">\nAGUARDANDO RECUPERAÇÃO OU AÇÃO DO USUÁRIO</string>
+    <string name="sos_sms_footer_recovery">\nA GLICEMIA ESTÁ SUBINDO — AGUARDE CONFIRMAÇÃO</string>
+    <string name="sos_sms_footer_stale">\nVERIFIQUE A CONEXÃO DO SENSOR.</string>
+    <string name="sos_sms_label_bg">GLICEMIA</string>
+    <string name="sos_sms_label_iob">INSULINA ATIVA</string>
+    <string name="sos_sms_label_last_bg">ÚLTIMA GLICEMIA</string>
+    <string name="sos_sms_label_pos">Pos</string>
+    <string name="sos_sms_label_time">HORA</string>
+    <string name="sos_sms_label_trend">TENDÊNCIA</string>
+    <string name="sos_sms_pos_not_available">Não disponível</string>
+    <string name="sos_sms_title_critical">SOS: HIPO CRÍTICA</string>
+    <string name="sos_sms_title_low">ALERTA SOS DE GLICEMIA BAIXA</string>
+    <string name="sos_sms_title_recovery">SOS HIPO: FASE DE RECUPERAÇÃO</string>
+    <string name="sos_sms_title_stale">AAPS: DADOS DO SENSOR AUSENTES</string>
+    <string name="steps">&#160;| Passos=%1$d</string>
+    <string name="tdd_per_hour_high">TDD/h alto (%1$.2f U/h), redução x0,8; </string>
+    <string name="temp_basal_pose">Basal temp %1$s U/h por %2$d minutos\n</string>
+    <string name="tir_high">TIR alto (%1$.1f%%), redução x0,5;</string>
+    <string name="training_ml_breakfast_modes_preferences">Café da manhã</string>
+    <string name="training_ml_dinner_modes_preferences">Jantar</string>
+    <string name="training_ml_generic_meal_modes_preferences">Refeição Genérica</string>
+    <string name="training_ml_high_carb_modes_preferences">Alto Carboidrato</string>
+    <string name="training_ml_lunch_modes_preferences">Almoço</string>
+    <string name="training_ml_sleep_modes_preferences">Repouso</string>
+    <string name="training_ml_snack_modes_preferences">Lanche</string>
+    <string name="user_preferences">Preferências do usuário</string>
+    <string name="zero_basal_forced">Duração de basal zero (%1$d min) excedida, forçando basal mínima; </string>
+    <string name="aimi_permission_steps_title">Atividade física</string>
+    <string name="aimi_permission_steps_description">O AIMI lê o contador de passos deste telefone para ver quando você está ativo. Sem esta permissão, os passos do telefone permanecem desconhecidos.</string>
+
+    <!-- Labels of the women cycle and inflammatory disease lists. One string per entry. -->
+    <string name="aimi_wcycle_tracking_fixed_28">Fixo de 28 dias</string>
+    <string name="aimi_wcycle_tracking_calendar_variable">Calendário variável</string>
+    <string name="aimi_wcycle_tracking_no_menses_larc" comment="LARC = long-acting reversible contraception (hormonal IUD, implant). Menstrual periods stop.">Sem menstruação (LARC)</string>
+    <string name="aimi_wcycle_tracking_perimenopause">Perimenopausa</string>
+    <string name="aimi_wcycle_tracking_menopause">Menopausa</string>
+    <string name="aimi_wcycle_contraceptive_none" comment="Birth control method: none">Nenhum</string>
+    <string name="aimi_wcycle_contraceptive_coc_pill">Pílula combinada (COC)</string>
+    <string name="aimi_wcycle_contraceptive_pop_pill">Pílula apenas de progestagênio (POP)</string>
+    <string name="aimi_wcycle_contraceptive_hormonal_iud">DIU hormonal</string>
+    <string name="aimi_wcycle_contraceptive_copper_iud">DIU de cobre</string>
+    <string name="aimi_wcycle_contraceptive_implant" comment="Birth control method: contraceptive implant">Implante</string>
+    <string name="aimi_wcycle_contraceptive_injection" comment="Birth control method: contraceptive injection">Injeção</string>
+    <string name="aimi_wcycle_contraceptive_ring" comment="Birth control method: vaginal ring">Anel</string>
+    <string name="aimi_wcycle_contraceptive_patch" comment="Birth control method: contraceptive skin patch">Adesivo</string>
+    <string name="aimi_wcycle_thyroid_euthyroid">Eutireoidiano</string>
+    <string name="aimi_wcycle_thyroid_hypothyroid_treated">Hipotireoidismo tratado</string>
+    <string name="aimi_wcycle_thyroid_hashimoto">Hashimoto</string>
+    <string name="aimi_wcycle_thyroid_thyroidectomy">Tireoidectomia</string>
+    <string name="aimi_wcycle_verneuil_none" comment="Hidradenitis suppurativa (Verneuil disease) state: the person does not have it">Nenhum</string>
+    <string name="aimi_wcycle_verneuil_quiescent" comment="Hidradenitis suppurativa (Verneuil disease) state: present but quiet">Quieto</string>
+    <string name="aimi_wcycle_verneuil_active" comment="Hidradenitis suppurativa (Verneuil disease) state: active">Ativo</string>
+    <string name="aimi_wcycle_verneuil_flare" comment="Hidradenitis suppurativa (Verneuil disease) state: a flare is going on">Crise</string>
+
+    <!-- Labels of the AI auditor mode list. -->
+    <string name="aimi_auditor_mode_audit_only">Apenas auditoria (registrar pareceres)</string>
+    <string name="aimi_auditor_mode_soft_modulation">Modulação suave (aplicar se confiante)</string>
+    <string name="aimi_auditor_mode_high_risk_only">Apenas alto risco (aplicar com alertas de risco)</string>
+
+    <!-- Settings audit screen. -->
+    <string name="aimi_settings_audit_entry_title">Auditoria de configurações</string>
+    <string name="aimi_settings_audit_entry_summary">Veja quais das suas configurações diferem do padrão do app e quem as alterou.</string>
+    <string name="aimi_settings_audit_title">Auditoria de configurações</string>
+    <string name="aimi_settings_audit_summary" comment="%1$s=number of settings that differ, %2$s=total number of settings checked. Example: 3 of 230 settings differ from their shipped default.">%1$s de %2$s configurações diferem do padrão de fábrica.</string>
+    <string name="aimi_settings_audit_empty">Todas as configurações correspondem ao padrão do app.</string>
+    <string name="aimi_settings_audit_row_tags" comment="%1$s=level such as Advanced, %2$s=family such as Protection. Example: Advanced · Protection">%1$s · %2$s</string>
+    <string name="aimi_settings_audit_changed_by_loop">Alterado pelo loop</string>
+    <string name="aimi_settings_audit_changed_by_slider">Definido por controle deslizante</string>
+    <string name="aimi_settings_audit_changed_by_user">Alterado por você</string>
+    <string name="aimi_settings_audit_stored_label">Valor atual</string>
+    <string name="aimi_settings_audit_default_label">Padrão de fábrica</string>
+    <string name="aimi_settings_audit_secret_set">Definido</string>
+    <string name="aimi_settings_audit_secret_not_set">Não definido</string>
+    <string name="aimi_settings_audit_reset_button">Redefinir para o padrão</string>
+    <string name="aimi_settings_audit_reset_done">Configuração redefinida para o padrão de fábrica.</string>
+    <string name="aimi_settings_audit_stored_ignored">Armazenado, mas não usado: o loop está rodando com o padrão de fábrica. Desative o modo simples para que este valor tenha efeito.</string>
+    <string name="aimi_settings_audit_reset_confirm_title">Redefinir esta configuração?</string>
+    <string name="aimi_settings_audit_reset_confirm_message" comment="%1$s=setting name, %2$s=the value that will be written. Example: Body weight will be set back to 50.">%1$s voltará para %2$s. Isso altera como o loop dosa.</string>
+    <string name="aimi_settings_audit_reset_confirm_message_secret" comment="%1$s=setting name. Example: Oura access token will be cleared.">%1$s será limpo. Você precisará inseri-lo novamente.</string>
+    <string name="aimi_permission_state_granted">Permitido</string>
+    <string name="aimi_permission_state_denied">Não permitido</string>
+    <string name="aimi_permission_state_not_asked">Ainda não solicitado</string>
+    <string name="aimi_permission_state_answered">Respondido. O iOS não informa aos apps o que você escolheu.</string>
+    <string name="aimi_permission_state_unavailable">Não disponível</string>
+    <string name="aimi_permission_ask_button">Perguntar agora</string>
+    <string name="aimi_permission_open_settings_button">Abrir Ajustes do iPhone</string>
+    <string name="pref_title_aimi_sos_alert_ios">Alerta de SOS neste iPhone</string>
+    <string name="pref_summary_aimi_sos_alert_ios">Um app de iPhone não pode enviar SMS. No iPhone, o SOS mostra um alerta neste telefone. Toque para verificar se o alerta está permitido.</string>
+    <string name="aimi_sos_ios_screen_title">Alerta de SOS</string>
+    <string name="aimi_sos_ios_intro">No iPhone, o SOS de Emergência não envia SMS e não compartilha sua localização. Quando o SOS inicia, o AAPS mostra um alerta neste telefone com seus dados de glicemia e os números de emergência que você digitou, para que você ou alguém perto possa ligar para eles. O alerta só pode aparecer se as notificações estiverem permitidas.</string>
+    <string name="aimi_sos_ios_row_notifications">Notificações</string>
+    <string name="aimi_sos_ios_row_critical">Alertas críticos (som no modo silencioso)</string>
+    <string name="aimi_sos_ios_note">Alertas críticos exigem um direito especial que a Apple concede apenas mediante solicitação. Sem isso, o alerta de SOS é uma notificação sensível ao tempo e segue as configurações de som do telefone. Para alterar uma escolha já feita, abra os Ajustes do iPhone.</string>
+    <string name="pref_title_aimi_healthkit_access">Acesso ao Apple Health</string>
+    <string name="pref_summary_aimi_healthkit_access">Permita que o AIMI leia passos, frequência cardíaca, variabilidade da frequência cardíaca, frequência cardíaca de repouso, sono e temperatura do Apple Health.</string>
+    <string name="aimi_healthkit_intro">O AIMI lê passos, frequência cardíaca, variabilidade da frequência cardíaca, frequência cardíaca de repouso, sono e temperatura do Apple Health. Ele não grava nada no Apple Health.</string>
+    <string name="aimi_healthkit_row_read">Acesso de leitura ao Apple Health</string>
+    <string name="aimi_healthkit_note">O iOS pergunta apenas uma vez. Depois disso, o iOS não informa aos apps quais dados você permitiu, e os dados não permitidos simplesmente parecem vazios. Para alterar sua escolha, abra o app Saúde, toque na sua foto de perfil, depois em Apps em Privacidade e então neste app.</string>
+    <!-- Essentials page and the AIMI setting row (step S1) -->
+    <string name="aimi_essentials_title">Essenciais</string>
+    <string name="aimi_essentials_summary">Seus próprios dados e os limites de dose, com o valor em uso agora.</string>
+    <string name="aimi_essentials_disclaimer">Isto não é aconselhamento médico. Converse com sua equipe de saúde antes de alterar um limite de dose.</string>
+    <string name="aimi_essentials_group_patient">Sobre você</string>
+    <string name="aimi_essentials_group_limits">Limites de dose</string>
+    <string name="aimi_essentials_group_targets">Alvos</string>
+    <string name="aimi_essentials_targets_value" comment="%1$s=low target with unit, %2$s=high target with unit. Example: 100 mg/dL to 110 mg/dL">%1$s a %2$s</string>
+    <string name="aimi_essentials_targets_unknown">Nenhum perfil está rodando.</string>
+    <string name="aimi_essentials_targets_hint">Os alvos vêm do seu perfil. Altere-os na tela de perfil.</string>
+    <string name="aimi_essentials_targets_hint_open">Os alvos vêm do seu perfil. Toque aqui para abrir a tela de perfil e alterá-los.</string>
+    <string name="aimi_essentials_targets_open">Abrir a tela de perfil</string>
+    <string name="aimi_essentials_patient_age_title">Idade do paciente</string>
+    <string name="aimi_essentials_hint_weight">Peso corporal. O AIMI usa isso para dimensionar as doses.</string>
+    <string name="aimi_essentials_hint_tdd7">Sua insulina total habitual por dia, nos últimos 7 dias.</string>
+    <string name="aimi_essentials_hint_cho">Quantos carboidratos você costuma comer em uma refeição.</string>
+    <string name="aimi_essentials_hint_age">Idade da pessoa que usa a bomba. Se tiver 25 anos ou mais, defina 25.</string>
+    <string name="aimi_essentials_hint_honeymoon">Ative enquanto o pâncreas ainda produz alguma insulina.</string>
+    <string name="aimi_essentials_hint_pregnancy">Ative durante a gravidez.</string>
+    <string name="aimi_essentials_hint_due_date">Data prevista do nascimento. Usada apenas enquanto a gravidez estiver ativada.</string>
+    <string name="aimi_essentials_hint_max_basal">Maior taxa basal temporária que o loop pode definir, quando nenhum modo de refeição está ligado e o Autodrive não atua.</string>
+    <string name="aimi_essentials_hint_meal_max_basal">Maior taxa basal durante um modo de refeição.</string>
+    <string name="aimi_essentials_hint_autodrive_max_basal">Maior taxa basal quando o Autodrive atua.</string>
+    <string name="aimi_essentials_hint_max_iob">Máximo de insulina ativa (IOB) que o loop pode acumular.</string>
+    <string name="aimi_essentials_hint_max_smb">Maior bolus pequeno (SMB) individual.</string>
+    <string name="aimi_essentials_hint_high_bg_max_smb">Maior bolus pequeno (SMB) individual quando a glicemia está alta.</string>
+    <string name="aimi_essentials_hint_current_basal_multiplier">Maior taxa basal temporária, como fator da basal do perfil da hora atual. Quando nenhum modo de refeição está ligado, o Autodrive não atua e o modo instável T3C está desligado, uma basal temporária nunca é maior que este fator vezes a basal do perfil. O loop pode tornar este limite menor por um tempo, por exemplo a partir de dados de frequência cardíaca ou sono. Caso contrário, a basal máxima do modo ativo é o limite.</string>
+    <string name="aimi_essentials_hint_max_multiplier">Maior fator que o aprendiz basal adaptativo pode aplicar sobre a basal do perfil. Usado apenas enquanto a basal adaptativa estiver ligada. Não é um limite para todas as taxas basais.</string>
+    <string name="aimi_essentials_hint_lgs">O loop não dá insulina extra quando a glicemia, agora ou prevista, cai abaixo deste valor ou abaixo de um valor definido pelo seu alvo, o que for maior.</string>
+    <string name="aimi_essentials_hint_use_smb">Permite pequenos bolus automáticos (SMB).</string>
+    <string name="aimi_essentials_ngr_on_by_switch">O suporte noturno ao crescimento está ligado: sua própria chave está ligada.</string>
+    <string name="aimi_essentials_ngr_off_by_switch">O suporte noturno ao crescimento está desligado: sua própria chave está desligada.</string>
+    <string name="aimi_essentials_ngr_on_by_age">O suporte noturno ao crescimento está ligado, porque a idade é menor que 18 anos e sua própria chave nunca foi definida.</string>
+    <string name="aimi_essentials_ngr_off_by_age">O suporte noturno ao crescimento está desligado, porque a idade é 18 anos ou mais e sua própria chave nunca foi definida.</string>
+    <string name="aimi_essentials_ngr_off_no_age">Idade não definida: o suporte noturno ao crescimento está desligado. Defina a idade se a pessoa tiver menos de 18 anos.</string>
+    <string name="aimi_essentials_ngr_on_by_t3c">O suporte noturno ao crescimento está ligado, porque o modo instável T3C está ligado.</string>
+    <string name="aimi_ngr_state_title">Suporte noturno ao crescimento agora</string>
+    <string name="aimi_ngr_state_summary">Veja se o suporte noturno ao crescimento está ligado ou desligado agora, e por quê. Quando sua chave nunca foi definida, a idade decide: abaixo de 18 anos fica ligado. Quando a idade também nunca foi definida, o AIMI considera a pessoa um adulto e o suporte noturno ao crescimento fica desligado.</string>
+    <string name="aimi_ngr_switch_reason_hand">Definido manualmente</string>
+    <string name="aimi_ngr_switch_reason_age">Definido pela idade (a chave nunca foi definida)</string>
+    <string name="aimi_ngr_switch_reason_no_age">Idade não definida: desligado</string>
+    <string name="aimi_ngr_switch_reason_t3c">Definido pelo modo instável T3C: permanece ligado enquanto o modo instável T3C estiver ligado</string>
+    <string name="aimi_unit_insulin_per_day" comment="Unit label: insulin units per day">U/dia</string>
+    <string name="aimi_setting_help">Ajuda para esta configuração</string>
+    <string name="aimi_setting_default" comment="%1$s=default value with its unit. Example: Default: 1.00 U">Padrão: %1$s</string>
+    <string name="aimi_setting_value_unit" comment="%1$s=number, %2$s=unit label. Example: 50 kg">%1$s %2$s</string>
+    <string name="aimi_setting_on">Ligado</string>
+    <string name="aimi_setting_off">Desligado</string>
+    <string name="aimi_setting_not_set">Não definido</string>
+    <string name="aimi_setting_in_use" comment="%1$s=value with its unit that the loop uses now. Example: In use now: 0.60 U">Em uso agora: %1$s</string>
+    <string name="aimi_setting_badge_tpo" comment="%1$s=the value the person set, with its unit. Example: Changed by TPO for a while. Your value: 1.00 U">Alterado pelo TPO por um tempo. Seu valor: %1$s</string>
+    <string name="aimi_setting_badge_tpo_no_value">Alterado pelo TPO por um tempo. Seu valor volta depois.</string>
+    <string name="aimi_setting_badge_raised">Elevado para a maior taxa basal do seu perfil.</string>
+    <string name="aimi_setting_when_active" comment="%1$s=limit value with its unit (a max basal, or the current basal multiplier), used only when its mode (meal mode or Autodrive or normal) is on. Example: Not in use now. Limit when it applies: 3.00 U/h">Fora de uso agora. Limite quando se aplica: %1$s</string>
+    <string name="aimi_setting_per_decision_smb">Para cada decisão, o loop escolhe seu limite de SMB entre SMB máximo e SMB máximo em glicemia alta, e pode reduzi-lo, por exemplo durante exercício.</string>
+    <string name="aimi_setting_per_decision_iob">O loop inicia cada decisão a partir deste valor e pode aumentá-lo ou reduzi-lo para aquela decisão, por exemplo com o suporte noturno ao crescimento.</string>
+    <string name="aimi_unit_times_profile_basal" comment="Unit label after a factor. Example: 1.60 × profile basal">× basal do perfil</string>
+    <string name="aimi_setting_badge_limited">Reduzido por um limite de segurança do loop.</string>
+    <string name="aimi_setting_note_tpo">O AIMI pode alterar este valor sozinho por um curto período (TPO). Ele coloca seu valor de volta depois.</string>
+    <string name="aimi_setting_warning_patient_input">O AIMI usa este valor para dimensionar as doses. Um valor errado pode dar insulina demais ou de menos.</string>
+    <string name="aimi_setting_warning_dose_limit">Este limite define quanta insulina o AIMI pode dar. Um valor maior pode causar glicemia baixa, um valor menor pode causar glicemia alta. Converse com sua equipe de saúde antes de alterá-lo.</string>
+    <string name="aimi_setting_warning_lgs">O loop usa este valor ou um valor definido pelo seu alvo (metade do caminho entre seu alvo e 40 mg/dL), o que for maior. Um valor abaixo do definido pelo seu alvo não tem efeito. Um valor menor dá menos proteção contra glicemia baixa. Converse com sua equipe de saúde antes de alterá-lo.</string>
+    <string name="aimi_setting_warning_smb">Com SMB desligado, o loop corrige a glicemia alta mais devagar. Com SMB ligado, o AIMI dá pequenos bolus sozinho. Converse com sua equipe de saúde antes de alterá-lo.</string>
+    <!-- Step S2: feature cards, Expert area and "What AIMI learned" -->
+    <string name="aimi_card_meals_title">Refeições</string>
+    <string name="aimi_card_meals_sentence">Os modos de refeição dão um primeiro bolus quando você inicia um modo e depois permitem bolus automáticos maiores por um tempo.</string>
+    <string name="aimi_card_meals_mode_values_title">Valores de cada modo de refeição</string>
+    <string name="aimi_card_activity_title">Exercício e atividade</string>
+    <string name="aimi_card_activity_sentence">Quando o AIMI vê exercício ou esforço recente, ele dá bolus automáticos menores e limita até onde a basal pode subir.</string>
+    <string name="aimi_card_night_title">Noite</string>
+    <string name="aimi_card_night_sentence">As configurações noturnas alteram com que frequência o AIMI pode dar um bolus à noite e como ele lida com a glicemia que sobe à noite em crianças e adolescentes.</string>
+    <string name="aimi_card_wcycle_title">Ciclo feminino</string>
+    <string name="aimi_card_wcycle_sentence">Quando ligado, o AIMI altera um pouco a basal e os bolus automáticos conforme a fase do ciclo menstrual.</string>
+    <string name="aimi_card_illness_title">Doença e inflamação</string>
+    <string name="aimi_card_illness_sentence">As configurações de tireoide, endometriose, CFRD, Verneuil e diabetes instável (tipo 3c) alteram quanta insulina o AIMI dá enquanto uma delas está ativa.</string>
+    <string name="aimi_endo_flare_time_left" comment="%1$d=hours, %2$d=minutes. Example: Pain flare on: it stops changing insulin in 3 h 20 min.">Crise de dor ativa: para de alterar a insulina em %1$d h %2$d min.</string>
+    <string name="aimi_endo_flare_ended">A duração da crise de dor passou: a crise não altera mais a insulina. Desligue a crise de dor e ligue novamente para uma nova crise.</string>
+    <string name="aimi_card_pkpd_title">Aprendizado de ação da insulina (PK/PD)</string>
+    <string name="aimi_card_pkpd_sentence">Quando ligado, o AIMI aprende por quanto tempo sua insulina age e quando atinge o pico, partindo da insulina do seu perfil, e dosa com o que aprendeu.</string>
+    <string name="aimi_card_physio_title">Sinais corporais (fisio)</string>
+    <string name="aimi_card_physio_sentence">Frequência cardíaca, passos, sono e outros sinais corporais podem fazer o AIMI dar menos ou mais insulina.</string>
+    <string name="aimi_card_autodrive_title">Autodrive</string>
+    <string name="aimi_card_autodrive_sentence">Quando ligado, o AIMI pode dar basal extra e bolus sozinho quando a glicemia sobe rápido, podendo dar mais insulina do que sem ele.</string>
+    <string name="aimi_card_sos_title">Alarmes de segurança (SOS)</string>
+    <string name="aimi_card_sos_sentence">Envia uma mensagem de texto aos seus contatos quando a glicemia fica muito baixa. Não altera a entrega de insulina.</string>
+    <string name="aimi_card_off_hint">Ligue para ver as configurações que só atuam enquanto estiver ligado.</string>
+    <string name="aimi_patient_about_you_title">Sobre você</string>
+    <string name="aimi_expert_title">Especialista</string>
+    <string name="aimi_expert_summary">Configurações técnicas, agrupadas por família, com busca.</string>
+    <string name="aimi_expert_warning">Configurações de especialista alteram como o AIMI dosa. Ninguém verifica um valor que você definir aqui. Altere apenas se souber o que faz e converse com sua equipe de saúde antes. Isto não é aconselhamento médico.</string>
+    <string name="aimi_expert_search_hint">Buscar configurações do AIMI</string>
+    <string name="aimi_expert_search_none">Nenhuma configuração encontrada.</string>
+    <string name="aimi_learned_title">O que o AIMI aprendeu</string>
+    <string name="aimi_learned_summary">Somente leitura: o que o AIMI aprendeu e os valores que ele usa agora.</string>
+    <string name="aimi_learned_intro">Esta página apenas mostra valores. Apenas os botões de redefinição alteram algo, e eles perguntam antes. Isto não é aconselhamento médico.</string>
+    <string name="aimi_learned_pkpd_title">Ação da insulina (PK/PD)</string>
+    <string name="aimi_learned_pkpd_range" comment="%1$s=lowest DIA, %2$s=highest DIA, both in hours, %3$s=earliest peak, %4$s=latest peak, both in minutes. Example: Learner range: DIA 4.5 to 7.5 h, peak 45 to 81 min">Faixa do aprendiz: DIA %1$s a %2$s h, pico %3$s a %4$s min</string>
+    <string name="aimi_learned_pkpd_range_unknown">Faixa do aprendiz: nenhum perfil está rodando.</string>
+    <string name="aimi_learned_isf_title">Sensibilidade (ISF)</string>
+    <string name="aimi_learned_isf_percent" comment="%1$d=whole percent. Example: AIMI uses 120 % of your profile ISF now.">O AIMI usa %1$d %% do ISF do seu perfil agora.</string>
+    <string name="aimi_learned_isf_hint">Acima de 100 % significa que o AIMI trata você como mais sensível do que o seu perfil, então uma correção recebe menos insulina.</string>
+    <string name="aimi_learned_isf_unknown">Ainda não conhecido: o loop não rodou com um perfil.</string>
+    <string name="aimi_learned_models_title">Modelos de aprendizado de máquina</string>
+    <string name="aimi_learned_model_smb" comment="%1$s=state of the model, for example: loaded, the loop may use it">Modelo SMB: %1$s</string>
+    <string name="aimi_learned_model_basal" comment="%1$s=state of the model, for example: a model file exists">Modelo basal: %1$s</string>
+    <string name="aimi_learned_model_unknown">ainda não configurado</string>
+    <string name="aimi_learned_model_none">sem modelo, o loop roda sem ele</string>
+    <string name="aimi_learned_model_not_loaded">existe um arquivo de modelo, mas não está carregado</string>
+    <string name="aimi_learned_model_present">existe um arquivo de modelo</string>
+    <string name="aimi_learned_model_in_use">carregado, o loop pode usá-lo</string>
+    <string name="aimi_learned_model_paused">treinamento pausado após erros</string>
+    <string name="aimi_learned_tpo_title">Proteção temporária (TPO)</string>
+    <string name="aimi_learned_tpo_none">Nenhuma proteção temporária está ativa.</string>
+    <string name="aimi_learned_runtime_title">Motores de decisão (T3C e Harmonia)</string>
+    <string name="aimi_learned_reset_title">Redefinir</string>
+</resources>

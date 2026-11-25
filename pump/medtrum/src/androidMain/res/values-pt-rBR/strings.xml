@@ -137,4 +137,10 @@
     <string name="bolus_error_reason_unable_to_send_command">Não foi possível enviar o comando de bólus</string>
     <string name="bolus_error_reason_communication_lost">Tempo limite excedido ao obter o status do bólus</string>
     <string name="bolus_error_reason_pump_error">Erro da bomba</string>
+    <string name="medtrum_pick_pump_title">Escolha sua bomba</string>
+    <string name="medtrum_pick_pump_summary">Encontre sua bomba via Bluetooth e guarde o número de série dela.</string>
+    <string name="medtrum_chosen_pump">Bomba escolhida: %1$s</string>
+    <string name="medtrum_no_pump_chosen">Nenhuma bomba escolhida ainda.</string>
+    <string name="medtrum_bluetooth_off">O Bluetooth está desligado, então nenhuma bomba pode ser encontrada. Ligue-o e abra esta tela novamente.</string>
+    <string name="medtrum_ios_caution">Bomba adesiva Medtrum no iPhone. Ela é nova: teste com água antes de confiar com insulina. Escolha sua bomba primeiro e depois use Trocar Adesivo para preencher, escorvar e ativar um adesivo. Este é um comportamento de software, não aconselhamento médico \u2014 fale com sua equipe de saúde antes de alterar como sua bomba é controlada.</string>
 </resources>

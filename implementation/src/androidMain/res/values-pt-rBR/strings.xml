@@ -3,6 +3,9 @@
     <string name="executing_right_now">Comando será executado agora</string>
     <string name="smb_being_delivered">Um SMB está sendo administrado agora. Tente novamente quando ele terminar.</string>
     <string name="basal_value_below_minimum">Valor da basal abaixo do mínimo. Perfil não definido!</string>
+    <string name="concentration_change_failed_title">Falha na troca de insulina</string>
+    <string name="concentration_change_failed">A nova insulina está na bomba, mas o AAPS não conseguiu gravar o perfil nela. A bomba está administrando a quantidade errada de insulina. Desconecte ou remova a bomba agora, verifique sua glicemia (BG) e administre insulina de outra forma se precisar. Conecte a bomba novamente somente depois que o perfil for gravado.</string>
+    <string name="concentration_change_pending">O perfil com a nova insulina ainda não foi gravado na bomba. A insulina não pode ser administrada até que ele seja gravado.</string>
     <string name="profile_set_ok_rounded" comment="%1$s=insulin per day the pump gives, %2$s=insulin per day in the profile. Example: 10.00 U, 10.12 U">Perfil basal da bomba atualizado. A bomba arredonda a basal para o seu próprio passo: ela dá %1$s por dia em vez de %2$s.</string>
     <string name="basal_reported_far_from_profile">A bomba informa uma basal muito diferente do perfil. O AAPS mantém a basal do perfil. Verifique as taxas basais na bomba.</string>
     <!--       Stats -->
@@ -23,6 +26,8 @@
     <string name="permission_schedule_exact_alarm_title">Alarmes e lembretes</string>
     <string name="permission_schedule_exact_alarm_description">Necessário para que os alarmes possam ativar a tela enquanto o AAPS estiver em segundo plano e para que os lembretes toquem no horário</string>
     <!--    Notification channels, shown in the Android settings-->
+    <string name="permission_dnd_title">Alarmes no modo Não Perturbe</string>
+    <string name="permission_dnd_description">Necessário para que alarmes urgentes (por exemplo, glicemia baixa) possam tocar durante os modos Não Perturbe e hora de dormir</string>
     <string name="alarm_channel_group">Alarmes do AAPS</string>
     <string name="alarm_channel_standard">Alarme padrão</string>
     <string name="alarm_channel_bolus_error">Erro no bólus</string>
@@ -34,6 +39,8 @@
     <string name="alarm_channel_silent_urgent">Alarme urgente (modo de volume crescente)</string>
     <string name="alarm_channel_silent">Alarme (modo de volume crescente)</string>
     <string name="alarm_channel_silent_description">Usado quando \'Aumentar gradualmente o volume da notificação\' está ativado. A tela de alarme toca o som.</string>
+    <string name="alarm_channel_ramp_bypass">Alarme urgente (vibrar, depois o AAPS toca o som, ignorar Não Perturbe)</string>
+    <string name="alarm_channel_ramp_bypass_description">Usado quando \'Aumentar gradualmente o volume das notificações\' está ativado ou quando uma melodia de alarme suave é escolhida: o telefone vibra e depois o AAPS toca o som do alarme.</string>
     <string name="ongoing_channel_name">Status contínuo</string>
     <string name="eat_reminder_channel">Contagem regressiva do lembrete de refeição</string>
     <string name="eat_reminder_channel_description">Mostra o tempo que falta até a hora de comer. Não faz som; o alarme no final faz.</string>

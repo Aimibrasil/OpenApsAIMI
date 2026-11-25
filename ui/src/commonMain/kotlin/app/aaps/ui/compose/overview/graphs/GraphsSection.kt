@@ -223,16 +223,12 @@ fun GraphsSection(
     isSimpleMode: Boolean,
     modifier: Modifier = Modifier,
     fitWholeWindow: Boolean = false,
-    /**
-     * Insulin and carbs on board, already formatted, for the spoken description of the BG graph.
-     * The overview passes them; the history browser must NOT, because these are CURRENT values and
-     * announcing them beside a past day would state something untrue about insulin.
-     */
     iobText: String? = null,
     cobText: String? = null,
-    /** Height of the bars drawn over the end of this section (the overview's preview mode), added to the space at its end. */
-    overlaidBarsHeight: Dp = 0.dp
+    overlaidBarsHeight: Dp = 0.dp,
+    transparentBgBackdrop: Boolean = false
 ) {
+
     val dateUtil = LocalDateUtil.current
     val savedGraphConfig by graphViewModel.graphConfigFlow.collectAsStateWithLifecycle()
     // In simple mode: fixed layout (BG, IOB+BAS, COB — no overlays, no editing)
@@ -577,7 +573,7 @@ fun GraphsSection(
             Box(
                 modifier = Modifier
                     .offset(y = (-16).dp)
-                    .drawBehind { drawVicoChartBackdrop(backdropPalette) }
+                    .then(if (!transparentBgBackdrop) Modifier.drawBehind { drawVicoChartBackdrop(backdropPalette) } else Modifier)
                     .graphInspectTouch(inspect)
             ) {
                 BgGraphCompose(
@@ -972,9 +968,12 @@ internal fun GraphSeriesBottomSheet(
     onRemoveGraph: (() -> Unit)? = null
 ) {
     val sheetState = rememberModalBottomSheetState()
+    val isDarkSheet = app.aaps.core.ui.compose.glass.isGlassDarkMode()
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = sheetState
+        sheetState = sheetState,
+        containerColor = if (isDarkSheet) androidx.compose.ui.graphics.Color(0xFF1A1F29) else androidx.compose.ui.graphics.Color(0xFFF8FAFC),
+        contentColor = if (isDarkSheet) androidx.compose.ui.graphics.Color(0xFFF1F5F9) else androidx.compose.ui.graphics.Color(0xFF0F172A),
     ) {
         // Scrolls like the other sheets. Without it a window shorter than the content (large font, small
         // screen, landscape, keyboard open) cut off the last row of chips, and the sheet could jump (#5478).

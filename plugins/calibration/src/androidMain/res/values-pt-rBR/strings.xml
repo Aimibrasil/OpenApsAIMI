@@ -7,6 +7,7 @@
     <string name="sensor_change_detected_text">Possível troca de sensor detectada em %1$s. Marcar como novo sensor?</string>
     <string name="sensor_change_detected_action">Marcar troca de sensor</string>
     <!-- Calibration management screen -->
+    <string name="sensor_change_detected_ignore">Não é um sensor novo</string>
     <string name="cal_status_no_session">Registre uma troca de sensor para ativar a calibração.</string>
     <string name="cal_status_warmup">Aquecimento do sensor — calibração ativa após %1$s.</string>
     <string name="cal_status_need_more_entries">São necessárias pelo menos 2 medições capilares (atualmente %1$d).</string>
@@ -22,4 +23,10 @@
     <string name="cal_no_entries">Ainda não há medições capilares.</string>
     <string name="cal_entry_pair">Medição capilar %1$s → sensor %2$s (Δ %3$s)</string>
     <string name="cal_chart_entry_readout">Leitura do gráfico: entrada %1$d/%2$d · %3$s · sensor %4$s → glicemia %5$s</string>
+    <string name="cal_notify_need_more_entries">Adicione uma calibração de ponta de dedo para ativar a correção do sensor. Para o melhor resultado: aguarde o término do aquecimento, calibre enquanto sua glicemia estiver estável (sem subir ou cair rápido) e use uma leitura recente e cuidadosa do medidor. São necessárias pelo menos 2 calibrações, de preferência em diferentes níveis de glicemia.</string>
+
+    <string name="cal_notify_unsafe_fit">Suas calibrações recentes deram um resultado inconsistente e não foram aplicadas — o sensor está exibindo valores não corrigidos. Adicione uma nova calibração enquanto sua glicemia estiver estável; confira bem a leitura do medidor, pois uma única ponta de dedo imprecisa pode atrapalhar isso.</string>
+    <string name="cal_notify_narrow_range">Suas calibrações estão todas próximas em valor de glicemia, então apenas uma correção básica pode ser aplicada. Adicione uma na próxima vez que sua glicemia estiver claramente mais alta ou mais baixa que o habitual — distribuir calibrações por diferentes níveis torna a correção precisa em toda a sua faixa, não apenas em torno de um único valor.</string>
+    <string name="cal_notify_stale">Já faz algum tempo desde a sua última calibração. Os sensores podem sofrer desvio ao longo do tempo de uso, então adicionar uma nova calibração agora — enquanto sua glicemia estiver estável — ajuda a manter a correção precisa pelo restante da sessão.</string>
+
 </resources>

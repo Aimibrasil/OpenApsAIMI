@@ -1,101 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Autotune-->
-    <string name="dyn_isf_adjust_title" formatted="false">Fator de ajuste do DynamicISF %</string>
-    <string name="openapssmb">SMB OpenAPS</string>
-    <string name="openaps_smb_dynamic_isf">ISF dinâmico</string>
+    <string name="dyn_isf_adjust_title" formatted="false">Fator de Ajuste DynamicISF %</string>
+    <string name="openapssmb">OpenAPS SMB</string>
+    <string name="openaps_smb_dynamic_isf">Dynamic ISF</string>
     <string name="openaps_auto_isf">Auto ISF</string>
-    <string name="openapsma_disabled">Plugin está desativado</string>
-    <string name="openapsma_no_glucose_data">Sem dados de glicose disponíveis</string>
-    <string name="openaps_no_as_data">Sem dados Autosens disponíveis</string>
+    <string name="openapsma_disabled">O plugin está desativado</string>
+    <string name="openapsma_no_glucose_data">Nenhum dado de glicemia disponível</string>
+    <string name="openaps_no_as_data">Nenhum dado de autosens disponível</string>
     <string name="dynisf_shortname">DYNISF</string>
     <string name="openapsama">OpenAPS AMA</string>
-    <string name="array_of_elements">Array de %1$d elementos.\nValor atual:</string>
+    <string name="array_of_elements">Matriz de %1$d elementos.\nValor real:</string>
     <string name="description_ama">Estado do algoritmo em 2017</string>
     <string name="description_smb">Algoritmo mais recente para usuários avançados</string>
     <string name="description_smb_dynamic_isf">Algoritmo mais recente para usuários avançados com ISF dinâmico/automático</string>
-    <string name="description_auto_isf">Algoritmo experimental para usuários avançados com extensões do AutoISF</string>
+    <string name="description_auto_isf">Algoritmo experimental para usuários avançados com extensões AutoISF</string>
+
     <string name="openapsma_last_run_label">Última execução</string>
     <string name="openapsma_input_parameters_label">Parâmetros de entrada</string>
-    <string name="openapsma_glucose_status_label">Status da Glicose</string>
+    <string name="openapsma_glucose_status_label">Estado da glicemia</string>
     <string name="openapsma_current_temp_label">Temp atual</string>
     <string name="openapsma_iob_data_label">Dados de IOB</string>
     <string name="openapsma_profile_label">Perfil</string>
     <string name="openapsma_meal_data_label">Dados de refeição</string>
-    <string name="openapsma_request_label">Solicitar</string>
+    <string name="openapsma_request_label">Solicitação</string>
     <string name="constraints">Restrições</string>
-    <string name="openapsma_autosensdata_label">Dados Autosens</string>
-    <string name="openapsma_script_debug_data_label">Script debug</string>
-    <string name="openapsama_link_to_preference_json_doc_txt">Atenção!\n Normalmente não é necessário modificar os valores abaixo. Por favor PRESSIONE AQUI e LEIA o texto para garantir que ENTENDE as consequências antes de alterar qualquer um destes valores.</string>
-    <string name="increasing_max_basal">Aumentar o valor máximo de basal porque a configuração é inferior à sua basal máxima no perfil</string>
-    <string name="max_basal_multiplier">multiplicador de basal máx</string>
-    <string name="max_daily_basal_multiplier">multiplicador de basal máx diária</string>
-    <string name="smb_disabled_in_preferences">SMB desativado nas configurações</string>
-    <string name="uam_disabled_in_preferences">UAM desativado nas configurações</string>
-    <string name="autosens_disabled_in_preferences">Autosens desabilitado nas preferências</string>
+    <string name="openapsma_autosensdata_label">Dados de autosens</string>
+    <string name="openapsma_script_debug_data_label">Depuração de script</string>
+    <string name="openapsama_link_to_preference_json_doc_txt">Atenção!\nNormalmente você não precisa alterar estes valores abaixo. Por favor, CLIQUE AQUI e LEIA o texto e certifique-se de que ENTENDEU antes de alterar qualquer um destes valores.</string>
+
+
+    <string name="increasing_max_basal">Aumentando o valor máximo da basal porque a configuração é menor que a basal máxima no perfil</string>
+    <string name="max_basal_multiplier">multiplicador máximo da basal</string>
+    <string name="max_daily_basal_multiplier">multiplicador diário máximo da basal</string>
+    <string name="smb_disabled_in_preferences">SMB desativado nas preferências</string>
+    <string name="uam_disabled_in_preferences">UAM desativado nas preferências</string>
+    <string name="autosens_disabled_in_preferences">Autosens desativado nas preferências</string>
+
     <!--    Verify if needed in safety-->
-    <string name="limiting_iob">Limitando IOB para %1$.1f U porque %2$s</string>
-    <string name="maxvalueinpreferences">valor máx nas preferências</string>
+    <string name="limiting_iob">Limitando IOB a %1$.1f U por causa de %2$s</string>
+    <string name="maxvalueinpreferences">valor máximo nas preferências</string>
     <string name="hardlimit">limite rígido</string>
+
     <!--    Autotune   -->
     <string name="autotune_peak">Pico</string>
+
     <!--    Loop -->
-    <string name="smb_frequency_exceeded">Um bólus foi administrado nos últimos 3 minutos, ignorando o SMB</string>
+    <string name="smb_frequency_exceeded">Um bolus foi aplicado nos últimos 3 minutos, ignorando SMB</string>
     <string name="pump_not_initialized">Bomba não inicializada!</string>
-    <string name="zero_basal_not_set">A bomba não aceitou a basal temporária zero. Ela ainda pode estar dando insulina basal. Verifique a bomba.</string>
-    <string name="description_loop">Ative ou desative a implementação ativando o loop.</string>
-    <string name="no_aps_selected">SEM APS SELECIONADO OU RESULTADO FORNECIDO</string>
+    <string name="zero_basal_not_set">A bomba não aceitou a basal temporária zero. Ela ainda pode estar aplicando insulina basal. Verifique a bomba.</string>
+    <string name="description_loop">Ativa ou desativa a implementação que aciona o loop.</string>
+    <string name="no_aps_selected">NENHUM APS SELECIONADO OU RESULTADO FORNECIDO</string>
     <string name="ignore5m">Ignorar 5m</string>
     <string name="ignore15m">Ignorar 15m</string>
     <string name="ignore30m">Ignorar 30m</string>
-    <string name="carbs_suggestion">Sugestão de Carbs</string>
+    <string name="carbs_suggestion">Sugestão de Carboidratos</string>
     <string name="open_loop_new_suggestion">Nova sugestão disponível</string>
     <string name="loop_notification_channel_name">Sugestões do loop</string>
-    <string name="loop_notification_channel_silent_name">Sugestões do loop durante o Não perturbe</string>
+    <string name="loop_notification_channel_silent_name">Sugestões do loop durante Não Perturbe</string>
     <string name="open_loop_suggestion_too_old">Esta sugestão é antiga demais. Nada foi enviado para a bomba. Aguarde a próxima.</string>
-    <string name="basal_set_correctly">Basal correctamente definida</string>
+    <string name="basal_set_correctly">Basal definida corretamente</string>
     <string name="last_run_label">Última execução</string>
     <string name="loop_aps_label">APS</string>
-    <string name="request_label">Pedido</string>
-    <string name="loop_constraints_processed_label">Depois das restrições processadas</string>
-    <string name="loop_tbr_request_time_label">Hora de solicitação da basal temporária.</string>
-    <string name="loop_tbr_execution_time_label">Hora de execução da basal temporária.</string>
-    <string name="loop_tbr_set_by_pump_label">Basal temporária definida pela bomba</string>
-    <string name="loop_smb_request_time_label">Hora de solicitação SMB</string>
-    <string name="loop_smb_execution_time_label">Hora de execução do SMB</string>
+    <string name="request_label">Solicitação</string>
+    <string name="loop_constraints_processed_label">Após restrições processadas</string>
+    <string name="loop_tbr_request_time_label">Hora da solicitação da basal temp</string>
+    <string name="loop_tbr_execution_time_label">Hora da execução da basal temp</string>
+    <string name="loop_tbr_set_by_pump_label">Basal temp definida pela bomba</string>
+    <string name="loop_smb_request_time_label">Hora da solicitação de SMB</string>
+    <string name="loop_smb_execution_time_label">Hora da execução de SMB</string>
     <string name="loop_smb_set_by_pump_label">SMB definido pela bomba</string>
-    <string name="fallback_smb_no_tdd">Fallback para SMB. Dados insuficientes de TDD.</string>
-    <string name="fallback_to_isf_no_tdd">Fallback para a sensibilidade do perfil. Dados insuficientes. Motivo: %1$s</string>
+    <string name="fallback_smb_no_tdd">Alternativa para SMB. Dados de TDD insuficientes.</string>
+    <string name="fallback_to_isf_no_tdd">Alternativa para sensibilidade do perfil. Dados insuficientes. Motivo: %1$s</string>
+
     <!-- Autotune -->
-    <string name="autotune_description">Ajuda para possíveis ajustes do perfil (ISF, relação de carboidratos e taxas basais)</string>
+    <string name="autotune_description">Ajuda para possíveis ajustes do perfil (ISF, proporção de carboidrato e taxas basais)</string>
     <string name="autotune_default_tune_days_title">Número de dias de dados</string>
     <string name="autotune_tunedprofile_name">Ajustado</string>
-    <string name="autotune_profile">Perfil:</string>
+    <string name="autotune_profile">Perfil :</string>
     <string name="autotune_last_run">Última execução :</string>
     <string name="autotune_warning">Aviso :</string>
-    <string name="autotune_ic_warning">O perfil selecionado tem %1$d valores de IC. Autotune vai usar %2$.2f g/U</string>
-    <string name="autotune_isf_warning">O perfil selecionado tem %1$d valores de ISF. Autotune usará %2$.1f %3$s/U</string>
-    <string name="autotune_error">Erro nos dados de entrada, tente executar novamente autotune ou reduza o número de dias</string>
-    <string name="autotune_error_more_days">Erro nos dados de entrada, tente reduzir o número de dias</string>
-    <string name="autotune_warning_during_run">Cálculos do Autotune iniciados, por favor aguarde</string>
-    <string name="autotune_warning_after_run">Verifique os resultados cuidadosamente antes de usá-los!</string>
-    <string name="autotune_partial_result">Resultado parcial - dia %1$d / %2$d ajustado</string>
+    <string name="autotune_ic_warning">O perfil selecionado tem %1$d valores de IC. O Autotune usará %2$.2f g/U</string>
+    <string name="autotune_isf_warning">O perfil selecionado tem %1$d valores de ISF. O Autotune usará %2$.1f %3$s/U</string>
+    <string name="autotune_error">Erro nos dados de entrada, tente rodar o autotune novamente ou reduza o número de dias</string>
+    <string name="autotune_error_more_days">Erro nos dados de entrada, aumente o número de dias</string>
+    <string name="autotune_warning_during_run">Cálculo do Autotune iniciado, tenha paciência</string>
+    <string name="autotune_warning_after_run">Verifique os resultados com atenção antes de usá-los!</string>
+    <string name="autotune_partial_result">Resultado parcial dia %1$d / %2$d ajustado</string>
     <string name="autotune_result">Resultado: %1$s</string>
     <string name="autotune_param">Parâmetro</string>
     <string name="autotune_percent">%</string>
-    <string name="autotune_missing">Faltando</string>
+    <string name="autotune_missing">Ausente</string>
     <string name="autotune_run">Executar Autotune</string>
-    <string name="autotune_check_input_profile_button">Verifique o perfil de entrada</string>
+    <string name="autotune_check_input_profile_button">Verificar perfil de entrada</string>
     <string name="autotune_compare_profile">Comparar perfis</string>
-    <string name="autotune_copy_localprofile_button">Copiar para o perfil local</string>
+    <string name="autotune_copy_localprofile_button">Copiar para perfil local</string>
     <string name="autotune_update_input_profile_button">Atualizar perfil de entrada</string>
     <string name="autotune_revert_input_profile_button">Reverter perfil de entrada</string>
-    <string name="autotune_copy_local_profile_message">Criar um novo perfil local a partir deste perfil Autotune?</string>
-    <string name="autotune_update_local_profile_message">Atualizar perfil %1$s com perfil do Autotune?</string>
-    <string name="autotune_revert_local_profile_message">Reverter o perfil %1$s para o perfil inicial?</string>
+    <string name="autotune_copy_local_profile_message">Criar um novo perfil local a partir deste Perfil Autotune?</string>
+    <string name="autotune_update_local_profile_message">Atualizar o perfil %1$s com o Perfil Autotune?</string>
+    <string name="autotune_revert_local_profile_message">Reverter o perfil %1$s para o Perfil de Entrada?</string>
     <string name="autotune_profile_invalid">Perfil inválido</string>
+
+
+
+
+
+
+
     <string name="pump_disconnected">Bomba desconectada</string>
+
     <!--    autoISF -->
-    <string name="autoISF_settings_title">Configurações do AutoISF</string>
-    <string name="smb_delivery_settings_title">Configurações de administração de SMB</string>
+    <string name="autoISF_settings_title">AutoISF settings</string>
+    <string name="smb_delivery_settings_title">Configurações de entrega de SMB</string>
+
+    <!-- AIMI intent preferences (ApsIntentKey). Unique names so lot K aimi_strings.xml can keep freeze ids. -->
+    <string name="pref_title_aimi_support_package">Pacote de suporte AIMI</string>
+    <string name="pref_summary_aimi_support_package">Exporta um ZIP de diagnóstico com o final do corpus de treinamento e o perfil em execução.</string>
+    <string name="pref_title_aimi_sos_permissions">Conceder permissões de SMS e localização</string>
+    <string name="pref_summary_aimi_sos_permissions">Toque para autorizar o AAPS a enviar SMS de SOS e acessar a localização em emergências. Chamadas telefônicas automáticas não são usadas.</string>
+    <string name="pref_title_aimi_hypo_risk_alarm_info">Risco de Hipo</string>
+    <string name="pref_summary_aimi_hypo_risk_alarm_info">O AIMI emite um alarme urgente unificado com o som de alarme do AAPS. Adie ou dispense na lista de notificações ou na janela do painel.</string>
+    <string name="pref_title_aimi_physio_pattern_catalog_info">Catálogo de padrões fisiológicos</string>
+    <string name="pref_summary_aimi_physio_pattern_catalog_info">28 padrões com histerese (sono, HRV, refeições, estresse, ciclo). Toque para detalhes.</string>
+    <string name="pref_title_aimi_health_connect_permissions">Permissões do Health Connect</string>
+    <string name="pref_summary_aimi_health_connect_permissions">Abra a tela para conceder acesso a sono, HRV e frequência cardíaca via Health Connect.</string>
+    <string name="pref_title_hormonitor_viewer">Dados de estudo do Hormonitor</string>
+    <string name="pref_summary_hormonitor_viewer">Navegue pelos dados exportados do estudo dia a dia: tempo no alvo, decisões e como a árvore, o Harmonia, o contexto fisio e hormonal foram aplicados.</string>
+    <string name="pref_title_pkpd_setup">Configuração de PK/PD</string>
+    <string name="pref_summary_pkpd_setup">Predefinições guiadas, ajuste de conforto e parâmetros avançados em uma tela</string>
+    <string name="aimi_prefs_claude_model_title">Modelo Claude</string>
+    <string name="aimi_prefs_claude_model_summary">Usado pelo Coach de IA, Auditor de IA, confirmação de TPO, Contexto, Visão de refeição e Fisio quando o provedor for Claude (Fisio usa sua própria configuração de provedor).</string>
+    <string name="aimi_prefs_claude_model_sonnet5">Claude Sonnet 5 (recomendado)</string>
+    <string name="aimi_prefs_claude_model_fable51">Claude Fable 5.1 (mais forte, mais caro)</string>
+    <string name="aimi_prefs_claude_model_opus55">Claude Opus 5.5</string>
+    <string name="aimi_prefs_claude_model_haiku45">Claude Haiku 4.5 (mais rápido, mais barato)</string>
+    <string name="oaps_aimi_pkpd_curve_learning_gate_title">Aprender tempo de insulina apenas com glicemia tranquila</string>
+    <string name="oaps_aimi_pkpd_curve_learning_gate_summary">DESATIVADO por padrão. A duração e o pico aprendidos da insulina são atualizados apenas quando a glicemia não subiu por uma hora, não está subindo agora e não há suspeita de refeição. Sem carboidratos declarados, uma refeição ainda em absorção faz a insulina parecer mais lenta do que é. Com isso ATIVADO, o aprendizado é mais raro, porém mais limpo. Nunca aprende mais rápido. Quando DESATIVADO, os registros ainda mostram o que essa verificação teria feito.</string>
+    <string name="context_preset_cardio">🏃 Cardio</string>
+    <string name="context_preset_strength">💪 Força</string>
+    <string name="context_preset_yoga">🧘 Yoga</string>
+    <string name="context_preset_sport">⚽ Esporte</string>
+    <string name="context_preset_walking">🚶 Caminhada</string>
+    <string name="context_preset_sick">🤒 Doente</string>
+    <string name="context_preset_stress">😰 Estresse</string>
+    <string name="context_preset_meal_risk">🍕 Risco de Refeição</string>
+    <string name="context_preset_alcohol">🍷 Álcool</string>
+    <string name="context_preset_travel">✈️ Viagem</string>
+    <string name="context_preset_slow_carb">🧀 Refeição lenta (gordurosa)</string>
+    <string name="context_preset_hypo_recovery">🍬 Recuperação de hipo</string>
+
 </resources>

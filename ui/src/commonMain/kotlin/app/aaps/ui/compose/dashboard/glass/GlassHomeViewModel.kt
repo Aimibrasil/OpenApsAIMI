@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import app.aaps.core.data.model.GV
 import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.data.model.HR
+import app.aaps.core.data.model.PS
 import app.aaps.core.data.model.RM
 import app.aaps.core.data.model.SC
 import app.aaps.core.data.model.TB
@@ -17,6 +18,7 @@ import app.aaps.core.interfaces.concurrent.aapsIoDispatcher
 import app.aaps.core.interfaces.dashboard.AimiGlassDashboardData
 import app.aaps.core.interfaces.db.PersistenceLayer
 import app.aaps.core.interfaces.db.ProcessedTbrEbData
+import app.aaps.core.interfaces.iob.IobCobCalculator
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.plugin.ActivePlugin
@@ -56,13 +58,6 @@ import kotlinx.coroutines.withContext
 import kotlin.math.max
 import kotlin.math.roundToInt
 
-/**
- * The values of the Glass home that no shared overview flow carries: target, effective basal, loop
- * mode, today's time in range, steps, heart rate and the pump line.
- *
- * On `dev_OAPSAIMI` these came from `OverviewViewModel.updateStatus`. The rules are the same; only the
- * values the overview flows already have (glucose, IOB, status lights, charts) are read elsewhere.
- */
 @OptIn(ExperimentalCoroutinesApi::class)
 @ContributesIntoMap(AppScope::class, binding = binding<ViewModel>())
 @ViewModelKey
@@ -73,6 +68,7 @@ class GlassHomeViewModel(
     private val profileFunction: ProfileFunction,
     private val profileUtil: ProfileUtil,
     private val processedTbrEbData: ProcessedTbrEbData,
+    private val iobCobCalculator: IobCobCalculator,
     private val loop: Loop,
     private val dateUtil: DateUtil,
     private val rh: TextResolver,
@@ -85,23 +81,16 @@ class GlassHomeViewModel(
     private val _status = MutableStateFlow(GlassHomeStatus())
     val status: StateFlow<GlassHomeStatus> = _status.asStateFlow()
 
-    /**
-     * Today's step total from the platform health store, published by AIMI. Null when there is none
-     * (no AIMI, no Health Connect, iOS, desktop): the database total is then shown alone.
-     */
     private val healthStoreStepsToday = MutableStateFlow<AimiGlassDashboardData.StepsToday?>(null)
 
-    /** Called by the home with the latest AIMI snapshot value. */
     fun onHealthStoreStepsToday(stepsToday: AimiGlassDashboardData.StepsToday?) {
         healthStoreStepsToday.value = stepsToday
     }
 
-    /** Yesterday's in-range share does not change during the day: read once per day. */
     private var yesterdayDayStart: Long? = null
     private var yesterdayInRangePct: Double? = null
 
     init {
-        // Work only while the home is shown, like StatusViewModel.
         _status.subscriptionCount
             .map { it > 0 }
             .distinctUntilChanged()
@@ -111,16 +100,15 @@ class GlassHomeViewModel(
     }
 
     private fun refreshTriggers(): Flow<Unit> = merge(
-        // Emits at once, then every minute: steps, heart rate and the loop target move with time.
-        tickerFlow(60_000L),
+        tickerFlow(30_000L),
         persistenceLayer.observeChanges(GV::class).map { },
         persistenceLayer.observeChanges(TT::class).map { },
         persistenceLayer.observeChanges(TB::class).map { },
         persistenceLayer.observeChanges(RM::class).map { },
         persistenceLayer.observeChanges(HR::class).map { },
         persistenceLayer.observeChanges(SC::class).map { },
-        // Site and sensor age of the pump line.
         persistenceLayer.observeChanges(TE::class).map { },
+        persistenceLayer.observeChanges(PS::class).map { },
         activePlugin.activePump.reservoirLevel.map { },
         persistenceLayer.databaseClearedFlow.map { },
         healthStoreStepsToday.map { },
@@ -129,7 +117,6 @@ class GlassHomeViewModel(
     private var refreshJob: Job? = null
 
     private fun refresh() {
-        // Only the newest refresh matters; a slow one must not pile up behind the next.
         refreshJob?.cancel()
         refreshJob = viewModelScope.launch {
             try {
@@ -141,10 +128,11 @@ class GlassHomeViewModel(
             }
         }
     }
-
     private suspend fun buildStatus(): GlassHomeStatus {
         val now = dateUtil.now()
         val profile = profileFunction.getProfile()
+        val profileName = profileFunction.getProfileName().takeIf { it.isNotBlank() } ?: NO_VALUE
+
         val activeTemporaryTarget = persistenceLayer.getTemporaryTargetActiveAt(now)
         val targetRange = DashboardV2StatusValueResolver.resolveTargetRangeMgdl(
             temporaryLow = activeTemporaryTarget?.lowTarget,
@@ -157,6 +145,70 @@ class GlassHomeViewModel(
             profileUtil.toTargetRangeString(low = range.low, high = range.high, sourceUnits = GlucoseUnit.MGDL)
         }
 
+        // IOB Detalhado (Bolus e Basal)
+        val iobTotal = iobCobCalculator.calculateIobFromBolus()
+        val basalIob = iobCobCalculator.calculateIobFromTempBasalsIncludingConvertedExtended()
+        val bolusIobValue = iobTotal.iob
+        val basalIobValue = basalIob.basaliob
+        val bolusIobText = rh.gs(InterfacesStrings.format_insulin_units, bolusIobValue)
+        val basalIobText = rh.gs(CoreUiStrings.format_insulin_units_signed, basalIobValue)
+
+        // Carboidratos Ativos (COB com valor pendente entre parênteses)
+        val cobInfo = iobCobCalculator.getCobInfo("GlassHomeViewModel")
+        val activeCobText = when {
+            cobInfo.displayCob != null && cobInfo.futureCarbs > 0.0 ->
+                "${decimalFormatter.to0Decimal(cobInfo.displayCob!!)} g (${decimalFormatter.to0Decimal(cobInfo.futureCarbs)} g)"
+            cobInfo.displayCob != null ->
+                "${decimalFormatter.to0Decimal(cobInfo.displayCob!!)} g"
+            cobInfo.futureCarbs > 0.0 ->
+                "0 g (${decimalFormatter.to0Decimal(cobInfo.futureCarbs)} g)"
+            else -> "0 g"
+        }
+
+        // Sensibilidade (Autosens, ISF Perfil, ISF Variável, Autosens Algoritmo e ISF Médio)
+        val request = loop.lastRun?.request
+        val autosensRatio = request?.autosensResult?.ratio ?: 1.0
+        val profileIsfMgdl = profile?.getIsfMgdl("GlassHomeViewModel")
+        val variableIsfMgdl = profileIsfMgdl?.let { it / autosensRatio }
+        val algoRatio = autosensRatio
+        val avgIsfMgdl = if (profileIsfMgdl != null && variableIsfMgdl != null) {
+            (profileIsfMgdl + variableIsfMgdl) / 2.0
+        } else {
+            profileIsfMgdl
+        }
+
+        val units = profileFunction.getUnits()
+        val unitSuffix = if (units == GlucoseUnit.MGDL) "mg/dL/U" else "mmol/L/U"
+        val profileIsfStr = profileIsfMgdl?.takeIf { it > 0 && it.isFinite() }?.let { profileUtil.fromMgdlToStringInUnits(it) } ?: NO_VALUE
+        val variableIsfStr = variableIsfMgdl?.takeIf { it > 0 && it.isFinite() }?.let { profileUtil.fromMgdlToStringInUnits(it) } ?: profileIsfStr
+        val avgIsfStr = avgIsfMgdl?.takeIf { it > 0 && it.isFinite() }?.let { profileUtil.fromMgdlToStringInUnits(it) } ?: profileIsfStr
+
+        val trendArrowSymbol = when {
+            variableIsfMgdl != null && profileIsfMgdl != null && variableIsfMgdl > profileIsfMgdl + 0.05 -> "↗"
+            variableIsfMgdl != null && profileIsfMgdl != null && variableIsfMgdl < profileIsfMgdl - 0.05 -> "↘"
+            else -> "→"
+        }
+        val isfInlineText = if (profileIsfStr != NO_VALUE) "$profileIsfStr $trendArrowSymbol $variableIsfStr" else NO_VALUE
+        val isfText = if (profileIsfStr != NO_VALUE) "$profileIsfStr $unitSuffix" else NO_VALUE
+        val autosensRatioText = "${(autosensRatio * 100).roundToInt()}%"
+        val algorithmAutosensText = "${(algoRatio * 100).roundToInt()}%"
+
+        // Alvo Temporário + Tempo Restante
+        val tempTargetText = if (activeTemporaryTarget != null) {
+            profileUtil.toTargetRangeString(
+                low = activeTemporaryTarget.lowTarget,
+                high = activeTemporaryTarget.highTarget,
+                sourceUnits = GlucoseUnit.MGDL
+            )
+        } else {
+            targetText ?: NO_VALUE
+        }
+        val tempTargetRemainingText = if (activeTemporaryTarget != null) {
+            val remMin = ((activeTemporaryTarget.end - now) / 60_000L).coerceAtLeast(0L)
+            if (remMin >= 60) "${remMin / 60}h${(remMin % 60).toString().padStart(2, '0')}m" else "${remMin}m"
+        } else {
+            ""
+        }
         val activeTempBasal = processedTbrEbData.getTempBasalIncludingConvertedExtended(now)?.takeIf { it.isInProgress(dateUtil) }
         val effectiveBasalRateUh = DashboardV2StatusValueResolver.resolveEffectiveBasalRateUh(
             temporaryBasal = activeTempBasal?.let { DashboardV2StatusValueResolver.TemporaryBasal(rate = it.rate, isAbsolute = it.isAbsolute) },
@@ -164,7 +216,6 @@ class GlassHomeViewModel(
         )
         val effectiveBasalText = effectiveBasalRateUh?.let { rh.gs(CoreUiStrings.pump_base_basal_rate, it) }
 
-        // Display only: read the running mode from the database, as DEV did.
         val loopMode = persistenceLayer.getRunningModeActiveAt(now).mode
 
         val dayStart = dateUtil.beginOfDay(now)
@@ -181,7 +232,6 @@ class GlassHomeViewModel(
         )
 
         val steps = GlassHomeStats.chooseStepsToday(
-            // A total of another day (read just before midnight) is not today's.
             healthStoreSteps = healthStoreStepsToday.value?.takeIf { it.dayStartMs == dayStart }?.steps,
             databaseSteps = GlassHomeStats.stepsToday(persistenceLayer.getStepsCountFromTimeToTime(dayStart, now)),
         )
@@ -190,7 +240,6 @@ class GlassHomeViewModel(
             steps > 1.0   -> decimalFormatter.to0Decimal(steps)
             else          -> decimalFormatter.to0Decimal(0.0)
         }
-        // 3 h window plus 15 min: some watches (Garmin) write records that overlap.
         val lastHr = persistenceLayer.getHeartRatesFromTimeToTime(now - HR_WINDOW_MS - HR_OVERLAP_MS, now)
             .maxByOrNull { it.timestamp }?.beatsPerMinute?.takeIf { it > 0 }
         val hrText = lastHr?.let { decimalFormatter.to0Decimal(it) } ?: NO_VALUE
@@ -205,13 +254,24 @@ class GlassHomeViewModel(
             stepsText = stepsText,
             hrText = hrText,
             tir = tir,
+            profileName = profileName,
+            isfText = isfText,
+            isfInlineText = isfInlineText,
+            autosensRatioText = autosensRatioText,
+            profileIsfText = profileIsfStr,
+            variableIsfText = variableIsfStr,
+            algorithmAutosensText = algorithmAutosensText,
+            averageIsfText = avgIsfStr,
+            bolusIobText = bolusIobText,
+            basalIobText = basalIobText,
+            activeCobText = activeCobText,
+            tempTargetText = tempTargetText,
+            tempTargetRemainingText = tempTargetRemainingText,
         )
     }
 
-    /** Same sources and rules as DEV `OverviewViewModel.buildPumpAdjustmentDisplay`. */
     private suspend fun buildPumpStatus(now: Long): GlassPumpStatusLine {
         val pump = activePlugin.activePump
-        // Null when the pump does not know its reservoir; shown as unavailable, like an empty reading.
         val reservoirUnits = pump.reservoirLevel.value?.cU ?: 0.0
         val reservoirText =
             if (reservoirUnits > 0) rh.gs(InterfacesStrings.format_insulin_units, reservoirUnits)
@@ -235,14 +295,12 @@ class GlassHomeViewModel(
     }
 
     private companion object {
-
         const val NO_VALUE = "--"
         const val HR_WINDOW_MS = 3 * 60 * 60 * 1000L
         const val HR_OVERLAP_MS = 15 * 60 * 1000L
     }
 }
 
-/** The loop pill text for a running mode. Same labels as on `dev_OAPSAIMI`. */
 internal fun loopModeLabel(mode: RM.Mode): TextRef = when (mode) {
     RM.Mode.SUPER_BOLUS       -> CoreUiStrings.superbolus
     RM.Mode.DISCONNECTED_PUMP -> CoreUiStrings.disconnected
@@ -256,42 +314,39 @@ internal fun loopModeLabel(mode: RM.Mode): TextRef = when (mode) {
     RM.Mode.RESUME            -> CoreUiStrings.resumeloop
 }
 
-/**
- * What [GlassHomeViewModel] adds to the Glass home. Texts are ready to show; null means "no value",
- * and the home then shows "--".
- */
 data class GlassHomeStatus(
-    /** Null until the first refresh: the pump line is then not shown. */
     val pumpStatus: GlassPumpStatusLine? = null,
     val targetText: String? = null,
     val isTempTargetActive: Boolean = false,
     val effectiveBasalText: String? = null,
-    /** Null until the first refresh: the pill then shows its default "Loop" label. */
     val loopStatusText: String? = null,
     val loopIsRunning: Boolean = true,
     val stepsText: String = "--",
     val hrText: String = "--",
     val tir: GlassTir? = null,
+    val profileName: String = "--",
+    val isfText: String = "--",
+    val isfInlineText: String = "--",
+    val autosensRatioText: String = "--",
+    val profileIsfText: String = "--",
+    val variableIsfText: String = "--",
+    val algorithmAutosensText: String = "--",
+    val averageIsfText: String = "--",
+    val bolusIobText: String = "--",
+    val basalIobText: String = "--",
+    val activeCobText: String = "--",
+    val tempTargetText: String = "--",
+    val tempTargetRemainingText: String = "",
 )
 
-/** Pure rules behind [GlassHomeViewModel], kept apart so they can be tested without a database. */
 internal object GlassHomeStats {
-
-    /** Today's ring shows only after this many hours: early in the day there are too few readings. */
     const val TIR_DAY_READY_HOURS = 6.0
-
     private const val LOW_MGDL = 70.0
     private const val HIGH_MGDL = 180.0
 
-    /** Share of readings in 70-180 mg/dL, in percent. Null without readings. */
     fun inRangePct(valuesMgdl: List<Double>): Double? =
         valuesMgdl.takeIf { it.isNotEmpty() }?.let { list -> list.count { it in LOW_MGDL..HIGH_MGDL } * 100.0 / list.size }
 
-    /**
-     * Today's time in range for the ring, with the change against yesterday. Null when there are no
-     * readings today or the day is younger than [TIR_DAY_READY_HOURS]. The bands are the ones DEV used:
-     * below = under 70, in range = 70-180, above = over 180 mg/dL.
-     */
     fun tir(todayMgdl: List<Double>, yesterdayInRangePct: Double?, hoursSinceDayStart: Double): GlassTir? {
         if (todayMgdl.isEmpty() || hoursSinceDayStart < TIR_DAY_READY_HOURS) return null
         val count = todayMgdl.size.toDouble()
@@ -306,11 +361,6 @@ internal object GlassHomeStats {
         )
     }
 
-    /**
-     * Steps since midnight from the database, as DEV computed them without Health Connect: per device,
-     * the largest 5 min count of each 5 min slot is added up, and the device with the highest total wins
-     * (devices are not merged). Null when there are no rows.
-     */
     fun stepsToday(rows: List<SC>): Double? {
         if (rows.isEmpty()) return null
         return rows
@@ -326,11 +376,6 @@ internal object GlassHomeStats {
             } ?: 0.0
     }
 
-    /**
-     * The steps shown for today, as on `dev_OAPSAIMI`: with a health store total, the larger of it and
-     * the database total (the database cannot merge phone and watch, the store can lag, so the larger
-     * one is the fresher); without it, the database total. Null when neither has a value.
-     */
     fun chooseStepsToday(healthStoreSteps: Long?, databaseSteps: Double?): Double? = when {
         healthStoreSteps != null -> max(healthStoreSteps.toDouble().coerceAtLeast(0.0), (databaseSteps ?: 0.0).coerceAtLeast(0.0))
         else                     -> databaseSteps
