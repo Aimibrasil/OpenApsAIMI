@@ -1,5 +1,6 @@
 package app.aaps.ui.compose.main
 
+import app.aaps.ui.compose.dashboard.aimibrasil.AimiBrasilDashboardHome
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.TrendingFlat
 import androidx.compose.material.icons.filled.Warning
@@ -309,6 +310,23 @@ fun OverviewScreen(
                     statusViewModel = statusViewModel,
                     aimiDashboardData = aimiGlassDashboardData,
                     commandsAllowed = commandsAllowed,
+                    cgmWarmupStatus = (activePlugin.activeBgSource as? CgmWarmupProvider)?.warmupStatus,
+                )
+            }
+            DashboardHomeSelection.AIMI_BRASIL -> { commandsAllowed ->
+                AimiBrasilDashboardHome(
+                    graphViewModel = graphViewModel,
+                    chipsViewModel = chipsViewModel,
+                    statusViewModel = statusViewModel,
+                    notifications = notifications,
+                    onDismissNotification = { notification -> notificationManager.dismiss(NotificationHandle(notification.instanceKey)) },
+                    onNotificationActionClick = onNotificationActionClick,
+                    availablePluginClassNames = activePlugin.getPluginsList().mapNotNull { it::class.simpleName }.toSet(),
+                    bgSourcePluginClassName = bgSourcePlugin?.let { it::class.simpleName },
+                    commandsAllowed = commandsAllowed,
+                    onNavigate = onNavigate,
+                    onOpenActions = { manageSheetState.show() },
+                    aimiDashboardData = aimiGlassDashboardData,
                     cgmWarmupStatus = (activePlugin.activeBgSource as? CgmWarmupProvider)?.warmupStatus,
                 )
             }

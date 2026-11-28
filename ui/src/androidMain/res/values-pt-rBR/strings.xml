@@ -885,5 +885,56 @@
     <string name="essential_shape_description" comment="Screen reader text. %1$s=glucose with unit, %2$s=situation. Example: Glucose 168 mg/dL, Rising">Glicemia %1$s, %2$s</string>
     <string name="essential_previous_step">Anterior</string>
     <string name="essential_next_step">Próximo</string>
+    <!-- AIMI Brasil Dashboard -->
+    <string name="aimibr_pump_label">Bomba</string>
+    <string name="aimibr_insulin_label">Insulina</string>
+    <string name="aimibr_sensor_label">Sensor</string>
+    <string name="aimibr_unreachable">Sem conexão</string>
+    <string name="aimibr_super_bolus">Super Bolus</string>
+    <string name="aimibr_disconnected">Desconectada</string>
+    <string name="aimibr_pump_suspended">Bomba Suspensa</string>
+    <string name="aimibr_loop_suspended">Loop Suspenso</string>
+    <string name="aimibr_closed_loop">Loop Fechado</string>
+    <string name="aimibr_open_loop">Loop Aberto</string>
+    <string name="aimibr_disabled_loop">Loop Desativado</string>
+    <string name="aimibr_advisor_btn">Consultor</string>
+    <string name="aimibr_context_btn">Contexto</string>
+    <string name="aimibr_calc_btn">Calc</string>
+    <string name="aimibr_carbs_prefix">Carbo:</string>
+    <string name="aimibr_sens_prefix">Sens:</string>
+    <string name="aimibr_target_prefix">Alvo:</string>
+    <string name="aimibr_bolus_prefix">Bolus:</string>
+    <string name="aimibr_metric_steps_hr">Passos e FC</string>
+    <string name="aimibr_metric_iob">IOB (Insulina Ativa)</string>
+    <string name="aimibr_metric_basal">Basal</string>
+    <string name="aimibr_metric_carbs">Carboidratos (COB)</string>
+    <string name="aimibr_metric_sens">Sensibilidade (FSI)</string>
+    <string name="aimibr_metric_target">Alvo Glicêmico</string>
+    <string name="aimibr_metric_last_bolus">Último Bolus</string>
+    <string name="aimibr_style_dialog_title">Estilo Visual AIMI Brasil</string>
+    <string name="aimibr_style_neutral_title">Escuro / Cinza Neutro</string>
+    <string name="aimibr_style_neutral_sub">Cartões escuros neutros, apenas o anel muda de cor</string>
+    <string name="aimibr_style_dynamic_title">Cor da Zona Glicêmica</string>
+    <string name="aimibr_style_dynamic_sub">Cartões tingidos suavemente pela faixa da glicemia</string>
+    <string name="aimibr_style_glass_title">Liquid Glass</string>
+    <string name="aimibr_style_glass_sub">Camadas de vidro translúcido com brilho especular</string>
+    <string name="aimibr_fullscreen_title">Modo Tela Inteira</string>
+    <string name="aimibr_fullscreen_sub">Ocultar barra de pesquisa superior e barra inferior (mantém menu ☰)</string>
+    <string name="aimibr_customize_title">Personalizar Botões</string>
+    <string name="aimibr_customize_hint">Selecione e reordene os botões da tela inicial:</string>
+    <string name="aimibr_add_buttons">+ Adicionar Botões</string>
+    <string name="aimibr_done">Concluir</string>
+    <string name="aimibr_close">Fechar</string>
+    <string name="aimibr_cancel">Cancelar</string>
+    <string name="aimibr_iob_dialog_title">Insulina Ativa (IOB)</string>
+    <string name="aimibr_bolus_iob_format">IOB de Bolus: %1$s</string>
+    <string name="aimibr_basal_iob_format">IOB de Basal: %1$s</string>
+    <string name="aimibr_total_iob_format">IOB Total: %1$s</string>
+    <string name="aimibr_sens_dialog_title">Sensibilidade à Insulina (FSI)</string>
+    <string name="aimibr_autosens_ratio_format">Proporção Autosens: %1$s</string>
+    <string name="aimibr_profile_isf_format">FSI do Perfil: %1$s</string>
+    <string name="aimibr_variable_isf_format">FSI Variável: %1$s</string>
+    <string name="aimibr_algo_autosens_format">Autosens do Algoritmo: %1$s</string>
+    <string name="aimibr_avg_isf_format">FSI Média: %1$s</string>
 
 </resources>

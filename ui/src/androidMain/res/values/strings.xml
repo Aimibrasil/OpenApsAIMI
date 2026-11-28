@@ -885,5 +885,56 @@
     <string name="essential_shape_description" comment="Screen reader text. %1$s=glucose with unit, %2$s=situation. Example: Glucose 168 mg/dL, Rising">Glucose %1$s, %2$s</string>
     <string name="essential_previous_step">Earlier</string>
     <string name="essential_next_step">Later</string>
+    <!-- AIMI Brasil Dashboard -->
+    <string name="aimibr_pump_label">Pump</string>
+    <string name="aimibr_insulin_label">Insulin</string>
+    <string name="aimibr_sensor_label">Sensor</string>
+    <string name="aimibr_unreachable">Unreachable</string>
+    <string name="aimibr_super_bolus">Super Bolus</string>
+    <string name="aimibr_disconnected">Disconnected</string>
+    <string name="aimibr_pump_suspended">Pump Suspended</string>
+    <string name="aimibr_loop_suspended">Loop Suspended</string>
+    <string name="aimibr_closed_loop">Closed Loop</string>
+    <string name="aimibr_open_loop">Open Loop</string>
+    <string name="aimibr_disabled_loop">Disabled Loop</string>
+    <string name="aimibr_advisor_btn">Advisor</string>
+    <string name="aimibr_context_btn">Context</string>
+    <string name="aimibr_calc_btn">Calc</string>
+    <string name="aimibr_carbs_prefix">Carbs:</string>
+    <string name="aimibr_sens_prefix">Sens:</string>
+    <string name="aimibr_target_prefix">Target:</string>
+    <string name="aimibr_bolus_prefix">Bolus:</string>
+    <string name="aimibr_metric_steps_hr">Steps &amp; HR</string>
+    <string name="aimibr_metric_iob">IOB (Active Insulin)</string>
+    <string name="aimibr_metric_basal">Basal</string>
+    <string name="aimibr_metric_carbs">Carbs (COB)</string>
+    <string name="aimibr_metric_sens">Sensitivity (ISF)</string>
+    <string name="aimibr_metric_target">Target</string>
+    <string name="aimibr_metric_last_bolus">Last Bolus</string>
+    <string name="aimibr_style_dialog_title">AIMI Brasil Visual Style</string>
+    <string name="aimibr_style_neutral_title">Neutral Dark / Grey</string>
+    <string name="aimibr_style_neutral_sub">Clean dark cards, only glucose ring changes color</string>
+    <string name="aimibr_style_dynamic_title">Glucose Zone Color</string>
+    <string name="aimibr_style_dynamic_sub">Cards subtly tinted with current glucose range</string>
+    <string name="aimibr_style_glass_title">Liquid Glass</string>
+    <string name="aimibr_style_glass_sub">Translucent glass layers with specular highlights</string>
+    <string name="aimibr_fullscreen_title">Full Screen Mode</string>
+    <string name="aimibr_fullscreen_sub">Hide top search bar and bottom navigation bar (keeps ☰ menu)</string>
+    <string name="aimibr_customize_title">Customize Buttons</string>
+    <string name="aimibr_customize_hint">Select and reorder dashboard buttons:</string>
+    <string name="aimibr_add_buttons">+ Add Buttons</string>
+    <string name="aimibr_done">Done</string>
+    <string name="aimibr_close">Close</string>
+    <string name="aimibr_cancel">Cancel</string>
+    <string name="aimibr_iob_dialog_title">Insulin on Board (IOB)</string>
+    <string name="aimibr_bolus_iob_format">Bolus IOB: %1$s</string>
+    <string name="aimibr_basal_iob_format">Basal IOB: %1$s</string>
+    <string name="aimibr_total_iob_format">Total IOB: %1$s</string>
+    <string name="aimibr_sens_dialog_title">Insulin Sensitivity (ISF)</string>
+    <string name="aimibr_autosens_ratio_format">Autosens Ratio: %1$s</string>
+    <string name="aimibr_profile_isf_format">Profile ISF: %1$s</string>
+    <string name="aimibr_variable_isf_format">Variable ISF: %1$s</string>
+    <string name="aimibr_algo_autosens_format">Algorithm Autosens: %1$s</string>
+    <string name="aimibr_avg_isf_format">Average ISF: %1$s</string>
 
 </resources>

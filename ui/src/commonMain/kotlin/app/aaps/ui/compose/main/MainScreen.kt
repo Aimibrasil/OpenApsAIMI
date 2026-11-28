@@ -1,5 +1,12 @@
 package app.aaps.ui.compose.main
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
+import app.aaps.ui.compose.dashboard.aimibrasil.AimiBrImmersiveState
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -211,6 +218,7 @@ fun MainScreen(
     ) {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             val density = LocalDensity.current
+            val immersiveAimiBr by AimiBrImmersiveState
             val previewMode = maxHeight < PREVIEW_MODE_MIN_HEIGHT
             var chromeVisible by remember { mutableStateOf(false) }
             val showChrome = !previewMode || chromeVisible
@@ -438,7 +446,7 @@ fun MainScreen(
 
                     // Top bar overlay
                     AnimatedVisibility(
-                        visible = showChrome,
+                        visible = showChrome && !immersiveAimiBr,
                         enter = slideInVertically { -it },
                         exit = slideOutVertically { -it },
                         modifier = Modifier
@@ -459,18 +467,63 @@ fun MainScreen(
                             onSearchClear = onSearchClear,
                             onSearchActiveChange = onSearchActiveChange,
                             isSimpleMode = uiState.isSimpleMode,
-                            // Guard against transient 0 heights during AnimatedVisibility exit:
-                            // the resulting contentPadding invalidation can schedule a remeasure
-                            // on a node that's losing its owner — crashes in dispatchDraw.
                             modifier = Modifier.onSizeChanged {
                                 if (it.height > 0 && it.height != topBarHeightPx) topBarHeightPx = it.height
                             }
                         )
                     }
 
-                    // Bottom bar overlay
+                    // Botões flutuantes no modo Tela Inteira do AIMI Brasil (☰ à esquerda e ⚙ à direita)
+                    if (immersiveAimiBr && !showChrome) {
+                        Surface(
+                            onClick = {
+                                scope.launch {
+                                    drawerState.open()
+                                    onMenuClick()
+                                }
+                            },
+                            shape = CircleShape,
+                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.72f),
+                            shadowElevation = 4.dp,
+                            modifier = Modifier
+                                .align(Alignment.TopStart)
+                                .padding(
+                                    top = scaffoldPadding.calculateTopPadding() + 6.dp,
+                                    start = 8.dp
+                                )
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Menu,
+                                contentDescription = "Menu",
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+
+                        Surface(
+                            onClick = { onNavigate(NavigationRequest.Element(ElementType.SETTINGS)) },
+                            shape = CircleShape,
+                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.72f),
+                            shadowElevation = 4.dp,
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(
+                                    top = scaffoldPadding.calculateTopPadding() + 6.dp,
+                                    end = 8.dp
+                                )
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Settings,
+                                contentDescription = "Settings",
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+                    }
+
+                    // Bottom bar overlay (oculta no modo Tela Inteira do AIMI Brasil)
                     AnimatedVisibility(
-                        visible = showChrome,
+                        visible = showChrome && !immersiveAimiBr,
                         enter = slideInVertically { it },
                         exit = slideOutVertically { it },
                         modifier = Modifier
@@ -509,9 +562,6 @@ fun MainScreen(
                                 scenesViewModel.refreshState()
                                 showAutomationSheet = true
                             },
-                            // Total drives nav-button visibility (button stays visible whenever
-                            // scenes/automation exist, even if currently un-activatable).
-                            // Count drives the badge — only items the user can act on right now.
                             automationTotal = automationState.items.size + automationState.sceneItems.size,
                             automationCount = automationState.items.count { it.activationReason == null } +
                                 automationState.sceneItems.count { it.activationReason == null },
@@ -534,17 +584,19 @@ fun MainScreen(
                         )
                     }
 
-                    // Quick launch toolbar overlay
+                    // Quick launch toolbar overlay (mantida visível no modo Tela Inteira!)
+                    val quickLaunchBottomPad = if (immersiveAimiBr && !showChrome) {
+                        scaffoldPadding.calculateBottomPadding() + 8.dp
+                    } else {
+                        scaffoldPadding.calculateBottomPadding() + with(density) { bottomBarHeightPx.toDp() } + 8.dp
+                    }
                     AnimatedVisibility(
-                        visible = hasToolbar && showChrome,
+                        visible = hasToolbar && (showChrome || immersiveAimiBr),
                         enter = slideInVertically { it },
                         exit = slideOutVertically { it },
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
-                            .padding(
-                                bottom = scaffoldPadding.calculateBottomPadding() +
-                                    with(density) { bottomBarHeightPx.toDp() } + 8.dp
-                            )
+                            .padding(bottom = quickLaunchBottomPad)
                     ) {
                         QuickLaunchToolbar(
                             items = quickLaunchItems,

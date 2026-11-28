@@ -123,7 +123,11 @@ enum class StringKey(
             "glass" to KeysStrings.pref_dashboard_home_glass,
             "essential" to KeysStrings.pref_dashboard_home_essential,
         ),
+        entriesLiterals = mapOf(
+            "aimi_brasil" to "AIMI Brasil",
+        ),
     ),
+
 
     // Look of the BG graph on the home screen. Same names, values and defaults as on dev_OAPSAIMI.
     OverviewVicoBgReadingTint(
