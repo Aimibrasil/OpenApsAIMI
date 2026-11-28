@@ -224,39 +224,28 @@ fun MainScreen(
             val showChrome = !previewMode || chromeVisible
             val accessibilityManager = LocalAccessibilityManager.current
 
-            // Measure actual bar heights for content padding in non-preview mode
             var topBarHeightPx by remember { mutableIntStateOf(0) }
             var bottomBarHeightPx by remember { mutableIntStateOf(0) }
 
-            // Auto-hide chrome after timeout, reset when leaving preview mode
             LaunchedEffect(chromeVisible, previewMode) {
                 if (!previewMode) {
                     chromeVisible = false
                     return@LaunchedEffect
                 }
                 if (chromeVisible) {
-                    // Honours the system "Time to take action" setting: a screen reader user moving
-                    // through the bars needs longer than 3 s before they hide again.
                     delay(accessibilityManager?.calculateRecommendedTimeoutMillis(AUTO_HIDE_DELAY_MS, containsIcons = true, containsControls = true) ?: AUTO_HIDE_DELAY_MS)
                     chromeVisible = false
                 }
             }
 
-            // topBar/bottomBar are intentionally absent — chrome is rendered as
-            // overlays inside the content (see AnimatedVisibility blocks below) so
-            // it can hide in preview mode without reflowing layout. The status-bar
-            // and navigation-bar protection scrims rely on this: they read raw
-            // WindowInsets.statusBars / navigationBars, which would be consumed
-            // (returning zero height) if those Scaffold slots were populated.
             Scaffold { scaffoldPadding ->
-                // Glass has its own shortcut pills and its own bottom bar, so the Quick Launch toolbar
-                // would only float on top of them.
                 val hasToolbar = quickLaunchItems.isNotEmpty() && !isGlassSkin
 
-                // Content padding: in preview mode use only system bars;
-                // in normal mode add measured bar heights
-                val contentPadding = if (previewMode) scaffoldPadding
-                else {
+                val contentPadding = if (immersiveAimiBr) {
+                    PaddingValues(0.dp)
+                } else if (previewMode) {
+                    scaffoldPadding
+                } else {
                     val topBarHeight = with(density) { topBarHeightPx.toDp() }
                     val bottomBarHeight = with(density) { bottomBarHeightPx.toDp() }
                     PaddingValues(
@@ -264,6 +253,7 @@ fun MainScreen(
                         bottom = scaffoldPadding.calculateBottomPadding() + bottomBarHeight
                     )
                 }
+
 
                 val activeSceneState by mainViewModel.activeSceneState.collectAsStateWithLifecycle()
                 val sceneExpired by mainViewModel.sceneExpired.collectAsStateWithLifecycle()
@@ -427,22 +417,24 @@ fun MainScreen(
 
                     // Status bar protection scrim — keeps system icons legible
                     // against the floating search bar / graph content
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .fillMaxWidth()
-                            .windowInsetsTopHeight(WindowInsets.statusBars)
-                            .background(MaterialTheme.colorScheme.surface)
-                    )
+                    if (!immersiveAimiBr || showChrome) {
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.TopCenter)
+                                .fillMaxWidth()
+                                .windowInsetsTopHeight(WindowInsets.statusBars)
+                                .background(MaterialTheme.colorScheme.surface)
+                        )
 
-                    // Navigation bar protection scrim
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .fillMaxWidth()
-                            .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                            .background(MaterialTheme.colorScheme.surface)
-                    )
+                        // Navigation bar protection scrim
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .fillMaxWidth()
+                                .windowInsetsBottomHeight(WindowInsets.navigationBars)
+                                .background(MaterialTheme.colorScheme.surface)
+                        )
+                    }
 
                     // Top bar overlay
                     AnimatedVisibility(
@@ -474,7 +466,8 @@ fun MainScreen(
                     }
 
                     // Botões flutuantes no modo Tela Inteira do AIMI Brasil (☰ à esquerda e ⚙ à direita)
-                    if (immersiveAimiBr && !showChrome) {
+                    // Botões flutuantes no modo Tela Inteira do AIMI Brasil (☰ à esquerda e ⚙ à direita)
+                    if (immersiveAimiBr) {
                         Surface(
                             onClick = {
                                 scope.launch {
@@ -585,7 +578,7 @@ fun MainScreen(
                     }
 
                     // Quick launch toolbar overlay (mantida visível no modo Tela Inteira!)
-                    val quickLaunchBottomPad = if (immersiveAimiBr && !showChrome) {
+                    val quickLaunchBottomPad = if (immersiveAimiBr) {
                         scaffoldPadding.calculateBottomPadding() + 8.dp
                     } else {
                         scaffoldPadding.calculateBottomPadding() + with(density) { bottomBarHeightPx.toDp() } + 8.dp

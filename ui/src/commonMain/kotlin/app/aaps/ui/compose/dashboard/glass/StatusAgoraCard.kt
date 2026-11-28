@@ -1,703 +1,489 @@
 package app.aaps.ui.compose.dashboard.glass
 
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.DirectionsWalk
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.aaps.core.interfaces.overview.graph.BgRange
+import app.aaps.core.interfaces.source.CgmWarmupStatus
+import app.aaps.core.ui.CoreUiStrings
+import app.aaps.core.ui.compose.AapsTheme
 import app.aaps.core.ui.compose.glass.GlassColors
+import app.aaps.core.ui.compose.icons.IcGlycoBattery
+import app.aaps.core.ui.compose.icons.IcGlycoCannula
+import app.aaps.core.ui.compose.icons.IcGlycoInsulin
+import app.aaps.core.ui.compose.icons.IcGlycoSensor
+import app.aaps.core.ui.compose.icons.IcGlycoSettings
+import app.aaps.core.ui.compose.statusLevelToColor
+import app.aaps.core.ui.compose.stringResource
 import app.aaps.core.ui.extensions.directionToIcon
+import app.aaps.ui.UiStrings
 import app.aaps.ui.compose.dashboard.GlassCgmLinkStatus
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
-internal enum class GlassGlucoseZone(val titlePt: String) {
-    MUITO_BAIXO("MUITO BAIXO"),
-    BAIXO("BAIXO"),
-    ESTAVEL("ESTÁVEL"),
-    ALTO("ALTO"),
-    MUITO_ALTO("MUITO ALTO"),
-    SEM_DADOS("SEM DADOS")
+/** Neutral grey for a glucose with an unknown range, and for a stale value. */
+private val NEUTRAL_DARK = Color(0xFF94A3B8)
+private val NEUTRAL_LIGHT = Color(0xFF64748B)
+private val LOOP_RUNNING_HALO = Color(0xFF22C55E)
+private val TEMP_TARGET_ACCENT = Color(0xFFF4D700)
+
+// Only ever called for GlassPillLocation.BOTTOM_ROW entries (see the bottom-row filter below), but the
+// `when` must still cover every GlassPillId since top-grid IDs share the same enum.
+private fun glassPillValue(id: GlassPillId, state: GlassUiState): String = when (id) {
+    GlassPillId.IOB            -> state.iobText
+    GlassPillId.TARGET         -> state.targetText
+    GlassPillId.BASAL_RATE     -> state.basalPercentText
+    GlassPillId.LAST_BOLUS     -> state.lastBolusText
+    GlassPillId.LAST_CARBS     -> state.lastCarbsText
+    GlassPillId.PUMP_RESERVOIR, GlassPillId.CANNULA, GlassPillId.BATTERY,
+    GlassPillId.SENSOR, GlassPillId.LOOP_STATUS, GlassPillId.ACTIVITY -> ""
 }
 
-internal data class GlassZoneColors(val core: Color, val deep: Color, val glow: Color, val border: Color)
-
-internal fun GlassGlucoseZone.zoneColors(): GlassZoneColors = when (this) {
-    GlassGlucoseZone.MUITO_BAIXO -> GlassZoneColors(Color(0xFFD32F2F), Color(0xFF7F0000), Color(0xFFFF1744), Color(0xFFFF8A80))
-    GlassGlucoseZone.BAIXO -> GlassZoneColors(Color(0xFFE53935), Color(0xFF8E0000), Color(0xFFFF5252), Color(0xFFFFCDD2))
-    GlassGlucoseZone.ESTAVEL -> GlassZoneColors(Color(0xFF1B8A5A), Color(0xFF0A472C), Color(0xFF00E676), Color(0xFFA5D6A7))
-    GlassGlucoseZone.ALTO -> GlassZoneColors(Color(0xFFD48817), Color(0xFF7A4900), Color(0xFFFFB300), Color(0xFFFFE082))
-    GlassGlucoseZone.MUITO_ALTO -> GlassZoneColors(Color(0xFFE65100), Color(0xFF872600), Color(0xFFFF9100), Color(0xFFFFCC80))
-    GlassGlucoseZone.SEM_DADOS -> GlassZoneColors(Color(0xFF455A64), Color(0xFF1C313A), Color(0xFF90A4AE), Color(0xFFCFD8DC))
-}
-
-internal fun classifyGlassZone(bg: Float, stale: Boolean, low: Float, high: Float, isMmol: Boolean): GlassGlucoseZone {
-    if (stale || bg <= 0f || !bg.isFinite()) return GlassGlucoseZone.SEM_DADOS
-    val vLow = if (isMmol) 0.8f else 15f
-    val vHigh = if (isMmol) 2.2f else 40f
-    return when {
-        bg < low - vLow -> GlassGlucoseZone.MUITO_BAIXO
-        bg < low -> GlassGlucoseZone.BAIXO
-        bg <= high -> GlassGlucoseZone.ESTAVEL
-        bg <= high + vHigh -> GlassGlucoseZone.ALTO
-        else -> GlassGlucoseZone.MUITO_ALTO
-    }
-}
-
-internal fun Modifier.glassSurface(isDark: Boolean, radius: Dp = 18.dp, accent: Color? = null): Modifier {
-    val shape = RoundedCornerShape(radius)
-    val bg = if (isDark) {
-        listOf(
-            Color(0xFF232832).copy(alpha = 0.86f),
-            Color(0xFF14171D).copy(alpha = 0.90f)
-        )
-    } else {
-        listOf(
-            Color.White.copy(alpha = 0.94f),
-            Color(0xFFF1F5F9).copy(alpha = 0.88f)
-        )
-    }
-    val border = if (accent != null) {
-        listOf(accent.copy(0.45f), Color.White.copy(if (isDark) 0.08f else 0.35f))
-    } else if (isDark) {
-        listOf(Color.White.copy(0.22f), Color.White.copy(0.05f))
-    } else {
-        listOf(Color.White.copy(0.95f), Color(0xFF94A3B8).copy(0.35f))
-    }
-    return this
-        .clip(shape)
-        .background(Brush.verticalGradient(bg))
-        .border(BorderStroke(1.dp, Brush.verticalGradient(border)), shape)
-}
+/**
+ * The status card at the top of the Glass home: glucose inside today's time-in-range ring, the
+ * device pills left and right, and the selected bottom-row pills. Port of `StatusAgoraCard` on
+ * `dev_OAPSAIMI`.
+ *
+ * @param nowMs current time, from a ticker: keeps "last value N min ago" and the stale grey moving
+ *   between two refreshes of the data
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun StatusAgoraCard(
     state: GlassUiState,
-    pumpStatus: GlassPumpStatusLine? = null,
     isDark: Boolean,
     nowMs: Long,
     commands: GlassHeroCommands,
     onOpenTools: () -> Unit,
     selectedPills: List<GlassPillId>,
-    currentBgValue: Float = state.currentBg.replace(",", ".").toFloatOrNull() ?: 0f,
-    lowLine: Float = 70f,
-    highLine: Float = 180f,
-    isMmol: Boolean = false,
-    onOpenMealAdvisor: () -> Unit = onOpenTools,
-    onOpenAimiContext: () -> Unit = commands::openLoopDashboard,
 ) {
-    var topExpanded by rememberSaveable { mutableStateOf(true) }
-    var showIobDialog by remember { mutableStateOf(false) }
-    var showSensDialog by remember { mutableStateOf(false) }
+    val glucoseStale = GlassCgmLinkStatus.isStale(state.isGlucoseActual, state.glucoseTimestampMs, nowMs)
+    val linkBanner = GlassCgmLinkStatus.banner(state.warmup, state.isGlucoseActual, state.glucoseTimestampMs, nowMs)
+    val neutralColor = if (isDark) NEUTRAL_DARK else NEUTRAL_LIGHT
+    val glucoseColor = glucoseRangeColor(state.glucoseRange, isDark)
 
-    val stale = GlassCgmLinkStatus.isStale(state.isGlucoseActual, state.glucoseTimestampMs, nowMs)
-    val zone = classifyGlassZone(currentBgValue, stale, lowLine, highLine, isMmol)
-    val pal = zone.zoneColors()
-
-    val coreAnim by animateColorAsState(pal.core, tween(500), label = "core")
-    val deepAnim by animateColorAsState(pal.deep, tween(500), label = "deep")
-    val glowAnim by animateColorAsState(pal.glow, tween(500), label = "glow")
-
-    val txtPrimary = if (isDark) Color(0xFFF1F5F9) else Color(0xFF0F172A)
-    val txtMuted = if (isDark) Color(0xFF94A3B8) else Color(0xFF64748B)
-
-    val bombaAgeValue = pumpStatus?.siteAgeText?.takeIf { it.isNotBlank() } ?: state.cannulaAge.ifBlank { "--" }
-    val insulinaUnitsValue = pumpStatus?.reservoirText?.takeIf { it.isNotBlank() } ?: state.insulinAge.ifBlank { "--" }
-    val sensorAgeValue = pumpStatus?.sensorAgeText?.takeIf { it.isNotBlank() } ?: state.sensorAge.ifBlank { "--" }
-
-    val numericTimeAgo = remember(state.timeAgo) {
-        val digits = state.timeAgo.filter { it.isDigit() }
-        when {
-            state.timeAgo.contains("-") || state.timeAgo.isBlank() -> "0m"
-            digits.isNotEmpty() -> "${digits}m"
-            else -> state.timeAgo
-        }
-    }
-
-    val pumpTint = when {
-        pumpStatus?.unreachableText != null -> Color(0xFFEF4444)
-        pumpStatus?.siteAgeWarning == true -> Color(0xFFF59E0B)
-        else -> Color(0xFF38BDF8)
-    }
-    val insulinTint = when {
-        pumpStatus?.unreachableText != null -> Color(0xFFEF4444)
-        else -> Color(0xFF38BDF8)
-    }
-    val sensorTint = when {
-        pumpStatus?.sensorAgeWarning == true -> Color(0xFFF97316)
-        else -> Color(0xFF22C55E)
-    }
-
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .glassSurface(isDark = isDark, radius = 18.dp)
-                .padding(horizontal = 12.dp, vertical = 9.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            if (topExpanded) {
-                Row(
-                    modifier = Modifier.weight(1f),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    DeviceBadgeCustom(
-                        iconContent = { MedtrumPatchGraphic() },
-                        label = "Bomba",
-                        value = bombaAgeValue,
-                        valueColor = pumpTint,
-                        labelColor = txtMuted,
-                        onClick = commands::openCannula
-                    )
-                    DeviceBadgeCustom(
-                        iconContent = {
-                            Icon(
-                                imageVector = Icons.Default.WaterDrop,
-                                contentDescription = null,
-                                tint = Color(0xFF38BDF8),
-                                modifier = Modifier.size(22.dp)
-                            )
-                        },
-                        label = "Insulina",
-                        value = insulinaUnitsValue,
-                        valueColor = insulinTint,
-                        labelColor = txtMuted,
-                        onClick = commands::openPump
-                    )
-                    DeviceBadgeCustom(
-                        iconContent = { RoundWhiteSensorGraphic() },
-                        label = "Sensor",
-                        value = sensorAgeValue,
-                        valueColor = sensorTint,
-                        labelColor = txtMuted,
-                        onClick = commands::openSensorQuality,
-                        onLong = commands::openSensorInsert
-                    )
-                }
-            } else {
-                Text(
-                    text = "Bomba: $bombaAgeValue • Insulina: $insulinaUnitsValue • Sensor: $sensorAgeValue",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = txtMuted,
-                    modifier = Modifier.weight(1f)
-                )
-            }
-            Spacer(Modifier.width(4.dp))
-            Icon(
-                imageVector = if (topExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                contentDescription = null,
-                tint = txtMuted,
-                modifier = Modifier
-                    .size(24.dp)
-                    .clip(CircleShape)
-                    .clickable { topExpanded = !topExpanded }
-            )
-        }
-        // CARTÃO PRINCIPAL DE TELEMETRIA VIDRO LÍQUIDO GRAFITE
+    GlassContainer(isDark = isDark, modifier = Modifier.fillMaxWidth()) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .glassSurface(isDark = isDark, radius = 22.dp)
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier.padding(14.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // 1. CABEÇALHO 50% / 50%: ESTRELA + PERFIL (Abre Perfis) | ÍCONE LOOP + STATUS DO LOOP (Abre Modo do Loop)
+            Spacer(modifier = Modifier.height(2.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(RoundedCornerShape(10.dp))
-                        .clickable { commands.openProfile() }
-                        .padding(horizontal = 6.dp, vertical = 4.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.StarOutline,
-                        contentDescription = null,
-                        tint = Color(0xFFF59E0B),
-                        modifier = Modifier.size(19.dp)
-                    )
-                    Text(
-                        text = state.profileName,
-                        fontSize = 14.5.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = txtPrimary,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.End),
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(RoundedCornerShape(10.dp))
-                        .clickable { commands.openLoop() }
-                        .padding(horizontal = 6.dp, vertical = 4.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Sync,
-                        contentDescription = null,
-                        tint = if (state.loopIsRunning) GlassColors.emerald else Color(0xFFEF4444),
-                        modifier = Modifier.size(19.dp)
-                    )
-                    Text(
-                        text = state.loopStatusText ?: "Loop Fechado",
-                        fontSize = 14.5.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = txtPrimary,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
-
-            // CORPO DO CARTÃO: ESFERA À ESQUERDA + LISTA AO CENTRO + TIR & BOTÕES À DIREITA
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // Esfera de Glicemia -> Abre Painel do Loop
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(124.dp)
-                        .clip(CircleShape)
-                        .border(2.dp, pal.border.copy(alpha = 0.85f), CircleShape)
-                        .clickable { commands.openLoopDashboard() }
-                ) {
-                    Canvas(modifier = Modifier.fillMaxSize()) {
-                        drawCircle(
-                            brush = Brush.radialGradient(
-                                colors = listOf(coreAnim, deepAnim),
-                                center = Offset(size.width * 0.35f, size.height * 0.30f),
-                                radius = size.minDimension * 0.78f
-                            )
-                        )
-                        drawCircle(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(Color.White.copy(alpha = 0.38f), Color.Transparent),
-                                startY = 0f,
-                                endY = size.height * 0.55f
-                            ),
-                            radius = size.minDimension * 0.44f,
-                            center = Offset(size.width * 0.5f, size.height * 0.44f)
-                        )
-                        drawCircle(
-                            color = glowAnim.copy(alpha = 0.45f),
-                            radius = size.minDimension * 0.47f,
-                            style = Stroke(width = 2.dp.toPx())
-                        )
-                    }
-
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = numericTimeAgo,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = if (stale) Color(0xFFFFCDD2) else Color.White.copy(alpha = 0.92f)
-                        )
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = state.currentBg,
-                                fontSize = 36.sp,
-                                fontWeight = FontWeight.Black,
-                                color = Color.White,
-                                textDecoration = if (stale) TextDecoration.LineThrough else null,
-                                letterSpacing = (-1.2).sp,
-                                lineHeight = 36.sp
-                            )
-                            state.trendArrow?.let {
-                                Icon(
-                                    imageVector = it.directionToIcon(),
-                                    contentDescription = null,
-                                    tint = Color.White,
-                                    modifier = Modifier.size(26.dp)
-                                )
-                            }
-                        }
-                        Text(
-                            text = "Δ ${state.deltaText} ${state.unit}",
-                            fontSize = 10.5.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White.copy(alpha = 0.95f)
-                        )
-                    }
-                }
-                // COLUNA CENTRAL: TELEMETRIA COMPACTA
+                // LEFT: pump status
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(3.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 2.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(3.dp)) {
-                            Icon(Icons.AutoMirrored.Filled.DirectionsWalk, null, tint = Color(0xFF38BDF8), modifier = Modifier.size(13.dp))
-                            Text(state.stepsText, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = txtPrimary)
-                        }
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(3.dp)) {
-                            Icon(Icons.Default.Favorite, null, tint = Color(0xFFF43F5E), modifier = Modifier.size(13.dp))
-                            Text("${state.hrText} bpm", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = txtPrimary)
-                        }
-                    }
-
-                    // IOB -> Abre janela com IOB de Bolus, IOB Basal e Total
-                    TelemetryRow(
-                        icon = Icons.Default.WaterDrop,
-                        iconTint = Color(0xFF38BDF8),
-                        label = "IOB",
-                        value = state.iobText,
-                        txtColor = txtPrimary,
-                        onClick = { showIobDialog = true }
-                    )
-                    TelemetryRow(Icons.Default.Vaccines, Color(0xFF60A5FA), "Últ. Bolus", state.lastBolusText, txtPrimary, commands::openInsulin)
-                    TelemetryRow(Icons.Default.Medication, Color(0xFF818CF8), "Basal", state.basalPercentText, txtPrimary, commands::openBasal)
-
-                    // Carbo Ativo (reduzindo conforme absorção + pendente entre parênteses)
-                    TelemetryRow(
-                        icon = Icons.Default.LocalDining,
-                        iconTint = Color(0xFFF59E0B),
-                        label = "Carbo",
-                        value = state.activeCobText,
-                        txtColor = txtPrimary,
-                        onClick = commands::openInsulin
-                    )
-
-                    // Sensibilidade inline (24,0 ↗ 28,5) -> Abre diálogo detalhado
-                    TelemetryRow(
-                        icon = Icons.Default.Speed,
-                        iconTint = Color(0xFF2DD4BF),
-                        label = "Sens.",
-                        value = state.isfInlineText,
-                        txtColor = txtPrimary,
-                        onClick = { showSensDialog = true }
-                    )
-
-                    // Alvo Temporário sem quebra + destaque quando ativo -> Abre Alvo Temporário Completo
-                    val targetDisplay = if (state.isTempTargetActive && state.tempTargetRemainingText.isNotBlank()) {
-                        "${state.tempTargetText} (${state.tempTargetRemainingText})"
-                    } else {
-                        state.tempTargetText
-                    }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(
-                                if (state.isTempTargetActive) Color(0xFFF59E0B).copy(alpha = 0.18f) else Color.Transparent
-                            )
-                            .border(
-                                width = if (state.isTempTargetActive) 1.dp else 0.dp,
-                                color = if (state.isTempTargetActive) Color(0xFFF59E0B).copy(alpha = 0.55f) else Color.Transparent,
-                                shape = RoundedCornerShape(6.dp)
-                            )
-                            .clickable { commands.openFullTempTarget() }
-                            .padding(vertical = 2.dp, horizontal = 4.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.TrackChanges,
-                            contentDescription = null,
-                            tint = if (state.isTempTargetActive) Color(0xFFF59E0B) else Color(0xFF94A3B8),
-                            modifier = Modifier.size(12.dp)
-                        )
-                        Text(
-                            text = "Alvo:",
-                            fontSize = 10.sp,
-                            color = if (state.isTempTargetActive) Color(0xFFD97706) else txtPrimary.copy(alpha = 0.72f),
-                            maxLines = 1,
-                            softWrap = false
-                        )
-                        Text(
-                            text = targetDisplay,
-                            fontSize = 10.5.sp,
-                            fontWeight = FontWeight.ExtraBold,
-                            color = if (state.isTempTargetActive) (if (isDark) Color(0xFFFBBF24) else Color(0xFFB45309)) else txtPrimary,
-                            maxLines = 1,
-                            softWrap = false,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                }
-
-                // COLUNA DIREITA: BARRA TIR + BOTÕES AIMI + CALCULADORA
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    val tirPct = state.tir?.inRangePct?.roundToInt() ?: 0
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("TIR", fontSize = 8.5.sp, fontWeight = FontWeight.Bold, color = txtMuted)
-                        Spacer(Modifier.height(2.dp))
-                        Box(
-                            modifier = Modifier
-                                .width(11.dp)
-                                .height(132.dp)
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(if (isDark) Color(0xFF1E242E) else Color(0xFFE2E8F0)),
-                            contentAlignment = Alignment.BottomCenter
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .fillMaxHeight((tirPct / 100f).coerceIn(0.05f, 1f))
-                                    .background(GlassColors.emerald)
-                            )
-                        }
-                        Spacer(Modifier.height(2.dp))
-                        Text(
-                            text = if (state.tir != null) "$tirPct%" else "--",
-                            fontSize = 9.sp,
-                            fontWeight = FontWeight.ExtraBold,
-                            color = txtMuted
-                        )
-                    }
-
-                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        GlassSquareBtn(Icons.Default.CameraAlt, "Sugestão\nAIMI", Color(0xFF38BDF8), isDark, onOpenMealAdvisor)
-                        GlassSquareBtn(Icons.Default.LocationOn, "Contexto", Color(0xFF94A3B8), isDark, onOpenAimiContext)
-                        GlassSquareBtn(Icons.Default.Calculate, "Calc.", Color(0xFF22C55E), isDark, commands::openCalculator)
-                        GlassSquareBtn(Icons.Default.Settings, "AIMI", Color(0xFFF59E0B), isDark, onOpenTools)
-                    }
-                }
-            }
-        }
-    }
-    // JANELA MODAL DE IOB (Bolus, Basal e Total)
-    if (showIobDialog) {
-        AlertDialog(
-            onDismissRequest = { showIobDialog = false },
-            title = {
-                Text(
-                    text = "Insulina Ativa (IOB)",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold
-                )
-            },
-            text = {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                    horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    Text("IOB de Bolus: ${state.bolusIobText}", fontSize = 15.sp)
-                    Text("IOB Basal: ${state.basalIobText}", fontSize = 15.sp)
-                    HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
-                    Text(
-                        text = "IOB Total: ${state.iobText}",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.ExtraBold
+                    if (GlassPillId.PUMP_RESERVOIR in selectedPills) {
+                        GlassPill(
+                            label = state.insulinLabel ?: stringResource(CoreUiStrings.insulin_label),
+                            value = state.insulinAge,
+                            isDark = isDark,
+                            valueColor = statusLevelToColor(state.insulinAgeStatus),
+                            modifier = Modifier.width(PILL_WIDTH).clickable { commands.openPump() },
+                            leadingIcon = { PillIcon(IcGlycoInsulin, neutralColor) }
+                        )
+                    }
+                    if (GlassPillId.CANNULA in selectedPills) {
+                        GlassPill(
+                            label = state.cannulaLabel ?: stringResource(CoreUiStrings.cannula),
+                            value = state.cannulaAge,
+                            isDark = isDark,
+                            valueColor = statusLevelToColor(state.cannulaAgeStatus),
+                            modifier = Modifier.width(PILL_WIDTH).clickable { commands.openCannula() },
+                            leadingIcon = { PillIcon(IcGlycoCannula, neutralColor) }
+                        )
+                    }
+                    if (GlassPillId.BATTERY in selectedPills) {
+                        GlassPill(
+                            label = state.batteryLabel ?: stringResource(CoreUiStrings.pb_label),
+                            value = state.batteryAge,
+                            isDark = isDark,
+                            valueColor = statusLevelToColor(state.batteryAgeStatus),
+                            modifier = Modifier.width(PILL_WIDTH).clickable { commands.openBattery() },
+                            leadingIcon = { PillIcon(IcGlycoBattery, neutralColor) }
+                        )
+                    }
+                    GlassPill(
+                        label = stringResource(UiStrings.dashboard_glass_tools_label),
+                        value = "",
+                        isDark = isDark,
+                        modifier = Modifier.width(PILL_WIDTH).clickable { onOpenTools() },
+                        leadingIcon = { PillIcon(IcGlycoSettings, neutralColor) }
                     )
                 }
-            },
-            confirmButton = {
-                TextButton(onClick = { showIobDialog = false }) {
-                    Text("OK", fontWeight = FontWeight.Bold)
-                }
-            }
-        )
-    }
 
-    // JANELA MODAL DE SENSIBILIDADE (5 campos iguais ao original)
-    if (showSensDialog) {
-        AlertDialog(
-            onDismissRequest = { showSensDialog = false },
-            title = {
-                Text(
-                    text = "Sensibilidade",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold
-                )
-            },
-            text = {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(5.dp)
+                // CENTER: glucose, inside today's TIR ring
+                Box(
+                    modifier = Modifier
+                        .weight(1.3f)
+                        .offset(y = TIR_RING_LIFT)
+                        .size(TIR_RING_SIZE),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text("Valor do Autosens: ${state.autosensRatioText}", fontSize = 14.sp)
-                    Text("ISF do perfil: ${state.profileIsfText}", fontSize = 14.sp)
-                    Text("ISF variável: ${state.variableIsfText}", fontSize = 14.sp)
-                    Text("Autosens no algoritmo: ${state.algorithmAutosensText}", fontSize = 14.sp)
-                    Text(
-                        text = "ISF médio para a calculadora e a absorção de carboidratos: ${state.averageIsfText}",
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.Center
+                    TirRing(
+                        tir = state.tir,
+                        trackColor = neutralColor.copy(alpha = 0.18f),
+                        modifier = Modifier.matchParentSize()
                     )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Top
+                    ) {
+                        // An old value stays visible, greyed and struck through, like the classic overview.
+                        Text(
+                            text = state.currentBg,
+                            fontSize = 34.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = if (glucoseStale) neutralColor else glucoseColor,
+                            textDecoration = if (glucoseStale) TextDecoration.LineThrough else null,
+                            letterSpacing = (-1.2).sp,
+                            lineHeight = 34.sp,
+                            modifier = Modifier.clickable { commands.openLoop() }
+                        )
+                        Text(
+                            text = state.unit,
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = neutralColor,
+                            modifier = Modifier.padding(top = 1.dp)
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            state.trendArrow?.let { arrow ->
+                                Icon(
+                                    imageVector = arrow.directionToIcon(),
+                                    contentDescription = null,
+                                    tint = glucoseColor,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
+                            Text(
+                                text = state.deltaText,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = glucoseColor,
+                                modifier = Modifier.padding(start = 3.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(2.dp))
+                        // The age and the TIR share one row: as a fifth line the TIR sat at the bottom of
+                        // the ring, where the circle is narrowest, and the ring stroke hid it.
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Text(
+                                text = state.timeAgo,
+                                fontSize = 8.5.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = neutralColor
+                            )
+                            TirTrendText(
+                                tir = state.tir,
+                                neutralColor = neutralColor
+                            )
+                        }
+                    }
                 }
-            },
-            confirmButton = {
-                TextButton(onClick = { showSensDialog = false }) {
-                    Text("OK", fontWeight = FontWeight.Bold)
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showSensDialog = false }) {
-                    Text("Cancelar")
+
+                // RIGHT: CGM & loop
+                Column(
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    if (GlassPillId.SENSOR in selectedPills) {
+                        GlassPill(
+                            label = state.sensorLabel ?: stringResource(CoreUiStrings.sensor_label),
+                            value = state.sensorAge,
+                            isDark = isDark,
+                            valueColor = statusLevelToColor(state.sensorAgeStatus),
+                            modifier = Modifier.width(PILL_WIDTH).combinedClickable(
+                                onClick = commands::openSensorQuality,
+                                onLongClick = commands::openSensorInsert
+                            ),
+                            leadingIcon = { PillIcon(IcGlycoSensor, neutralColor) }
+                        )
+                    }
+                    if (GlassPillId.LOOP_STATUS in selectedPills) {
+                        GlassPill(
+                            label = stringResource(UiStrings.dashboard_glass_loop_label),
+                            value = state.loopStatusText ?: stringResource(UiStrings.dashboard_glass_loop_label),
+                            isDark = isDark,
+                            modifier = Modifier.width(PILL_WIDTH).combinedClickable(
+                                onClick = commands::openLoopDashboard,
+                                onLongClick = commands::openLoop
+                            ),
+                            leadingIcon = { LoopDot(running = state.loopIsRunning) }
+                        )
+                    }
+                    if (GlassPillId.ACTIVITY in selectedPills) {
+                        GlassPill(
+                            label = stringResource(UiStrings.dashboard_glass_activity_label),
+                            value = stringResource(UiStrings.dashboard_glass_activity_value, state.stepsText, state.hrText),
+                            isDark = isDark,
+                            modifier = Modifier.width(PILL_WIDTH),
+                            leadingIcon = { PillIcon(IcGlycoSettings, neutralColor) }
+                        )
+                    }
                 }
             }
-        )
-    }
-}
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun DeviceBadgeCustom(
-    iconContent: @Composable () -> Unit,
-    label: String,
-    value: String,
-    valueColor: Color,
-    labelColor: Color,
-    onClick: () -> Unit,
-    onLong: (() -> Unit)? = null,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-        modifier = Modifier
-            .clip(RoundedCornerShape(10.dp))
-            .combinedClickable(onClick = onClick, onLongClick = onLong)
-            .padding(horizontal = 4.dp, vertical = 2.dp)
-    ) {
-        iconContent()
-        Column {
-            Text(label, fontSize = 9.5.sp, fontWeight = FontWeight.SemiBold, color = labelColor, lineHeight = 10.sp)
-            Text(value, fontSize = 13.sp, fontWeight = FontWeight.ExtraBold, color = valueColor, maxLines = 1, lineHeight = 15.sp)
+            linkBanner?.let { banner ->
+                Spacer(modifier = Modifier.height(8.dp))
+                CgmLinkBannerText(banner)
+            }
+
+            val bottomRowPills = GLASS_PILL_CATALOG.filter { it.location == GlassPillLocation.BOTTOM_ROW && it.id in selectedPills }
+            if (bottomRowPills.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    bottomRowPills.forEach { entry ->
+                        val isTarget = entry.id == GlassPillId.TARGET
+                        BottomMetricPill(
+                            title = if (isTarget && state.isTempTargetActive) "" else stringResource(entry.label),
+                            value = glassPillValue(entry.id, state),
+                            isDark = isDark,
+                            onClick = when (entry.id) {
+                                GlassPillId.IOB        -> commands::openInsulin
+                                GlassPillId.TARGET     -> commands::openTarget
+                                GlassPillId.BASAL_RATE -> commands::openBasal
+                                GlassPillId.LAST_BOLUS -> commands::openInsulin
+                                GlassPillId.LAST_CARBS -> commands::openInsulin
+                                GlassPillId.PUMP_RESERVOIR, GlassPillId.CANNULA, GlassPillId.BATTERY,
+                                GlassPillId.SENSOR, GlassPillId.LOOP_STATUS, GlassPillId.ACTIVITY -> null
+                            },
+                            modifier = Modifier.weight(1f),
+                            accentColor = if (isTarget && state.isTempTargetActive) TEMP_TARGET_ACCENT else null
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
+/** Glucose colour by range, from the app theme. Unknown range: the neutral grey. */
 @Composable
-private fun MedtrumPatchGraphic() {
-    Canvas(modifier = Modifier.size(26.dp)) {
-        val w = size.width
-        val h = size.height
-        drawRoundRect(
-            color = Color(0xFFF1F5F9),
-            topLeft = Offset(w * 0.05f, h * 0.18f),
-            size = Size(w * 0.90f, h * 0.64f),
-            cornerRadius = CornerRadius(w * 0.28f, h * 0.28f)
-        )
-        drawRoundRect(
-            color = Color(0xFF94A3B8),
-            topLeft = Offset(w * 0.05f, h * 0.18f),
-            size = Size(w * 0.90f, h * 0.64f),
-            cornerRadius = CornerRadius(w * 0.28f, h * 0.28f),
-            style = Stroke(width = 1.5f)
-        )
-        drawRoundRect(
-            color = Color(0xFF64748B),
-            topLeft = Offset(w * 0.42f, h * 0.24f),
-            size = Size(w * 0.46f, h * 0.52f),
-            cornerRadius = CornerRadius(w * 0.20f, h * 0.20f)
-        )
-        drawCircle(
-            color = Color(0xFF38BDF8),
-            radius = w * 0.09f,
-            center = Offset(w * 0.25f, h * 0.50f)
-        )
-    }
+private fun glucoseRangeColor(range: BgRange?, isDark: Boolean): Color = when (range) {
+    BgRange.HIGH     -> AapsTheme.generalColors.bgHigh
+    BgRange.IN_RANGE -> AapsTheme.generalColors.bgInRange
+    BgRange.LOW      -> AapsTheme.generalColors.bgLow
+    null             -> if (isDark) NEUTRAL_DARK else NEUTRAL_LIGHT
 }
 
 @Composable
-private fun RoundWhiteSensorGraphic() {
-    Canvas(modifier = Modifier.size(24.dp)) {
-        val c = Offset(size.width / 2f, size.height / 2f)
-        drawCircle(color = Color.White.copy(alpha = 0.25f), radius = size.minDimension * 0.48f, center = c)
-        drawCircle(color = Color(0xFFF8FAFC), radius = size.minDimension * 0.38f, center = c)
-        drawCircle(color = Color(0xFFCBD5E1), radius = size.minDimension * 0.38f, center = c, style = Stroke(1.5f))
-        drawCircle(color = Color(0xFF94A3B8), radius = size.minDimension * 0.10f, center = c)
-    }
+private fun PillIcon(icon: ImageVector, tint: Color) {
+    Icon(
+        imageVector = icon,
+        contentDescription = null,
+        tint = tint,
+        modifier = Modifier.size(14.dp)
+    )
 }
 
+/** Pulsing green dot while the loop runs, a grey dot when it is paused. */
 @Composable
-private fun TelemetryRow(
-    icon: ImageVector,
-    iconTint: Color,
-    label: String,
-    value: String,
-    txtColor: Color,
-    onClick: (() -> Unit)? = null
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(5.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(6.dp))
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
-            .padding(vertical = 1.dp, horizontal = 2.dp)
-    ) {
-        Icon(icon, null, tint = iconTint, modifier = Modifier.size(12.dp))
-        Text("$label:", fontSize = 10.sp, color = txtColor.copy(alpha = 0.72f), maxLines = 1, softWrap = false)
-        Text(value, fontSize = 10.5.sp, fontWeight = FontWeight.Bold, color = txtColor, maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis)
-    }
-}
-
-@Composable
-private fun GlassSquareBtn(icon: ImageVector, label: String, accent: Color, isDark: Boolean, onClick: () -> Unit) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .width(54.dp)
-            .height(36.dp)
-            .glassSurface(isDark = isDark, radius = 11.dp)
-            .clickable(onClick = onClick)
-            .padding(2.dp)
-    ) {
-        Icon(icon, label, tint = accent, modifier = Modifier.size(14.dp))
-        Text(
-            text = label,
-            fontSize = 7.5.sp,
-            fontWeight = FontWeight.Bold,
-            color = if (isDark) Color(0xFFE2E8F0) else Color(0xFF1E293B),
-            lineHeight = 8.sp,
-            textAlign = TextAlign.Center,
-            maxLines = 2
+private fun LoopDot(running: Boolean) {
+    if (running) {
+        val infiniteTransition = rememberInfiniteTransition()
+        val pulseAlpha by infiniteTransition.animateFloat(
+            initialValue = 0f,
+            targetValue = 0.8f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(1000, easing = LinearEasing),
+                repeatMode = RepeatMode.Reverse
+            )
         )
+        // pulseAlpha is read in the draw phase only: reading it in composition
+        // recomposed this dot on every frame and kept the render thread busy.
+        Box(
+            modifier = Modifier
+                .size(10.dp)
+                .clip(CircleShape)
+                .drawBehind { drawCircle(LOOP_RUNNING_HALO, alpha = pulseAlpha) },
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(5.dp)
+                    .background(GlassColors.emerald, CircleShape)
+            )
+        }
+    } else {
+        Box(
+            modifier = Modifier
+                .size(10.dp)
+                .clip(CircleShape)
+                .background(NEUTRAL_DARK, CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(5.dp)
+                    .background(NEUTRAL_DARK, CircleShape)
+            )
+        }
     }
+}
+
+/**
+ * Thin ring with today's time-in-range split: in range (green) from 12 o'clock, then high (amber),
+ * then low (red), clockwise. A small gap separates the parts. Without data ([tir] null) only the empty
+ * track is drawn.
+ */
+@Composable
+private fun TirRing(tir: GlassTir?, trackColor: Color, modifier: Modifier = Modifier) {
+    Canvas(modifier = modifier) {
+        val strokePx = TIR_RING_STROKE.toPx()
+        val diameter = size.minDimension - strokePx
+        if (diameter <= 0f) return@Canvas
+        val topLeft = Offset((size.width - diameter) / 2f, (size.height - diameter) / 2f)
+        val arcSize = Size(diameter, diameter)
+        drawArc(
+            color = trackColor,
+            startAngle = 0f,
+            sweepAngle = 360f,
+            useCenter = false,
+            topLeft = topLeft,
+            size = arcSize,
+            style = Stroke(width = strokePx)
+        )
+        if (tir == null) return@Canvas
+        val parts = listOf(
+            tir.inRangePct to GlassColors.emerald,
+            tir.abovePct to GlassColors.amber,
+            tir.belowPct to GlassColors.red,
+        ).filter { it.first > 0f }
+        val total = parts.sumOf { it.first.toDouble() }.toFloat()
+        if (total <= 0f) return@Canvas
+        val gap = if (parts.size > 1) TIR_RING_GAP_DEG else 0f
+        var start = -90f
+        for ((pct, color) in parts) {
+            val sweep = pct / total * 360f
+            // A few minutes low must stay visible: never draw a part thinner than the minimum.
+            drawArc(
+                color = color,
+                startAngle = start + gap / 2f,
+                sweepAngle = (sweep - gap).coerceAtLeast(TIR_RING_MIN_PART_DEG),
+                useCenter = false,
+                topLeft = topLeft,
+                size = arcSize,
+                style = Stroke(width = strokePx, cap = StrokeCap.Butt)
+            )
+            start += sweep
+        }
+    }
+}
+
+/** "TIR 78% ↑6" under the glucose: green when better than yesterday, amber when worse. */
+@Composable
+private fun TirTrendText(tir: GlassTir?, neutralColor: Color, modifier: Modifier = Modifier) {
+    val delta = tir?.deltaVsYesterday
+    val percent = tir?.let { stringResource(CoreUiStrings.units_format_percent, it.inRangePct.roundToInt()) }
+    val text = when {
+        percent == null             -> stringResource(UiStrings.dashboard_glass_tir_empty)
+        delta == null || delta == 0 -> stringResource(UiStrings.dashboard_glass_tir_value, percent)
+        delta > 0                   -> stringResource(UiStrings.dashboard_glass_tir_up, percent, delta)
+        else                        -> stringResource(UiStrings.dashboard_glass_tir_down, percent, abs(delta))
+    }
+    val color = when {
+        delta == null || delta == 0 -> neutralColor
+        delta > 0                   -> GlassColors.emerald
+        else                        -> GlassColors.amber
+    }
+    Text(
+        text = text,
+        fontSize = 8.5.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = color,
+        modifier = modifier
+    )
+}
+
+/** Width of every top-grid pill. */
+private val PILL_WIDTH = 100.dp
+
+/** Fixed ring size: the glucose block is laid out to fit inside it, so the card height stays small. */
+private val TIR_RING_SIZE = 130.dp
+
+/** Moves the ring a little up, into the card top padding, without making the card taller. */
+private val TIR_RING_LIFT = (-6).dp
+private val TIR_RING_STROKE = 5.dp
+private const val TIR_RING_GAP_DEG = 3f
+private const val TIR_RING_MIN_PART_DEG = 2f
+
+/** "Reconnecting… · last value 14 min ago", in the attention colour of the other dashboard skins. */
+@Composable
+private fun CgmLinkBannerText(banner: GlassCgmLinkStatus.Banner) {
+    val phase = stringResource(
+        when (banner.phase) {
+            CgmWarmupStatus.Phase.CONNECTING   -> UiStrings.dashboard_glass_cgm_phase_connecting
+            CgmWarmupStatus.Phase.RECONNECTING -> UiStrings.dashboard_glass_cgm_phase_reconnecting
+            CgmWarmupStatus.Phase.PAIRING      -> UiStrings.dashboard_glass_cgm_phase_pairing
+            CgmWarmupStatus.Phase.WARMING,
+            CgmWarmupStatus.Phase.OTHER        -> UiStrings.dashboard_glass_cgm_phase_warmup
+        }
+    )
+    Text(
+        text = banner.minutesSinceLastValue?.let { stringResource(UiStrings.dashboard_glass_cgm_link_banner, phase, it.toInt()) } ?: phase,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Bold,
+        color = GlassColors.metricAttention,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.fillMaxWidth()
+    )
 }

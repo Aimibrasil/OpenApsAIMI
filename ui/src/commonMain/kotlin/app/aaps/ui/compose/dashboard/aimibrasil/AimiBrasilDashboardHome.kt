@@ -1,5 +1,6 @@
 package app.aaps.ui.compose.dashboard.aimibrasil
 
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -55,7 +56,7 @@ fun AimiBrasilDashboardHome(
     val profileUtil = LocalProfileUtil.current
     val dateUtil = LocalDateUtil.current
     val decimalFormatter = LocalDecimalFormatter.current
-    val isDark = isSystemInDarkTheme()
+    val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
 
     val bgInfoState by graphViewModel.bgInfoState.collectAsStateWithLifecycle()
     val nowMs by graphViewModel.nowTimestamp.collectAsStateWithLifecycle()
@@ -205,11 +206,13 @@ internal fun AimiBrasilOverviewContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .statusBarsPadding()
+                .navigationBarsPadding()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 8.dp, vertical = 6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            AimiBrasilStatusCard(
+        AimiBrasilStatusCard(
                 state = state,
                 pumpStatus = pumpStatus,
                 isDark = isDark,

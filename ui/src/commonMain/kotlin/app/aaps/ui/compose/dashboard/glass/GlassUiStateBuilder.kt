@@ -8,15 +8,26 @@ import app.aaps.ui.compose.overview.statusLights.StatusUiState
 
 private const val NO_VALUE = "--"
 
+/**
+ * Builds the state of the Glass status card from the shared overview data.
+ *
+ * On `dev_OAPSAIMI` everything came from one `StatusCardState`. Here each part has its own source:
+ *
+ * - [bgInfo] (glucose, range, trend, age) from `GraphViewModel.bgInfoState`
+ * - [timeAgo], [deltaText], [iobText], [unitText] are already formatted by the caller
+ * - [lights] (reservoir, cannula, battery, sensor ages) from `StatusViewModel.uiState`
+ * - [homeStatus] (target, basal, loop, steps, heart rate, time in range) from [GlassHomeViewModel]
+ * - [treatmentData] (last bolus, last carbs) from `GraphViewModel.treatmentGraphFlow`
+ * - [warmup] from the active BG source when it is a `CgmWarmupProvider`
+ *
+ * A missing source leaves the default of that field ("--" or the default label).
+ */
 internal fun buildGlassUiState(
     bgInfo: BgInfoData?,
     timeAgo: String,
     deltaText: String,
     unitText: String,
     iobText: String?,
-    bolusIobText: String? = null,
-    basalIobText: String? = null,
-    cobText: String? = null,
     lights: StatusUiState?,
     homeStatus: GlassHomeStatus?,
     treatmentData: TreatmentGraphData?,
@@ -31,6 +42,7 @@ internal fun buildGlassUiState(
         deltaText = deltaText,
         trendArrow = bgInfo?.trendArrow,
         timeAgo = timeAgo.ifEmpty { defaults.timeAgo },
+        // The age is always the short form ("3d4h") since upstream 78c1707f665, so it fits the 100 dp pills.
         insulinAge = lights?.insulinStatus?.age ?: NO_VALUE,
         insulinAgeStatus = lights?.insulinStatus?.ageStatus ?: StatusLevel.UNSPECIFIED,
         insulinLabel = lights?.insulinStatus?.label,
@@ -46,8 +58,6 @@ internal fun buildGlassUiState(
         loopStatusText = homeStatus?.loopStatusText,
         loopIsRunning = homeStatus?.loopIsRunning ?: defaults.loopIsRunning,
         iobText = iobText ?: NO_VALUE,
-        bolusIobText = bolusIobText ?: homeStatus?.bolusIobText ?: NO_VALUE,
-        basalIobText = basalIobText ?: homeStatus?.basalIobText ?: NO_VALUE,
         isTempTargetActive = homeStatus?.isTempTargetActive ?: false,
         targetText = homeStatus?.targetText ?: NO_VALUE,
         basalPercentText = homeStatus?.effectiveBasalText ?: NO_VALUE,
@@ -59,17 +69,6 @@ internal fun buildGlassUiState(
         lastCarbsText = treatmentData?.carbs
             ?.filter { it.isValid && it.timestamp <= nowMs }
             ?.maxByOrNull { it.timestamp }?.label ?: NO_VALUE,
-        activeCobText = cobText ?: homeStatus?.activeCobText ?: NO_VALUE,
-        profileName = homeStatus?.profileName ?: NO_VALUE,
-        isfText = homeStatus?.isfText ?: NO_VALUE,
-        isfInlineText = homeStatus?.isfInlineText ?: homeStatus?.isfText ?: NO_VALUE,
-        autosensRatioText = homeStatus?.autosensRatioText ?: NO_VALUE,
-        profileIsfText = homeStatus?.profileIsfText ?: NO_VALUE,
-        variableIsfText = homeStatus?.variableIsfText ?: NO_VALUE,
-        algorithmAutosensText = homeStatus?.algorithmAutosensText ?: NO_VALUE,
-        averageIsfText = homeStatus?.averageIsfText ?: NO_VALUE,
-        tempTargetText = homeStatus?.tempTargetText ?: NO_VALUE,
-        tempTargetRemainingText = homeStatus?.tempTargetRemainingText ?: "",
         tir = homeStatus?.tir,
         warmup = warmup,
         isGlucoseActual = bgInfo?.isOutdated?.not() ?: defaults.isGlucoseActual,
